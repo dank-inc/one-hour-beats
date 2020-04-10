@@ -8,4 +8,4 @@
 
 <h1>About this {blah}</h1>
 
-<p>This is the 'about' page. There's not much here.</p>
+<p>One Hour beats</p>

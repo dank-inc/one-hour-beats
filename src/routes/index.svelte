@@ -40,6 +40,7 @@
 
 <h1>One Hour Beats</h1>
 
-<a href="jams">Create a new jam</a>
+<a href="create">Create a new jam</a>
 
 <p>TODO: click "jams" to find a jam!</p>
+<p>TODO: latest jam list</p>
