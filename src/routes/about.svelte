@@ -1,0 +1,11 @@
+<script>
+  let blah = "asdf";
+</script>
+
+<svelte:head>
+  <title>About</title>
+</svelte:head>
+
+<h1>About this {blah}</h1>
+
+<p>This is the 'about' page. There's not much here.</p>
