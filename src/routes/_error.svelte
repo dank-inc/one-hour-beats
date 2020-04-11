@@ -35,6 +35,11 @@
 <h1>{status}</h1>
 
 <p>{error.message}</p>
+<p>No Jams here, bro</p>
+<p>
+  Go back
+  <a href="home">home</a>
+</p>
 
 {#if dev && error.stack}
   <pre>{error.stack}</pre>

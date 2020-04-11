@@ -1,46 +1,11 @@
-<style>
-  h1,
-  figure,
-  p {
-    text-align: center;
-    margin: 0 auto;
-  }
+<script>
 
-  h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-  }
-
-  figure {
-    margin: 0 0 1em 0;
-  }
-
-  img {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 0 1em 0;
-  }
-
-  p {
-    margin: 1em auto;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
-    }
-  }
-</style>
+</script>
 
 <svelte:head>
-  <title>One Hour Beats</title>
+  <title>One Hour Beats - Home</title>
 </svelte:head>
 
 <h1>One Hour Beats</h1>
 
-<a href="create">Create a new jam</a>
-
-<p>TODO: click "jams" to find a jam!</p>
-<p>TODO: latest jam list</p>
+<h3>Home</h3>
