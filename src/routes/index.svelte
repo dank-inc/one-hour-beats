@@ -9,3 +9,9 @@
 <h1>One Hour Beats</h1>
 
 <h3>Home</h3>
+
+<p>
+  <a href="/create">Make a new Jam</a>
+</p>
+
+<h3>Jam Listings</h3>

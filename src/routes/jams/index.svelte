@@ -16,11 +16,7 @@
   <title>Jam Listings</title>
 </svelte:head>
 
-<h1>Create Jam</h1>
-
-<a href="/create">Make your own jam!</a>
-
-<h1>Past Jams</h1>
+<h1>All The Jammin</h1>
 
 {#each jams as jam}
   <div>
