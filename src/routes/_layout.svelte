@@ -14,7 +14,7 @@
   }
 </style>
 
-<Nav {segment} />
+<Nav />
 
 <main>
   <slot />

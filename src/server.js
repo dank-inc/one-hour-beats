@@ -6,8 +6,24 @@ import * as sapper from "@sapper/server";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
-polka() // You can also use Express
-  .get("/api/test", (req, res, next) => console.log("TEST API"))
+const app = polka()
+  .get("/api/jams/:id?", (req, res, next) => {
+    if (req.params.id) {
+      res.end(`getting jam: ${req.params.id}`);
+    }
+    res.end(`getting all jams`);
+  })
+  // post to /jams => create jam
+  // put to /jams/:id => update jam
+  .get("/api/entries/:id?", (req, res, next) => {
+    if (req.params.id) {
+      res.end(`getting jam: ${req.params.id}`);
+    }
+    res.end(`getting all jams`);
+  })
+  // post to /entries => create entry
+  // put to /entries/:id => update entry *milestone 2
+  // CRUD /users *milestone 1
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
