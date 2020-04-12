@@ -1,7 +1,11 @@
 <script context="module">
-  import jams from "../../mock-db/jams";
+  import { jamStore } from "../../store";
+
   export async function preload(page) {
-    const jam = jams.find(j => j.id == page.params.id);
+    let jam;
+
+    jamStore.subscribe(index => (jam = index[page.params.id]));
+
     return Promise.resolve({ id: page.params.id, jam });
   }
 </script>

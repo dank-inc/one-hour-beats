@@ -1,15 +1,11 @@
-<script context="module">
-  import jams from "../../mock-db/jams";
-
-  export async function preload(page) {
-    // use page.path, filter ID from path to find a jam.
-    return { jams }; // sorted by latest 10 or so (from server)
-  }
-</script>
-
 <script>
-  export let jams;
+  import { jamStore } from "../../store";
+  const jamIds = Object.keys(jamStore);
   let currentTime = parseInt(new Date().getTime() / 1000);
+
+  let jamIndex;
+
+  jamStore.subscribe(index => (jamIndex = index));
 </script>
 
 <svelte:head>
@@ -18,7 +14,7 @@
 
 <h1>All The Jammin</h1>
 
-{#each jams as jam}
+{#each Object.entries(jamIndex) as [id, jam]}
   <div>
     <h3>
       <a rel="prefetch" href={`/jams/${jam.id}`}>{jam.name}</a>
