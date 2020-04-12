@@ -11,10 +11,13 @@
   <title>Jam Listings</title>
 </svelte:head>
 
-<h1>All The Jammin</h1>
+<header>
+  <h1>All The Jammin</h1>
+  <p>soem little description blah</p>
+</header>
 
 {#each Object.entries(jamIndex) as [id, jam]}
-  <div>
+  <div class="jam-list">
     <h3>
       <a rel="prefetch" href={`/jams/${jam.id}`}>{jam.name}</a>
     </h3>

@@ -10,6 +10,8 @@
   const { page } = stores();
   const { getSocket } = getContext("socket");
 
+  // Add a socket for a room to add numbers
+
   let {
     params: { id }
   } = $page;
@@ -17,6 +19,7 @@
   $: jam = $jamStore[id];
   $: entries = $entryStore[id];
   $: currentTime = getUnix();
+  $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -38,7 +41,15 @@
 
 </style>
 
-<h1>{jam.name}</h1>
+<svelte:head>
+  <title>One Hour Beats - {jam.name}</title>
+</svelte:head>
+
+<header>
+  <h1>{jam.name}</h1>
+  <p>maybe some quick stats - authored by?</p>
+</header>
+
 <div class="jam-info">
   <h3>Jam Info</h3>
   <p>id: {id}</p>
@@ -48,11 +59,11 @@
 
   {#if !jam.startedAt}
     <button on:click={handleStart}>Start Jam!</button>
-  {:else if getTimeLeft(jam, currentTime) < 0}
-    <div>{jam.startedAt + jam.timeLimit - currentTime}</div>
+  {:else if timeLeft < 0}
+    <div>Time To Vote!</div>
   {:else}
     <p>Started At: {jam.startedAt}</p>
-    <p>Time Left: {getTimeLeft(jam, currentTime)}</p>
+    <p>Time Left: {timeLeft}</p>
     <EntryForm jamId={id} />
   {/if}
 </div>

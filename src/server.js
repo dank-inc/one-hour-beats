@@ -21,11 +21,13 @@ for (const entry of entries) {
   entryIndex[entry.jamId] = [...(entryIndex[entry.jamId] || []), entry];
 }
 // TODO: entries by id - gonna need an actual db lol
+// participants[jamId] = [array of users]
+const participantIndex = {};
 
 const server = http.createServer();
 
 const app = polka({ server });
-app.store = { jamIndex, entryIndex };
+app.store = { jamIndex, entryIndex, participantIndex };
 
 app
   .get("/api/jams/:id?", ({ params }, res, next) => {
@@ -35,6 +37,10 @@ app
     } else {
       send(res, 200, store.jamIndex);
     }
+  })
+  .post("/api/jams", () => {
+    io.emit("jamAdded", { ...app.store.jams });
+    res.end("io.emit is not a fucntion");
   })
   // post to /jams => create jam
   // put to /jams/:id => update jam
@@ -92,5 +98,19 @@ io(server).on("connection", (socket) => {
     console.log("Adding Entry", entry);
     socket.emit("entriesUpdated", app.store.entryIndex);
     socket.broadcast.emit("entriesUpdated", app.store.entryIndex);
+  });
+
+  socket.on("joinJamRoom", ({ userId, jamId }) => {
+    console.log("user", userId, "joined", jamId);
+    const room = app.store.participantIndex[jamId];
+    app.store.participantIndex[jamId] = [...(room || []), userId];
+  });
+  socket.on("leaveJamRoom", ({ userId, jamId }) => {
+    console.log("user", userId, "joined", jamId);
+    const room = app.store.participantIndex[jamId];
+    app.store.participantIndex[jamId] = [
+      ...(room || []).filter((id) => id !== userId),
+      userId,
+    ]; // yuck
   });
 });

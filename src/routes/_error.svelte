@@ -29,7 +29,7 @@
 </style>
 
 <svelte:head>
-  <title>{status}</title>
+  <title>One Hour Beats - {status}</title>
 </svelte:head>
 
 <h1>{status}</h1>
@@ -38,7 +38,7 @@
 <p>No Jams here, bro</p>
 <p>
   Go back
-  <a href="home">home</a>
+  <a href="/">home</a>
 </p>
 
 {#if dev && error.stack}

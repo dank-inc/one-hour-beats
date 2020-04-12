@@ -24,7 +24,8 @@
     font-size: 16pt;
     width: 60%;
     border: 1px solid #ccc;
-    padding: 2vmin;
+    padding: 4vmin;
+    margin: auto;
     border-radius: 1vmin;
   }
   .sexyform input {
@@ -59,9 +60,10 @@
   <title>One Hour Beats - Create Jam</title>
 </svelte:head>
 
-<h1>Create Jam!</h1>
-
-<p>Make your very own jam here!</p>
+<header>
+  <h1>Create Jam!</h1>
+  <p>Make your very own jam here!</p>
+</header>
 
 <form on:submit|preventDefault={handleSubmit} class="sexyform">
   <div>

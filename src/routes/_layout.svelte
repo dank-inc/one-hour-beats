@@ -1,6 +1,6 @@
 <script context="module">
   // initial state
-  import { jamStore, entryStore } from "../store";
+  import { jamStore, entryStore, participantStore } from "../store";
 
   export async function preload(page) {
     const jamsRes = await this.fetch("/api/jams");
@@ -38,6 +38,7 @@
     // check jam id to see if it's relevant
     console.log("Vote Happened!");
   });
+  socket.on("participantsUpdated", participants => {});
 
   setContext("socket", {
     getSocket: () => socket
