@@ -1,4 +1,7 @@
 <script>
+  let name;
+  let description;
+
   function handleSubmit() {
     // send jam to db
     // generate id for jam
@@ -51,13 +54,15 @@
   <div>
     <label>
       Name of Jam:
-      <input />
+      <input bind:value={name} placeholder="Jam Name" />
     </label>
   </div>
   <div>
     <label>Outline of the rules of the jam:</label>
   </div>
-  <textarea />
+  <textarea
+    bind:value={description}
+    placeholder="Eg: every sound must be in reverse" />
   <div>
     <button type="submit">Create!</button>
   </div>

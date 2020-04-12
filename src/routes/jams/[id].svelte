@@ -1,21 +1,17 @@
-<script context="module">
-  import { jamStore } from "../../store";
-
-  export async function preload(page) {
-    let jam;
-
-    jamStore.subscribe(index => (jam = index[page.params.id]));
-
-    return Promise.resolve({ id: page.params.id, jam });
-  }
-</script>
-
 <script>
+  import { jamStore } from "../../store";
   import { onMount } from "svelte";
   import { getUnix } from "../../utils/time";
+  import { stores } from "@sapper/app";
+  const { page } = stores();
 
-  export let id;
-  export let jam;
+  let jam;
+  let {
+    params: { id }
+  } = $page;
+
+  jamStore.subscribe(index => (jam = index[id]));
+
   $: currentTime = getUnix();
 
   onMount(() => {
@@ -30,8 +26,9 @@
 
   const handleStart = () => {
     // update jam record, reload?
-    jam = { ...jam, startedAt: getUnix() };
+    // jam = { ...jam, startedAt: getUnix() };
     console.log("starting Jam!", getUnix());
+    jamStore.update(jamIndex => ({ ...jamIndex, [jam.id]: jam }));
   };
 
   const handleSubmit = () => {
