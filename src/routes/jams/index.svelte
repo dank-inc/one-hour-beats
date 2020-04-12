@@ -1,9 +1,9 @@
 <script context="module">
-  export async function prefetch(page) {
-    const res = await fetch("/api/jams");
-    const data = res.json();
-    console.log(json);
-    return { jamIndex: json };
+  export async function preload(page) {
+    const res = await this.fetch("/api/jams");
+    const data = await res.json();
+    console.log("PREFETCH", data);
+    return Promise.resolve({ jamIndex: data });
   }
 </script>
 
@@ -12,7 +12,7 @@
 
   let currentTime = parseInt(new Date().getTime() / 1000);
 
-  export let jamIndex;
+  export let jamIndex = {};
 </script>
 
 <svelte:head>

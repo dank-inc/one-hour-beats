@@ -1,3 +1,12 @@
+<script context="module">
+  export async function preload(page) {
+    const res = await this.fetch("/api/jams");
+    const data = await res.json();
+    console.log("PREFETCH", data);
+    return Promise.resolve({ jamIndex: data });
+  }
+</script>
+
 <script>
 
 </script>

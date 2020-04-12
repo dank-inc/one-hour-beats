@@ -13,6 +13,3 @@ for (const entry of allEntries) {
   byJam[entry.jamId] = [...(existing || []), entry];
 }
 export const entriesByJam = writable(byJam);
-
-console.log(jamIndex);
-console.log(byJam);
