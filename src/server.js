@@ -69,8 +69,18 @@ io(server).on("connection", (socket) => {
   console.log("Connected =>", socket.id);
 
   socket.on("disconnect", () => {
-    console.log("Disonnected =>", socket.id);
     // todo remove user from any active rooms.
+    // filter out all the users
+    const userId = socketUserMap[socket.id];
+    console.log("Disonnected =>", socket.id, "userId:", userId);
+
+    // iterate over all the rooms and remove userid...
+    for (const [jamId, userIds] of Object.entries(app.store.jamRooms)) {
+      app.store.jamRooms[jamId] = [...userIds.filter((id) => id !== userId)];
+    }
+
+    socket.emit("jamRoomsUpdated", app.store.jamRooms);
+    socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
 
   socket.on("createJam", (jam) => {
@@ -108,17 +118,19 @@ io(server).on("connection", (socket) => {
 
   socket.on("joinJamRoom", ({ userId, jamId }) => {
     socket.join(jamId);
-    console.log("user", userId, "joined", jamId);
+    socketUserMap[socket.id] = userId;
+    console.log("user", userId, "joined", jamId, "socketId", socket.id);
+    // map socket users to user ids
     const room = app.store.jamRooms[jamId];
     app.store.jamRooms[jamId] = [...(room || []), userId];
     socket.emit("jamRoomsUpdated", app.store.jamRooms);
     socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
+
   socket.on("leaveJamRoom", ({ userId, jamId }) => {
     console.log("user", userId, "left", jamId);
     const userIds = app.store.jamRooms[jamId] || [];
-    app.store.jamRooms[jamId] = [...userIds.filter((id) => id !== userId)]; // yuck
-
+    app.store.jamRooms[jamId] = [...userIds.filter((id) => id !== userId)];
     socket.emit("jamRoomsUpdated", app.store.jamRooms);
     socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
@@ -135,6 +147,6 @@ io(server).on("connection", (socket) => {
     const message = { ...chat, createdAt: getUnix() };
     app.store.chatLogs[jamId] = [message, ...messages];
 
-    socket.in(jamId).broadcast.emit("chatUpdated", app.store.chatLogs[jamId]);
+    socket.in(jamId).broadcast.emit("chatUpdated", app.store.chatLogs);
   });
 });

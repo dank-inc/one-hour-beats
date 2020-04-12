@@ -2,8 +2,9 @@
   import Entry from "../../components/Entry.svelte";
   import EntryForm from "../../components/EntryForm.svelte";
   import ChatForm from "../../components/ChatForm.svelte";
+  import ChatLog from "../../components/ChatLog.svelte";
 
-  import { jamStore, entryStore, userStore } from "../../store";
+  import { jamStore, entryStore, userStore, chatLogStore } from "../../store";
 
   import { onMount, getContext } from "svelte";
   import { getUnix, getTimeLeft } from "../../utils/time";
@@ -21,6 +22,7 @@
   $: entries = $entryStore[id];
   $: currentTime = getUnix();
   $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
+  $: chat = $chatLogStore[id];
 
   onMount(() => {
     const socket = getSocket();
@@ -34,8 +36,9 @@
       socket.emit("room", { userId, jamId });
     });
 
-    socket.on("chatUpdated", log => {
-      console.log("chatroom updated", log);
+    socket.on("chatUpdated", chatLog => {
+      console.log("your chat has been updated", chatLog);
+      chatLogStore.set(chatLog);
     });
 
     socket.emit("joinJamRoom", { jamId, userId });
@@ -94,4 +97,9 @@
 {/if}
 
 <h2>Chatroom</h2>
+{#if chat}
+  <ChatLog {chat} />
+{:else}
+  <div>All is quiet...</div>
+{/if}
 <ChatForm jamId={id} />

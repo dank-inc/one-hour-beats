@@ -1,5 +1,6 @@
 <script>
-
+  import { userStore } from "../store";
+  $: userName = $userStore.name;
 </script>
 
 <style>
@@ -31,6 +32,9 @@
 
 <nav>
   <ul>
+    {#if userName}
+      <h3>Welcome, {userName}</h3>
+    {/if}
     <li>
       <a href="/">Home</a>
     </li>

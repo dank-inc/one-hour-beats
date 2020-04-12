@@ -16,11 +16,14 @@
 </script>
 
 <script>
+  import io from "socket.io-client";
   import Nav from "../components/Nav.svelte";
   import { onMount, setContext } from "svelte";
+  import { userStore } from "../store";
+  import UserForm from "../components/UserForm.svelte";
 
+  $: userName = $userStore.name;
   export let segment;
-  import io from "socket.io-client";
 
   const socket = io(); // we don't care about userId here?
 
@@ -64,7 +67,10 @@
 
 <Nav />
 
-<main>
-
-  <slot />
-</main>
+{#if userName}
+  <main>
+    <slot />
+  </main>
+{:else}
+  <UserForm />
+{/if}
