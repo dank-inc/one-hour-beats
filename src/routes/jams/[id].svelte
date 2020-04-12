@@ -32,7 +32,7 @@
 
   const handleStart = () => {
     // update jam record, reload?
-    const jam = { ...jam, startedAt: getUnix() };
+    const jam = { ...$jamStore[id], startedAt: getUnix() };
     console.log("starting Jam!", getUnix());
     jamStore.update(jamIndex => ({ ...jamIndex, [jam.id]: jam }));
   };
