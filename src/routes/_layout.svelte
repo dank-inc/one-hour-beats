@@ -1,6 +1,6 @@
 <script context="module">
   // initial state
-  import { jamStore, entryStore, participantStore } from "../store";
+  import { jamStore, entryStore, jamRoomStore } from "../store";
 
   export async function preload(page) {
     const jamsRes = await this.fetch("/api/jams");
@@ -22,7 +22,7 @@
   export let segment;
   import io from "socket.io-client";
 
-  const socket = io();
+  const socket = io(); // we don't care about userId here?
 
   socket.on("entriesUpdated", entryIndex => {
     // Milestone 1 - check user id to see if relevant
@@ -39,7 +39,10 @@
     // check jam id to see if it's relevant
     console.log("Vote Happened!");
   });
-  socket.on("participantsUpdated", participants => {});
+  socket.on("jamRoomsUpdated", rooms => {
+    console.log("jam rooms updated!", rooms);
+    jamRoomStore.set(rooms);
+  });
 
   setContext("socket", {
     getSocket: () => socket

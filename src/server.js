@@ -21,13 +21,18 @@ for (const entry of entries) {
   entryIndex[entry.jamId] = [...(entryIndex[entry.jamId] || []), entry];
 }
 // TODO: entries by id - gonna need an actual db lol
-// participants[jamId] = [array of users]
-const participantIndex = {};
+// jamRooms[jamId] = [array of user ids]
+const jamRooms = {};
+// chatlogs[jamId] = [array of chats]
+const chatLogs = {};
+
+// socket-id => user-id
+const socketUserMap = {};
 
 const server = http.createServer();
 
 const app = polka({ server });
-app.store = { jamIndex, entryIndex, participantIndex };
+app.store = { jamIndex, entryIndex, jamRooms, chatLogs };
 
 app
   .get("/api/jams/:id?", ({ params }, res, next) => {
@@ -61,7 +66,12 @@ app
   });
 
 io(server).on("connection", (socket) => {
-  console.log("SOCKET", socket.id);
+  console.log("Connected =>", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("Disonnected =>", socket.id);
+    // todo remove user from any active rooms.
+  });
 
   socket.on("createJam", (jam) => {
     const id = generateId();
@@ -97,16 +107,34 @@ io(server).on("connection", (socket) => {
   });
 
   socket.on("joinJamRoom", ({ userId, jamId }) => {
+    socket.join(jamId);
     console.log("user", userId, "joined", jamId);
-    const room = app.store.participantIndex[jamId];
-    app.store.participantIndex[jamId] = [...(room || []), userId];
+    const room = app.store.jamRooms[jamId];
+    app.store.jamRooms[jamId] = [...(room || []), userId];
+    socket.emit("jamRoomsUpdated", app.store.jamRooms);
+    socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
   socket.on("leaveJamRoom", ({ userId, jamId }) => {
-    console.log("user", userId, "joined", jamId);
-    const room = app.store.participantIndex[jamId];
-    app.store.participantIndex[jamId] = [
-      ...(room || []).filter((id) => id !== userId),
-      userId,
-    ]; // yuck
+    console.log("user", userId, "left", jamId);
+    const userIds = app.store.jamRooms[jamId] || [];
+    app.store.jamRooms[jamId] = [...userIds.filter((id) => id !== userId)]; // yuck
+
+    socket.emit("jamRoomsUpdated", app.store.jamRooms);
+    socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
+  });
+
+  socket.on("room", ({ jamId, userId }) => {
+    console.log(userId, "joined", jamId);
+    socket.join(jamId);
+  });
+
+  socket.on("chat", (chat) => {
+    const { jamId } = chat;
+    console.log("new chat recieved", chat);
+    const messages = app.store.chatLogs[jamId] || [];
+    const message = { ...chat, createdAt: getUnix() };
+    app.store.chatLogs[jamId] = [message, ...messages];
+
+    socket.in(jamId).broadcast.emit("chatUpdated", app.store.chatLogs[jamId]);
   });
 });

@@ -1,8 +1,9 @@
 <script>
   import Entry from "../../components/Entry.svelte";
   import EntryForm from "../../components/EntryForm.svelte";
+  import ChatForm from "../../components/ChatForm.svelte";
 
-  import { jamStore, entryStore } from "../../store";
+  import { jamStore, entryStore, userStore } from "../../store";
 
   import { onMount, getContext } from "svelte";
   import { getUnix, getTimeLeft } from "../../utils/time";
@@ -22,11 +23,24 @@
   $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
 
   onMount(() => {
+    const socket = getSocket();
     const interval = setInterval(() => {
       currentTime = getUnix();
     }, 1000);
+    const userId = $userStore.id;
+    const jamId = $page.params.id;
 
+    socket.on("connect", () => {
+      socket.emit("room", { userId, jamId });
+    });
+
+    socket.on("chatUpdated", log => {
+      console.log("chatroom updated", log);
+    });
+
+    socket.emit("joinJamRoom", { jamId, userId });
     return () => {
+      socket.emit("leaveJamRoom", { jamId, userId });
       clearInterval(interval);
     };
   });
@@ -78,3 +92,6 @@
     <p>todo: animate in thumbs</p>
   </div>
 {/if}
+
+<h2>Chatroom</h2>
+<ChatForm jamId={id} />
