@@ -6,17 +6,8 @@ import * as sapper from "@sapper/server";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
-const jams = [
-  // pretend this is database data.
-  {
-    name: "cool jam",
-    description: "do something dope",
-    timeLimit: 3600,
-    startedAt: null,
-  },
-];
-
-const app = polka() // You can also use Express
+polka() // You can also use Express
+  .get("/api/test", (req, res, next) => console.log("TEST API"))
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
