@@ -1,13 +1,21 @@
 <script>
+  import { getContext } from "svelte";
+  let { getSocket } = getContext("socket");
+  import { goto } from "@sapper/app";
   let name;
   let description;
+  let timeLimit = 60;
 
   function handleSubmit() {
+    const socket = getSocket();
+
+    socket.emit("createJam", { name, description, timeLimit });
     // send jam to db
     // generate id for jam
     // return id from server
     // navigate to `jams/id`
     console.log("submitting form");
+    goto("/jams");
   }
 </script>
 
@@ -55,6 +63,12 @@
     <label>
       Name of Jam:
       <input bind:value={name} placeholder="Jam Name" />
+    </label>
+  </div>
+  <div>
+    <label>
+      time limit:
+      <input bind:value={timeLimit} type="number" />
     </label>
   </div>
   <div>

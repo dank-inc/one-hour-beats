@@ -59,7 +59,7 @@
   {/if}
 </div>
 
-{#if entries.length}
+{#if entries && entries.length}
   <div class="jam-entries">
     <h2>Entries</h2>
     <p>todo: embed playables</p>

@@ -6,6 +6,7 @@ import _ from "lodash";
 import io from "socket.io";
 import compression from "compression";
 import * as sapper from "@sapper/server";
+import faker from "faker";
 
 import jams from "./mock-db/jams";
 import entries from "./mock-db/entries";
@@ -18,6 +19,7 @@ const entryIndex = {};
 for (const entry of entries) {
   entryIndex[entry.jamId] = [...(entryIndex[entry.jamId] || []), entry];
 }
+// TODO: entries by id - gonna need an actual db lol
 
 const server = http.createServer();
 
@@ -55,16 +57,28 @@ app
     if (err) console.log("error", err);
   });
 
-let numUsers = 0;
-
 io(server).on("connection", (socket) => {
   console.log("SOCKET", socket.id);
+
+  socket.on("createJam", (jam) => {
+    const id = `${faker.internet.protocol()}-${faker.hacker.adjective()}-${faker.hacker.noun()}`;
+    console.log("jam created", id);
+    app.store.jamIndex[id] = {
+      ...jam,
+      id,
+      createdAt: getUnix(),
+      startedAt: null,
+    };
+    socket.emit("jamsUpdated", app.store.jamIndex);
+    socket.broadcast.emit("jamsUpdated", app.store.jamIndex);
+    // generate ID
+    // remap jam list with new jam
+  });
 
   socket.on("startJam", (body) => {
     const jam = { ...app.store.jamIndex[body.id] };
     jam.startedAt = getUnix();
-
-    console.log("Starting Jam", body, jam);
+    console.log("Starting Jam", jam);
     app.store.jamIndex = { ...app.store.jamIndex, [body.id]: jam };
     socket.emit("jamsUpdated", app.store.jamIndex);
     socket.broadcast.emit("jamsUpdated", app.store.jamIndex);

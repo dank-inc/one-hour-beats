@@ -1,9 +1,9 @@
 <script>
   import { getContext } from "svelte";
+  let { getSocket } = getContext("socket");
   export let jamId;
   let link;
   let artist;
-  let { getSocket } = getContext("socket");
 
   const handleSubmit = () => {
     // get user to submit entry.
@@ -17,7 +17,6 @@
     artist = "";
     const socket = getSocket();
     socket.emit("addEntry", entry);
-    console.log("submitting entry", entry);
   };
 </script>
 

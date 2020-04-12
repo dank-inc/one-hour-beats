@@ -2,6 +2,9 @@
   import { jamStore } from "../../store";
   let currentTime = parseInt(new Date().getTime() / 1000);
   export let jamIndex = $jamStore;
+
+  // todo if jam.createdAt is less that 30 seconds ago, make it flash or add a highlight on it
+  // also sort by createdAt
 </script>
 
 <svelte:head>
