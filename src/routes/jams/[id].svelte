@@ -6,16 +6,16 @@
   import { stores } from "@sapper/app";
   const { page } = stores();
 
-  let jam;
   let {
     params: { id }
   } = $page;
+
+  $: jam = $jamStore[id];
 
   let entries;
   let entryLink;
   let entryArtist;
 
-  jamStore.subscribe(index => (jam = index[id]));
   entriesByJam.subscribe(index => (entries = index[id]));
 
   $: currentTime = getUnix();
@@ -32,7 +32,7 @@
 
   const handleStart = () => {
     // update jam record, reload?
-    // jam = { ...jam, startedAt: getUnix() };
+    const jam = { ...jam, startedAt: getUnix() };
     console.log("starting Jam!", getUnix());
     jamStore.update(jamIndex => ({ ...jamIndex, [jam.id]: jam }));
   };
