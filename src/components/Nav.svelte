@@ -6,6 +6,7 @@
   ul {
     display: flex;
     justify-content: space-around;
+    margin: 1vmin;
   }
   li {
     list-style: none;
@@ -13,13 +14,18 @@
     color: darkslategrey;
   }
 
+  a {
+    text-decoration: none;
+  }
   a:hover {
     color: darkolivegreen;
+    text-decoration: underline;
   }
 
   nav {
     background: #ccc;
-    padding: 2vmin;
+    padding: 1vmin 2vmin;
+    font-size: 18pt;
   }
 </style>
 
