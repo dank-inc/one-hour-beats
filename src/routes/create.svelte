@@ -34,6 +34,11 @@
     font-family: "Roboto", sans-serif;
     color: #555;
     letter-spacing: 0.05em;
+    width: 100%;
+  }
+
+  .sexyform label {
+    display: block;
   }
   .sexyform textarea {
     font-size: 14pt;
@@ -60,16 +65,12 @@
 
 <form on:submit|preventDefault={handleSubmit} class="sexyform">
   <div>
-    <label>
-      Name of Jam:
-      <input bind:value={name} placeholder="Jam Name" />
-    </label>
+    <label>Name of Jam:</label>
+    <input bind:value={name} placeholder="Jam Name" />
   </div>
   <div>
-    <label>
-      time limit:
-      <input bind:value={timeLimit} type="number" />
-    </label>
+    <label>time limit (in minutes):</label>
+    <input bind:value={timeLimit} type="number" />
   </div>
   <div>
     <label>Outline of the rules of the jam:</label>

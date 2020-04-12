@@ -11,6 +11,7 @@ import faker from "faker";
 import jams from "./mock-db/jams";
 import entries from "./mock-db/entries";
 import { getUnix } from "./utils/time";
+import { generateId } from "./utils/faker";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
@@ -61,7 +62,7 @@ io(server).on("connection", (socket) => {
   console.log("SOCKET", socket.id);
 
   socket.on("createJam", (jam) => {
-    const id = `${faker.internet.protocol()}-${faker.hacker.adjective()}-${faker.hacker.noun()}`;
+    const id = generateId();
     console.log("jam created", id);
     app.store.jamIndex[id] = {
       ...jam,

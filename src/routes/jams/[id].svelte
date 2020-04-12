@@ -5,7 +5,7 @@
   import { jamStore, entryStore } from "../../store";
 
   import { onMount, getContext } from "svelte";
-  import { getUnix } from "../../utils/time";
+  import { getUnix, getTimeLeft } from "../../utils/time";
   import { stores } from "@sapper/app";
   const { page } = stores();
   const { getSocket } = getContext("socket");
@@ -31,10 +31,6 @@
   const handleStart = () => {
     const socket = getSocket();
     socket.emit("startJam", { id });
-    // api call to database, sockets => update store.
-    // const jam = { ...$jamStore[id], startedAt: getUnix() };
-    // console.log("starting Jam!", getUnix());
-    // jamStore.update(jamIndex => ({ ...jamIndex, [jam.id]: jam }));
   };
 </script>
 
@@ -52,9 +48,11 @@
 
   {#if !jam.startedAt}
     <button on:click={handleStart}>Start Jam!</button>
+  {:else if getTimeLeft(jam, currentTime) < 0}
+    <div>{jam.startedAt + jam.timeLimit - currentTime}</div>
   {:else}
     <p>Started At: {jam.startedAt}</p>
-    <p>Time Left: {jam.startedAt + jam.timeLimit - currentTime}</p>
+    <p>Time Left: {getTimeLeft(jam, currentTime)}</p>
     <EntryForm jamId={id} />
   {/if}
 </div>
