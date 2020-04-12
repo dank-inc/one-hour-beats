@@ -15,13 +15,28 @@
     }
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (username.length < 6) {
       error = "your username must be 6 characters or greater";
       return;
     }
-    //
+
+    const user = await (await fetch(`/api/users/${username}`)).json();
+
+    if (user) {
+      error = "username is already taken";
+
+      return;
+    }
+
     userStore.set({ id: username, name: username });
+
+    // add user to database
+    const addUserResponse = await fetch("/api/users", {
+      method: "POST",
+      body: { id: username, name: userName }
+    });
+
     localStorage.setItem("ohb.username", username);
   };
 </script>

@@ -94,8 +94,6 @@ io(server).on("connection", (socket) => {
     };
     socket.emit("jamsUpdated", app.store.jamIndex);
     socket.broadcast.emit("jamsUpdated", app.store.jamIndex);
-    // generate ID
-    // remap jam list with new jam
   });
 
   socket.on("startJam", (body) => {
