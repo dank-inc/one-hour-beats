@@ -31,7 +31,7 @@
   });
 
   const handleStart = () => {
-    // update jam record, reload?
+    // api call to database, sockets => update store.
     const jam = { ...$jamStore[id], startedAt: getUnix() };
     console.log("starting Jam!", getUnix());
     jamStore.update(jamIndex => ({ ...jamIndex, [jam.id]: jam }));
@@ -39,6 +39,7 @@
 
   const handleSubmit = () => {
     // get user to submit entry.
+    // api call to database, sockets => update store.
     let entry = {
       name: entryName,
       artist: entryArtist,
