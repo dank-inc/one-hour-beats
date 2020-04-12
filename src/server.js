@@ -1,41 +1,47 @@
 import sirv from "sirv";
+import http from "http";
 import polka from "polka";
 import send from "@polka/send-type";
 import _ from "lodash";
+import io from "socket.io";
 import compression from "compression";
 import * as sapper from "@sapper/server";
 
 import jams from "./mock-db/jams";
 import entries from "./mock-db/entries";
-
+import { getUnix } from "./utils/time";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
 const jamIndex = _.keyBy(jams, "id");
-const entryByJam = {};
+const entryIndex = {};
 for (const entry of entries) {
-  entryByJam[entry.jamId] = [...(entryByJam[entry.jamId] || []), entry];
+  entryIndex[entry.jamId] = [...(entryIndex[entry.jamId] || []), entry];
 }
 
-const app = polka();
-app.store = { jamIndex, entryByJam };
+const server = http.createServer();
+
+const app = polka({ server });
+app.store = { jamIndex, entryIndex };
 
 app
   .get("/api/jams/:id?", ({ params }, res, next) => {
     const { store } = app;
     if (params.id) {
       send(res, 200, store.jamIndex[params.id]);
+    } else {
+      send(res, 200, store.jamIndex);
     }
-    send(res, 200, store.jamIndex);
   })
   // post to /jams => create jam
   // put to /jams/:id => update jam
   .get("/api/entries/:jamId?/:id?", ({ params }, res, next) => {
     const { store } = app;
     if (params.jamId) {
-      send(res, 200, store.entryByJam[params.jamId]);
+      send(res, 200, store.entryIndex[params.jamId]);
+    } else {
+      send(res, 200, store.entryIndex);
     }
-    send(res, 200, store.entryByJam);
   })
   // post to /entries => create entry
   // put to /entries/:id => update entry *milestone 2
@@ -48,3 +54,28 @@ app
   .listen(PORT, (err) => {
     if (err) console.log("error", err);
   });
+
+let numUsers = 0;
+
+io(server).on("connection", (socket) => {
+  console.log("SOCKET", socket.id);
+
+  socket.on("startJam", (body) => {
+    const jam = { ...app.store.jamIndex[body.id] };
+    jam.startedAt = getUnix();
+
+    console.log("Starting Jam", body, jam);
+    app.store.jamIndex = { ...app.store.jamIndex, [body.id]: jam };
+    socket.emit("jamsUpdated", app.store.jamIndex);
+    socket.broadcast.emit("jamsUpdated", app.store.jamIndex);
+    //
+  });
+
+  socket.on("addEntry", (entry) => {
+    const jamEntries = [...(app.store.entryIndex[entry.jamId] || []), entry];
+    app.store.entryIndex[entry.jamId] = jamEntries;
+    console.log("Adding Entry", entry);
+    socket.emit("entriesUpdated", app.store.entryIndex);
+    socket.broadcast.emit("entriesUpdated", app.store.entryIndex);
+  });
+});

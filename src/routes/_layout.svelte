@@ -1,18 +1,49 @@
 <script context="module">
-  import { jamStore } from "../store";
+  // initial state
+  import { jamStore, entryStore } from "../store";
 
   export async function preload(page) {
-    const res = await this.fetch("/api/jams");
-    const data = await res.json();
-    console.log("PREFETCH", data);
-    jamStore.set(data);
-    return Promise.resolve({ jamIndex: data });
+    const jamsRes = await this.fetch("/api/jams");
+    const jamsData = await jamsRes.json();
+    jamStore.set(jamsData);
+
+    const entriesRes = await this.fetch("/api/entries");
+    const entriesData = await entriesRes.json();
+    entryStore.set(entriesData);
+
+    return Promise.resolve();
   }
 </script>
 
 <script>
   import Nav from "../components/Nav.svelte";
+  import { onMount, setContext } from "svelte";
+
   export let segment;
+  import io from "socket.io-client";
+  const socket = io();
+
+  socket.on("entriesUpdated", entryIndex => {
+    // Milestone 1 - check user id to see if relevant
+    console.log("Entries Updated!", entryIndex);
+    entryStore.set(entryIndex);
+  });
+  socket.on("jamsUpdated", jams => {
+    // Milestone 1 - check users jam id to see if relevant
+    console.log("Jams Updated!", jams);
+    jamStore.set(jams);
+  });
+  socket.on("vote", socket => {
+    // Milestone 1
+    // check jam id to see if it's relevant
+    console.log("Vote Happened!");
+  });
+
+  setContext("socket", {
+    getSocket: () => socket
+  });
+
+  // Socket listeners and shit here.
 </script>
 
 <style>
@@ -29,5 +60,6 @@
 <Nav />
 
 <main>
+
   <slot />
 </main>

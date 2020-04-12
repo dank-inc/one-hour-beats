@@ -20,6 +20,7 @@ Jam View Page
 ### Milestone 1 - user accounts:
 
 - User accounts.
+- Add voting
 - profile page.
 
 ### Milestone 2:
