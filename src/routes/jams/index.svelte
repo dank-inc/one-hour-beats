@@ -1,11 +1,18 @@
+<script context="module">
+  export async function prefetch(page) {
+    const res = await fetch("/api/jams");
+    const data = res.json();
+    console.log(json);
+    return { jamIndex: json };
+  }
+</script>
+
 <script>
   import { jamStore } from "../../store";
-  const jamIds = Object.keys(jamStore);
+
   let currentTime = parseInt(new Date().getTime() / 1000);
 
-  let jamIndex;
-
-  jamStore.subscribe(index => (jamIndex = index));
+  export let jamIndex;
 </script>
 
 <svelte:head>
