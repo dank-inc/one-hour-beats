@@ -38,10 +38,6 @@ app
       send(res, 200, store.jamIndex);
     }
   })
-  .post("/api/jams", () => {
-    io.emit("jamAdded", { ...app.store.jams });
-    res.end("io.emit is not a fucntion");
-  })
   // post to /jams => create jam
   // put to /jams/:id => update jam
   .get("/api/entries/:jamId?/:id?", ({ params }, res, next) => {

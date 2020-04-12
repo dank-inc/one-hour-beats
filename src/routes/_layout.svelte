@@ -21,6 +21,7 @@
 
   export let segment;
   import io from "socket.io-client";
+
   const socket = io();
 
   socket.on("entriesUpdated", entryIndex => {
