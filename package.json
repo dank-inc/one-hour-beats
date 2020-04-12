@@ -12,6 +12,7 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
+    "@polka/send-type": "^0.5.2",
     "compression": "^1.7.1",
     "lodash": "^4.17.15",
     "polka": "next",
