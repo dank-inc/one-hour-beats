@@ -1,14 +1,7 @@
-<script context="module">
-  export async function preload(page) {
-    const res = await this.fetch("/api/jams");
-    const data = await res.json();
-    console.log("PREFETCH", data);
-    return Promise.resolve({ jamIndex: data });
-  }
-</script>
-
 <script>
-
+  import { jamStore } from "../store";
+  let currentTime = parseInt(new Date().getTime() / 1000);
+  let jamIndex = $jamStore;
 </script>
 
 <svelte:head>

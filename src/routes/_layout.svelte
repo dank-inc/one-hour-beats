@@ -1,3 +1,15 @@
+<script context="module">
+  import { jamStore } from "../store";
+
+  export async function preload(page) {
+    const res = await this.fetch("/api/jams");
+    const data = await res.json();
+    console.log("PREFETCH", data);
+    jamStore.set(data);
+    return Promise.resolve({ jamIndex: data });
+  }
+</script>
+
 <script>
   import Nav from "../components/Nav.svelte";
   export let segment;
