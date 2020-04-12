@@ -5,21 +5,27 @@
   let jamIndex = $jamStore;
 </script>
 
+<style>
+  p.right {
+    width: 100%;
+    text-align: right;
+  }
+</style>
+
 <svelte:head>
   <title>One Hour Beats - Home</title>
 </svelte:head>
 
 <header>
-  <h1>One Hour Beats</h1>
-  <p>Home</p>
+  <h1>Home</h1>
 </header>
-
-<p>
-  <a href="/create">Make a new Jam</a>
-</p>
 
 <h3>Jam Listings</h3>
 
 {#each Object.entries(jamIndex) as [id, jam]}
   <JamLink {jam} />
 {/each}
+
+<p class="right">
+  <a class="button" href="/create">Make a new Jam</a>
+</p>

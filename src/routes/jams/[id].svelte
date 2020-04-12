@@ -32,9 +32,9 @@
     const userId = $userStore.id;
     const jamId = $page.params.id;
 
-    socket.on("connect", () => {
-      socket.emit("room", { userId, jamId });
-    });
+    // socket.on("connect", () => {
+    //   socket.emit("room", { userId, jamId });
+    // });
 
     socket.on("chatUpdated", chatLog => {
       console.log("your chat has been updated", chatLog);
@@ -55,7 +55,25 @@
 </script>
 
 <style>
+  .jam-room {
+    padding: 1rem;
+    display: flex;
+  }
 
+  .jam-room-info {
+    flex: 5;
+  }
+
+  .jam-room-right {
+    flex: 3;
+  }
+
+  header {
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+  }
 </style>
 
 <svelte:head>
@@ -64,42 +82,48 @@
 
 <header>
   <h1>{jam.name}</h1>
-  <p>maybe some quick stats - authored by?</p>
+  <p>Created by: {jam.createdBy}</p>
 </header>
 
-<div class="jam-info">
-  <h3>Jam Info</h3>
-  <p>id: {id}</p>
-  <p>name: {jam.name}</p>
-  <p>description: {jam.description}</p>
-  <p>Time Limit: {jam.timeLimit / 60} minutes</p>
+<div class="jam-room">
+  <div class="jam-room-info">
+    <h3>Jam Info</h3>
+    <p>id: {id}</p>
+    <p>name: {jam.name}</p>
+    <p>description: {jam.description}</p>
+    <p>Time Limit: {jam.timeLimit / 60} minutes</p>
 
-  {#if !jam.startedAt}
-    <button on:click={handleStart}>Start Jam!</button>
-  {:else if timeLeft < 0}
-    <div>Time To Vote!</div>
-  {:else}
-    <p>Started At: {jam.startedAt}</p>
-    <p>Time Left: {timeLeft}</p>
-    <EntryForm jamId={id} />
-  {/if}
-</div>
-
-{#if entries && entries.length}
-  <div class="jam-entries">
-    <h2>Entries</h2>
-    <p>todo: embed playables</p>
-    {#each entries as entry}
-      <Entry {entry} />
-    {/each}
-    <p>todo: animate in thumbs</p>
+    {#if !jam.startedAt}
+      <button on:click={handleStart}>Start Jam!</button>
+    {:else if timeLeft < 0}
+      <div>Time To Vote!</div>
+    {:else}
+      <p>Started At: {jam.startedAt}</p>
+      <p>Time Left: {timeLeft}</p>
+      <EntryForm jamId={id} />
+    {/if}
   </div>
-{/if}
 
-<h2>Chatroom</h2>
-{#if chat}
-  <ChatLog {chat} />
-{:else}
-  <div>All is quiet...</div>
-{/if}
-<ChatForm jamId={id} />
+  <div class="jam-room-right">
+    {#if jam.startedAt && entries && entries.length}
+      <div class="jam-entries">
+        <h2>Entries</h2>
+
+        {#each entries as entry}
+          <Entry {entry} />
+        {/each}
+
+      </div>
+    {/if}
+
+    <div class="jam-chat">
+      <h2>Chatroom</h2>
+      {#if chat}
+        <ChatLog {chat} />
+      {:else}
+        <div>All is quiet...</div>
+      {/if}
+      <ChatForm jamId={id} />
+    </div>
+  </div>
+</div>

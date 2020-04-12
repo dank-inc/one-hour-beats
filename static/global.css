@@ -1,14 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
+
+:root {
+  --accent-color-dark: #511845;
+  --accent-color-mid: #900c3f;
+  --accent-color-alt: #c70039;
+  --accent-color-light: #ff5733;
+  --color-light: #ccc;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Open Sans";
   font-size: 14px;
   line-height: 1.5;
-  color: #333;
+  color: #555;
 }
 
 h1,
@@ -17,21 +27,47 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: "Garamond";
   margin: 0 0 0.5em 0;
-  font-weight: 400;
+  font-weight: bold;
   line-height: 1.2;
+}
+
+label {
+  font-family: "Garamond";
 }
 
 h1 {
   font-size: 2em;
 }
 
+a.button {
+  background: var(--accent-color-dark);
+  color: #fff;
+  border-radius: 0.5rem;
+  letter-spacing: 0.05rem;
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+a.button:hover {
+  background: var(--accent-color-mid);
+}
+
 a {
+  text-decoration: none;
+  text-transform: capitalize;
+  font-family: "Open Sans";
+  font-weight: bold;
   color: inherit;
+  transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 code {
-  font-family: menlo, inconsolata, monospace;
+  font-family: "Fira Code";
   font-size: calc(1em - 2px);
   color: #555;
   background-color: #f0f0f0;
@@ -43,4 +79,9 @@ code {
   body {
     font-size: 16px;
   }
+}
+
+#sapper {
+  margin: 0;
+  height: 100vh;
 }

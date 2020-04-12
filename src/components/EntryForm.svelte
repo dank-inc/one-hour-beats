@@ -1,9 +1,10 @@
 <script>
+  import { userStore } from "../store";
   import { getContext } from "svelte";
   let { getSocket } = getContext("socket");
   export let jamId;
   let link;
-  let artist;
+  $: artist = $userStore.id;
 
   const handleSubmit = () => {
     // get user to submit entry.

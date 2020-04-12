@@ -7,54 +7,84 @@
   ul {
     display: flex;
     justify-content: flex-end;
-    margin: 0 1vmin;
+    align-content: center;
+    margin: auto 1vmin 0;
   }
   li {
-    margin: 1vmin;
+    font-size: 12pt;
+    margin: auto 2vmin 0;
     list-style: none;
-    font-weight: bold;
-    color: darkslategrey;
+    transition: all 0.2s linear;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
   }
 
-  a {
-    text-decoration: none;
-  }
-  a:hover {
-    color: darkolivegreen;
-    text-decoration: underline;
+  li:hover {
+    /* background: #3333; */
   }
 
-  .username {
-    margin: auto 0;
-  }
   nav {
-    background: #ccc;
     padding: 1vmin 2vmin;
     font-size: 18pt;
     display: flex;
     justify-content: space-between;
     vertical-align: center;
   }
+
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    vertical-align: center;
+  }
+
+  img {
+    height: 5vw;
+    margin-right: 1vmin;
+  }
+
+  .lightTheme {
+    color: #fff;
+    background: var(--accent-color-light);
+    mix-blend-mode: multiply;
+  }
+
+  .darkTheme {
+    color: var(--accent-color-light);
+    background: #333;
+    filter: invert(1);
+    mix-blend-mode: lighten;
+  }
+
+  .username {
+    font-size: 10pt;
+    margin: auto auto 1vmin;
+  }
 </style>
 
-<nav>
-  {#if userName}
-    <div class="username">Welcome, {userName}</div>
-  {/if}
+<nav class="lightTheme">
+  <div class="left">
+    <a href="/">
+      <img class="lightTheme" src="/images/ohb-logo.jpeg" alt="logo" />
+    </a>
+    {#if userName}
+      <div class="username">Welcome, {userName}</div>
+    {/if}
+
+  </div>
   <ul>
 
-    <li>
-      <a href="/">Home</a>
-    </li>
-    <li>
-      <a href="/create">Create</a>
-    </li>
-    <li>
-      <a href="/about">About</a>
-    </li>
-    <li>
-      <a rel="prefetch" href="/jams">Jams</a>
-    </li>
+    <a href="/">
+      <li>Home</li>
+    </a>
+    <a href="/create">
+      <li>Create</li>
+    </a>
+    <a href="/about">
+      <li>About</li>
+    </a>
+    <a href="/jams">
+      <li>Jams</li>
+    </a>
 
   </ul>
 </nav>

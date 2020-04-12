@@ -2,6 +2,7 @@ import sirv from "sirv";
 import http from "http";
 import polka from "polka";
 import send from "@polka/send-type";
+import { json } from "body-parser";
 import _ from "lodash";
 import io from "socket.io";
 import compression from "compression";
@@ -10,6 +11,8 @@ import faker from "faker";
 
 import jams from "./mock-db/jams";
 import entries from "./mock-db/entries";
+import users from "./mock-db/users";
+
 import { getUnix } from "./utils/time";
 import { generateId } from "./utils/faker";
 const { PORT, NODE_ENV } = process.env;
@@ -21,20 +24,20 @@ for (const entry of entries) {
   entryIndex[entry.jamId] = [...(entryIndex[entry.jamId] || []), entry];
 }
 // TODO: entries by id - gonna need an actual db lol
+
 // jamRooms[jamId] = [array of user ids]
 const jamRooms = {};
 // chatlogs[jamId] = [array of chats]
 const chatLogs = {};
-
 // socket-id => user-id
 const socketUserMap = {};
-
+const userIndex = _.keyBy(users, "id");
 const server = http.createServer();
-
 const app = polka({ server });
-app.store = { jamIndex, entryIndex, jamRooms, chatLogs };
+app.store = { jamIndex, entryIndex, jamRooms, chatLogs, userIndex };
 
 app
+  .use(json())
   .get("/api/jams/:id?", ({ params }, res, next) => {
     const { store } = app;
     if (params.id) {
@@ -53,9 +56,33 @@ app
       send(res, 200, store.entryIndex);
     }
   })
-  // post to /entries => create entry
-  // put to /entries/:id => update entry *milestone 2
-  // CRUD /users *milestone 1
+  .get("/api/users/:id?", ({ params }, res, next) => {
+    if (!params.id) {
+      send(res, 200, app.store.userIndex);
+    }
+    const user = app.store.userIndex[params.id];
+    if (user) {
+      send(res, 200, user);
+    } else {
+      send(res, 404);
+    }
+    // get users
+  })
+  .post("/api/users?", ({ body }, res, next) => {
+    const user = { ...body, thumbs: 0, wins: 0 };
+    app.store.userIndex = { ...app.store.userIndex, user };
+    // get users
+  })
+  .post("/api/login", ({ body }, res, next) => {
+    console.log("login", body);
+    const user = app.store.userIndex[body.username];
+    console.log("Login", body, user);
+    if (user.password == body.password) {
+      send(res, 200);
+    } else {
+      send(res, 401);
+    }
+  })
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
@@ -133,10 +160,10 @@ io(server).on("connection", (socket) => {
     socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
 
-  socket.on("room", ({ jamId, userId }) => {
-    console.log(userId, "joined", jamId);
-    socket.join(jamId);
-  });
+  // socket.on("room", ({ jamId, userId }) => {
+  //   console.log(userId, "joined", jamId);
+  //   socket.join(jamId);
+  // });
 
   socket.on("chat", (chat) => {
     const { jamId } = chat;
@@ -145,6 +172,7 @@ io(server).on("connection", (socket) => {
     const message = { ...chat, createdAt: getUnix() };
     app.store.chatLogs[jamId] = [message, ...messages];
 
-    socket.in(jamId).broadcast.emit("chatUpdated", app.store.chatLogs);
+    socket.emit("chatUpdated", app.store.chatLogs);
+    socket.broadcast.emit("chatUpdated", app.store.chatLogs);
   });
 });

@@ -1,4 +1,5 @@
 <script>
+  import JamLink from "../../components/JamLink.svelte";
   import { jamStore } from "../../store";
   let currentTime = parseInt(new Date().getTime() / 1000);
   $: jamIndex = $jamStore;
@@ -16,16 +17,8 @@
   <p>soem little description blah</p>
 </header>
 
-{#each Object.entries(jamIndex) as [id, jam]}
-  <div class="jam-list">
-    <h3>
-      <a rel="prefetch" href={`/jams/${jam.id}`}>{jam.name}</a>
-    </h3>
-    <div>
-      <p>
-        Active?: {jam.startedAt && currentTime - jam.startedAt + jam.timeLimit > 0 ? true : false}
-      </p>
-      <p>Started?: {jam.startedAt ? true : false}</p>
-    </div>
-  </div>
-{/each}
+<div class="jam-list">
+  {#each Object.entries(jamIndex) as [id, jam]}
+    <JamLink {jam} />
+  {/each}
+</div>

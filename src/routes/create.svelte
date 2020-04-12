@@ -32,7 +32,6 @@
     font-size: 14pt;
     padding: 2vmin;
     border-radius: 2vmin;
-    font-family: "Roboto", sans-serif;
     color: #555;
     letter-spacing: 0.05em;
     width: 100%;

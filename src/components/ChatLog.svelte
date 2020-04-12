@@ -3,6 +3,6 @@
   console.log("chat => ", chat);
 </script>
 
-{#each chat as message}
+{#each chat.slice(0, 10) as message}
   <div>{message.userId} - {message.text}</div>
 {/each}

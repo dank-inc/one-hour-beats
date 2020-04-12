@@ -1,6 +1,6 @@
 <script context="module">
   // initial state
-  import { jamStore, entryStore, jamRoomStore } from "../store";
+  import { jamStore, entryStore, jamRoomStore, userStore } from "../store";
 
   export async function preload(page) {
     const jamsRes = await this.fetch("/api/jams");
@@ -11,6 +11,8 @@
     const entriesData = await entriesRes.json();
     entryStore.set(entriesData);
 
+    userStore.set({});
+
     return Promise.resolve();
   }
 </script>
@@ -19,10 +21,9 @@
   import io from "socket.io-client";
   import Nav from "../components/Nav.svelte";
   import { onMount, setContext } from "svelte";
-  import { userStore } from "../store";
   import UserForm from "../components/UserForm.svelte";
 
-  $: userName = $userStore.name;
+  $: user = $userStore;
   export let segment;
 
   const socket = io(); // we don't care about userId here?
@@ -67,7 +68,9 @@
 
 <Nav />
 
-{#if userName}
+{#if !user}
+  <div>Loading...</div>
+{:else if user.name}
   <main>
     <slot />
   </main>
