@@ -26,8 +26,8 @@
   }
 
   .jam-link:hover {
-    outline: 3px solid var(--accent-color-light);
-    -moz-outline-radius: 0.5rem;
+    box-shadow: 3px 3px var(--accent-color-dark);
+    text-shadow: 1px 1px #0002;
   }
 
   .jam-link h2,
