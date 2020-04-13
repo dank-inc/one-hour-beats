@@ -1,6 +1,5 @@
 <script>
-  import { userStore } from "../store";
-  $: userName = $userStore.name;
+
 </script>
 
 <style>
@@ -38,21 +37,21 @@
   }
 
   img {
-    height: 5vw;
+    height: 6vw;
     margin-right: 1vmin;
+    filter: invert(1);
+    mix-blend-mode: lighten;
   }
 
   .lightTheme {
     color: #fff;
     background: var(--accent-color-light);
-    mix-blend-mode: multiply;
   }
 
   .darkTheme {
     color: var(--accent-color-light);
     background: #333;
-    filter: invert(1);
-    mix-blend-mode: lighten;
+    mix-blend-mode: multiply;
   }
 
   .username {
@@ -66,10 +65,6 @@
     <a href="/">
       <img class="lightTheme" src="/images/ohb-logo.jpeg" alt="logo" />
     </a>
-    {#if userName}
-      <div class="username">Welcome, {userName}</div>
-    {/if}
-
   </div>
   <ul>
 

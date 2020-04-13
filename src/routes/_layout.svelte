@@ -67,13 +67,14 @@
 </style>
 
 <Nav />
-
-{#if !user}
-  <div>Loading...</div>
-{:else if user.name}
-  <main>
+<main>
+  {#if !user}
+    <div>Loading...</div>
+  {:else if user.name}
     <slot />
-  </main>
-{:else}
-  <UserForm />
-{/if}
+  {:else}
+    <UserForm />
+  {/if}
+</main>
+
+<footer>look a footer</footer>

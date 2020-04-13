@@ -84,4 +84,25 @@ code {
 #sapper {
   margin: 0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+footer {
+  background-color: var(--accent-color-dark);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-align: right;
+}
+
+main {
+  width: 100%;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem 0 0 0;
 }

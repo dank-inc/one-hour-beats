@@ -67,13 +67,6 @@
   .jam-room-right {
     flex: 3;
   }
-
-  header {
-    background: #333;
-    color: #fff;
-    padding: 1rem;
-    border-radius: 1rem 1rem 0 0;
-  }
 </style>
 
 <svelte:head>

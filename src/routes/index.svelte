@@ -1,6 +1,9 @@
 <script>
   import { jamStore } from "../store";
   import JamLink from "../components/JamLink.svelte";
+  import { userStore } from "../store";
+  $: userName = $userStore.name;
+
   let currentTime = parseInt(new Date().getTime() / 1000);
   let jamIndex = $jamStore;
 </script>
@@ -18,9 +21,9 @@
 
 <header>
   <h1>Home</h1>
+  <div class="username">Welcome, {userName}</div>
+  <!-- <h3>Jam Listings</h3> -->
 </header>
-
-<h3>Jam Listings</h3>
 
 {#each Object.entries(jamIndex) as [id, jam]}
   <JamLink {jam} />

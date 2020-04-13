@@ -1,8 +1,10 @@
 <svelte:head>
   <title>One Hour Beats - About</title>
 </svelte:head>
+<header>
+  <h1>About One Hour Beats</h1>
+</header>
 
-<h1>About One Hour Beats</h1>
 <p>
   Once upon a time, in the early demoscene years, in the days of the trackers
   there existed a compo.
