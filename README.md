@@ -26,3 +26,9 @@ Jam View Page
 ### Milestone 2:
 
 - Optional file upload.
+
+# Ideas:
+
+### achievements:
+
+- created number of successful jams (created & had more than 3 people submit and vote and declare a winner.)
