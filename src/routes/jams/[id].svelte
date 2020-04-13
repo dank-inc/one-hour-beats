@@ -12,6 +12,7 @@
   const { page } = stores();
   const { getSocket } = getContext("socket");
 
+  // if no entries by jam end, archive jam / delete
   // Add a socket for a room to add numbers
 
   let {
@@ -98,16 +99,20 @@
   </div>
 
   <div class="jam-room-right">
-    {#if jam.startedAt && entries}
+    {#if jam.startedAt}
       <div class="jam-entries">
         <h2>Entries</h2>
-        {#each entries as entry}
-          <Entry {entry} />
-        {/each}
+        {#if entries}
+          {#each entries as entry}
+            <Entry {entry} />
+          {/each}
+        {:else}
+          <p>This jam has no entries 😭 {timeLeft > 0 ? '...yet' : '!!'}</p>
+        {/if}
       </div>
     {/if}
 
-    {#if jam.startedAt && !includesSelf(entries, userId)}
+    {#if timeLeft > 0 && jam.startedAt && !includesSelf(entries, userId)}
       <EntryForm jamId={id} />
     {/if}
 

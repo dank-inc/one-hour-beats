@@ -11,6 +11,10 @@
     const entriesData = await entriesRes.json();
     entryStore.set(entriesData);
 
+    // get initial app state and populate stores
+    // get jam rooms
+    // get chats
+
     userStore.set({});
 
     return Promise.resolve();
