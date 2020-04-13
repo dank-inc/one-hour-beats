@@ -77,7 +77,7 @@
 
 <header>
   <h1>{jam.name}</h1>
-  <p>Created by: {jam.createdBy}</p>
+  <p>Created by: {jam.userId}</p>
 </header>
 
 <div class="jam-room page-content">

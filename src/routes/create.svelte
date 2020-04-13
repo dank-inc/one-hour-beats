@@ -1,15 +1,17 @@
 <script>
   import { getContext } from "svelte";
+  import { userStore } from "../store";
   let { getSocket } = getContext("socket");
   import { goto } from "@sapper/app";
   let name;
   let description;
   let timeLimit = 60;
+  let userId = $userStore.id;
 
   function handleSubmit() {
     const socket = getSocket();
 
-    socket.emit("createJam", { name, description, timeLimit });
+    socket.emit("createJam", { name, description, timeLimit, userId });
     // send jam to db
     // generate id for jam
     // return id from server

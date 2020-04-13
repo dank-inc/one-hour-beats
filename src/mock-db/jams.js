@@ -8,7 +8,7 @@ export default [
     createdAt: getUnix() - 3600,
     timeLimit: 3600,
     startedAt: getUnix() - 1800,
-    createdBy: "eli7vh",
+    userId: "eli7vh", // createdBy
   },
   {
     id: "cool-unicorns",
@@ -17,6 +17,6 @@ export default [
     createdAt: getUnix() - 3600,
     timeLimit: 3600,
     startedAt: null,
-    createdBy: "toffee",
+    userId: "toffee",
   },
 ];

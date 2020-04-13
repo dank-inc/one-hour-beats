@@ -59,10 +59,6 @@
   // Socket listeners and shit here.
 </script>
 
-<style>
-
-</style>
-
 <Nav />
 <main>
   {#if !user}
@@ -74,4 +70,7 @@
   {/if}
 </main>
 
-<footer>look a footer</footer>
+<footer>
+  <p>Made by Elijah Lucian - elijahlucian.ca</p>
+  <p>&copy; The year of our LORD this twenty and two thousand</p>
+</footer>
