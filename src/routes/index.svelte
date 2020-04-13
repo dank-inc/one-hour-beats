@@ -25,10 +25,12 @@
   <!-- <h3>Jam Listings</h3> -->
 </header>
 
-{#each Object.entries(jamIndex) as [id, jam]}
-  <JamLink {jam} />
-{/each}
+<div class="page-content">
+  {#each Object.entries(jamIndex) as [id, jam]}
+    <JamLink {jam} />
+  {/each}
 
-<p class="right">
-  <a class="button" href="/create">Make a new Jam</a>
-</p>
+  <p class="right">
+    <a class="button" href="/create">Make a new Jam</a>
+  </p>
+</div>

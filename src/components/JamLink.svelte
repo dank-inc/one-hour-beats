@@ -16,16 +16,16 @@
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    background: #ccc5;
+    /* background: #ccc5; */
     margin: 0.5rem 0;
     padding: 1rem 2rem;
     border-radius: 0.3rem;
     transition: all 0.1s ease-in;
-    border: 2px solid #ddd;
+    border: solid #eee;
+    border-width: 1px 7px 3px 1px;
   }
 
   .jam-link:hover {
-    background: #ccca;
     border: 2px solid #ccc;
   }
 

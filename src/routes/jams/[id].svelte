@@ -20,6 +20,7 @@
 
   $: jam = $jamStore[id];
   $: entries = $entryStore[id];
+  $: userId = $userStore.id;
   $: currentTime = getUnix();
   $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
   $: chat = $chatLogStore[id];
@@ -29,7 +30,7 @@
     const interval = setInterval(() => {
       currentTime = getUnix();
     }, 1000);
-    const userId = $userStore.id;
+
     const jamId = $page.params.id;
 
     // socket.on("connect", () => {
@@ -47,6 +48,10 @@
       clearInterval(interval);
     };
   });
+
+  const includesSelf = (arr, userId) => {
+    return arr && !!arr.find(a => a.userId === userId);
+  };
 
   const handleStart = () => {
     const socket = getSocket();
@@ -78,7 +83,7 @@
   <p>Created by: {jam.createdBy}</p>
 </header>
 
-<div class="jam-room">
+<div class="jam-room page-content">
   <div class="jam-room-info">
     <h3>Jam Info</h3>
     <p>id: {id}</p>
@@ -93,19 +98,19 @@
     {:else}
       <p>Started At: {jam.startedAt}</p>
       <p>Time Left: {timeLeft}</p>
-      <EntryForm jamId={id} />
     {/if}
   </div>
 
   <div class="jam-room-right">
-    {#if jam.startedAt && entries && entries.length}
+    {#if jam.startedAt}
       <div class="jam-entries">
         <h2>Entries</h2>
-
-        {#each entries as entry}
+        {#each entries || [] as entry}
           <Entry {entry} />
         {/each}
-
+        {#if !includesSelf(entries, userId)}
+          <EntryForm jamId={id} />
+        {/if}
       </div>
     {/if}
 

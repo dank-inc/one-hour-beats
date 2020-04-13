@@ -17,7 +17,7 @@
   <p>soem little description blah</p>
 </header>
 
-<div class="jam-list">
+<div class="page-content">
   {#each Object.entries(jamIndex) as [id, jam]}
     <JamLink {jam} />
   {/each}

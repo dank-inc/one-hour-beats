@@ -4,18 +4,18 @@
   let { getSocket } = getContext("socket");
   export let jamId;
   let link;
-  $: artist = $userStore.id;
+  $: user = $userStore;
+  let artist = $userStore.id; // I want this to be temp
 
   const handleSubmit = () => {
-    // get user to submit entry.
-    // api call to database, sockets => update store.
     let entry = {
       link,
       artist,
+      userId: user.id,
       jamId: jamId
     };
     link = "";
-    artist = "";
+    console.log("Adding Entry", entry);
     const socket = getSocket();
     socket.emit("addEntry", entry);
   };

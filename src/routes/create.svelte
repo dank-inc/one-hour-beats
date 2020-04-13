@@ -22,8 +22,7 @@
 <style>
   .sexyform {
     font-size: 16pt;
-    width: 60%;
-    border: 1px solid #ccc;
+    width: 100%;
     padding: 4vmin;
     margin: auto;
     border-radius: 1vmin;
@@ -64,22 +63,24 @@
   <p>Make your very own jam here!</p>
 </header>
 
-<form on:submit|preventDefault={handleSubmit} class="sexyform">
-  <div>
-    <label>Name of Jam:</label>
-    <input bind:value={name} placeholder="Jam Name" />
-  </div>
-  <div>
-    <label>time limit (in minutes):</label>
-    <input bind:value={timeLimit} type="number" />
-  </div>
-  <div>
-    <label>Outline of the rules of the jam:</label>
-  </div>
-  <textarea
-    bind:value={description}
-    placeholder="Eg: every sound must be in reverse" />
-  <div>
-    <button type="submit">Create!</button>
-  </div>
-</form>
+<div class="page-content">
+  <form on:submit|preventDefault={handleSubmit} class="sexyform">
+    <div>
+      <label>Name of Jam:</label>
+      <input bind:value={name} placeholder="Jam Name" />
+    </div>
+    <div>
+      <label>time limit (in minutes):</label>
+      <input bind:value={timeLimit} type="number" />
+    </div>
+    <div>
+      <label>Outline of the rules of the jam:</label>
+    </div>
+    <textarea
+      bind:value={description}
+      placeholder="Eg: every sound must be in reverse" />
+    <div>
+      <button type="submit">Create!</button>
+    </div>
+  </form>
+</div>

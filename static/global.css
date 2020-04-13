@@ -41,16 +41,25 @@ h1 {
   font-size: 2em;
 }
 
-a.button {
-  background: var(--accent-color-dark);
-  color: #fff;
+a.button,
+button {
+  /* background: var(--accent-color-dark); */
+  color: var(--accent-color-dark);
   border-radius: 0.5rem;
   letter-spacing: 0.05rem;
   padding: 0.5rem;
+  border-style: solid;
+  border-color: var(--accent-color-mid) var(--accent-color-mid)
+    var(--accent-color-mid) var(--accent-color-mid);
+  border-width: 1px 4px 2px 1px;
   margin: 1rem 0;
 }
 a.button:hover {
-  background: var(--accent-color-mid);
+}
+
+button {
+  cursor: pointer;
+  background: white;
 }
 
 a {
@@ -97,8 +106,25 @@ footer {
 }
 
 main {
+  padding: 2em;
   width: 100%;
+  align-self: flex-start;
+  margin: 0 auto auto;
+  box-sizing: border-box;
 }
+
+.page-content {
+  padding: 1rem;
+  border: solid #aaa;
+  border-width: 0 4px 2px 0;
+  border-radius: 0 0 1rem 0;
+}
+
+/* main {
+  position: relative;
+  max-width: 56em;
+  background-color: white;
+} */
 
 header {
   background: #333;
