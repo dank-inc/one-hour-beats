@@ -33,10 +33,6 @@
 
     const jamId = $page.params.id;
 
-    // socket.on("connect", () => {
-    //   socket.emit("room", { userId, jamId });
-    // });
-
     socket.on("chatUpdated", chatLog => {
       console.log("your chat has been updated", chatLog);
       chatLogStore.set(chatLog);
@@ -102,16 +98,17 @@
   </div>
 
   <div class="jam-room-right">
-    {#if jam.startedAt}
+    {#if jam.startedAt && entries}
       <div class="jam-entries">
         <h2>Entries</h2>
-        {#each entries || [] as entry}
+        {#each entries as entry}
           <Entry {entry} />
         {/each}
-        {#if !includesSelf(entries, userId)}
-          <EntryForm jamId={id} />
-        {/if}
       </div>
+    {/if}
+
+    {#if jam.startedAt && !includesSelf(entries, userId)}
+      <EntryForm jamId={id} />
     {/if}
 
     <div class="jam-chat">

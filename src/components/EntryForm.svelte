@@ -5,7 +5,7 @@
   export let jamId;
   let link;
   $: user = $userStore;
-  let artist = $userStore.id; // I want this to be temp
+  let artist = $userStore.id;
 
   const handleSubmit = () => {
     let entry = {

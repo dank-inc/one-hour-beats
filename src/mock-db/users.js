@@ -7,9 +7,9 @@ export default [
     wins: 0,
   },
   {
-    id: "otheruser",
+    id: "toffee",
     password: "toffee15",
-    name: "other guy",
+    name: "our furry friend",
     thumbs: 0,
     wins: 0,
   },

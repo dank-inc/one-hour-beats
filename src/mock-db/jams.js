@@ -17,6 +17,6 @@ export default [
     createdAt: getUnix() - 3600,
     timeLimit: 3600,
     startedAt: null,
-    createdBy: "otheruser",
+    createdBy: "toffee",
   },
 ];
