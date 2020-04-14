@@ -4,7 +4,8 @@
 
 # TODO before release
 
-- get all initial state
+- add vote token functionality.
+- get all initial state from layout.js, either rest or a socket.
 - plug in a database
 - add password hashing (bcrypt)
 - deploy
@@ -48,6 +49,8 @@ Jam View Page
 - sample packs
 - maybe some cool indicator that a jam is starting soon to prompt people to get into the jam.
 - allow jam creator or 50% vote to extend the jam time.
+- allow users to link their twitch streams to OHB, if the channel has the name it in somewhere it will show as "streaming" for people to watch. or stream hashtags.
+- allow users to post 'final versions' of their 1 hour beats after the fact!
 
 ### achievements:
 
