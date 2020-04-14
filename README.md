@@ -16,6 +16,7 @@ Jam View Page
 - [ ] add a "Submit Jam" where people can paste their soundcloud
       links etc.
 - [ ] expire jams not started in 1 day
+- [ ] add voting!
 
 ### Milestone 1 - user accounts:
 
@@ -25,7 +26,7 @@ Jam View Page
 
 ### Milestone 2:
 
-- Optional file upload.
+- Optional file upload (for pro users because hosting costs real dinero.)
 
 # Ideas:
 
