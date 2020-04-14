@@ -34,10 +34,11 @@ Jam View Page
 - vote to start jam?
 - jam expires maybe 1 day after opening it?
 - profile page.
+- voting time limit. maybe submission count \* 10 minutes.
 
 ### Milestone 2:
 
-- pust notifiactions
+- push notifiactions
 - join jam button
 - privtate / password protected jams
 - Optional file upload (for pro users because hosting costs real dinero.)
@@ -46,6 +47,7 @@ Jam View Page
 
 - sample packs
 - maybe some cool indicator that a jam is starting soon to prompt people to get into the jam.
+- allow jam creator or 50% vote to extend the jam time.
 
 ### achievements:
 
@@ -57,6 +59,7 @@ Jam View Page
 
 - allow a time window and a time limit.
 - users will have their own local jam timer.
+- example: jam is for 24 hours, people can join along that time and partake with their own personal timer.
 
 ## other rules to implement
 
