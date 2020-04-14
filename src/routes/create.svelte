@@ -46,7 +46,7 @@
     width: 100%;
     padding: 2vmin;
     border-radius: 1vmin;
-    font-family: "Roboto", sans-serif;
+    font-family: "Fira Code", sans-serif;
     color: #555;
     letter-spacing: 0.05em;
   }

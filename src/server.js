@@ -99,6 +99,8 @@ app
 io(server).on("connection", (socket) => {
   console.log("Connected =>", socket.id);
 
+  socket.emit("state", { ...app.store });
+
   socket.on("disconnect", () => {
     // todo remove user from any active rooms.
     // filter out all the users
@@ -181,8 +183,8 @@ io(server).on("connection", (socket) => {
       ...(app.store.votesIndex[entryId] || []),
       userId,
     ];
-
-    socket.emit("votesUpdated", app.store.votesIndex);
-    socket.broadcast.emit("votesUpdated", app.store.votesIndex);
+    io.emit("votesUpdated", app.store.votesIndex);
+    // socket.emit("votesUpdated", app.store.votesIndex);
+    // socket.broadcast.emit("votesUpdated", app.store.votesIndex);
   });
 });

@@ -82,8 +82,6 @@
 <div class="jam-room page-content">
   <div class="jam-room-info">
     <h3>Jam Info</h3>
-    <p>id: {id}</p>
-    <p>name: {jam.name}</p>
     <p>description: {jam.description}</p>
     <p>Time Limit: {jam.timeLimit / 60} minutes</p>
 

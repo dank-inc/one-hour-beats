@@ -11,7 +11,7 @@
   .vote {
     background: var(--accent-color-light);
     font-weight: bold;
-    font-family: Garamond;
+    font-family: var(--header-font);
     color: #fff;
     width: 2rem;
     height: 2rem;
