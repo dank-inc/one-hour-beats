@@ -68,3 +68,7 @@ Jam View Page
 
 - get a vote token by submitting an entry
 - can't start a jam unless 3 people say 'go'
+
+## visual shit
+
+- some cool header accents that span the width of the thing. maybe a mic cable? (generative!)

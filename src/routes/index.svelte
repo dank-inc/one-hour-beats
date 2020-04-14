@@ -21,8 +21,7 @@
 
 <header>
   <h1>Home</h1>
-  <div class="username">Welcome, {userName}</div>
-  <!-- <h3>Jam Listings</h3> -->
+  <p>Welcome, {userName}</p>
 </header>
 
 <div class="page-content">

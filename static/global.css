@@ -111,24 +111,13 @@ footer {
 
 main {
   padding: 2em;
-  width: 100%;
   align-self: flex-start;
-  margin: 0 auto auto;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
-
-.page-content {
-  padding: 1rem;
-  border: solid #aaa;
-  border-width: 0 4px 2px 0;
-  border-radius: 0 0 1rem 0;
-}
-
-/* main {
-  position: relative;
-  max-width: 56em;
-  background-color: white;
-} */
 
 header {
   background: #333;
@@ -136,4 +125,13 @@ header {
   padding: 1rem 2rem;
   border-radius: 1rem 0 0 0;
   text-shadow: -1px -1px #fff2, 1px 1px #000a;
+}
+
+.page-content {
+  flex: 1;
+  padding: 1rem;
+  border: solid;
+  border-color: #aaa #aaa #aaa8 #aaa4;
+  border-width: 0 4px 2px 1px;
+  border-radius: 0 0 1rem 0;
 }

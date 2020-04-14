@@ -3,6 +3,7 @@
 </svelte:head>
 <header>
   <h1>About One Hour Beats</h1>
+  <p>Why having so much fun?</p>
 </header>
 
 <div class="page-content">

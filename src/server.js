@@ -183,8 +183,7 @@ io(server).on("connection", (socket) => {
       ...(app.store.votesIndex[entryId] || []),
       userId,
     ];
-    io.emit("votesUpdated", app.store.votesIndex);
-    // socket.emit("votesUpdated", app.store.votesIndex);
-    // socket.broadcast.emit("votesUpdated", app.store.votesIndex);
+    socket.emit("votesUpdated", app.store.votesIndex);
+    socket.broadcast.emit("votesUpdated", app.store.votesIndex);
   });
 });
