@@ -37,7 +37,9 @@ Jam View Page
 
 ### Milestone 2:
 
+- pust notifiactions
 - join jam button
+- privtate / password protected jams
 - Optional file upload (for pro users because hosting costs real dinero.)
 
 # Ideas:
@@ -45,11 +47,16 @@ Jam View Page
 - sample packs
 - maybe some cool indicator that a jam is starting soon to prompt people to get into the jam.
 
-achievements:
+### achievements:
 
 - Super Creator: created number of successful jams (created & had more than 3 people submit and vote and declare a winner.)
 - JamPocalypse: N entries made
 - Twitch & Jam: linked N streams to OHC
+
+### delayed challenges!
+
+- allow a time window and a time limit.
+- users will have their own local jam timer.
 
 ## other rules to implement
 
