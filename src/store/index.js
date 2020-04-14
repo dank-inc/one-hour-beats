@@ -5,6 +5,9 @@ export const entryStore = writable({});
 
 export const userStore = writable();
 
-// { [jamId]: number}
+// { [jamId]: number }
 export const jamRoomStore = writable({});
 export const chatLogStore = writable({});
+
+// { [entryId]: userIds[] }
+export const voteStore = writable({});

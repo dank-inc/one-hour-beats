@@ -73,7 +73,7 @@
     </div>
     <div>
       <label>time limit (in minutes):</label>
-      <input bind:value={timeLimit} type="number" />
+      <input bind:value={timeLimit} type="number" min="60" max="240" />
     </div>
     <div>
       <label>Outline of the rules of the jam:</label>

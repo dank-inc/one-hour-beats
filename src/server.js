@@ -25,16 +25,20 @@ for (const entry of entries) {
 }
 // TODO: entries by id - gonna need an actual db lol
 
+// votesByEntry
+const votesIndex = {};
+
 // jamRooms[jamId] = [array of user ids]
 const jamRooms = {};
 // chatlogs[jamId] = [array of chats]
 const chatLogs = {};
 // socket-id => user-id
 const socketUserMap = {};
+
 const userIndex = _.keyBy(users, "id");
 const server = http.createServer();
 const app = polka({ server });
-app.store = { jamIndex, entryIndex, jamRooms, chatLogs, userIndex };
+app.store = { jamIndex, entryIndex, jamRooms, chatLogs, userIndex, votesIndex };
 
 app
   .use(json())
@@ -160,11 +164,6 @@ io(server).on("connection", (socket) => {
     socket.broadcast.emit("jamRoomsUpdated", app.store.jamRooms);
   });
 
-  // socket.on("room", ({ jamId, userId }) => {
-  //   console.log(userId, "joined", jamId);
-  //   socket.join(jamId);
-  // });
-
   socket.on("chat", (chat) => {
     const { jamId } = chat;
     console.log("new chat recieved", chat);
@@ -174,5 +173,16 @@ io(server).on("connection", (socket) => {
 
     socket.emit("chatUpdated", app.store.chatLogs);
     socket.broadcast.emit("chatUpdated", app.store.chatLogs);
+  });
+
+  socket.on("addVote", ({ entryId, userId }) => {
+    console.log("vote has been cast!", entryId, userId);
+    app.store.votesIndex[entryId] = [
+      ...(app.store.votesIndex[entryId] || []),
+      userId,
+    ];
+
+    socket.emit("votesUpdated", app.store.votesIndex);
+    socket.broadcast.emit("votesUpdated", app.store.votesIndex);
   });
 });
