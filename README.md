@@ -16,7 +16,7 @@ Jam View Page
 - [ ] add a "Submit Jam" where people can paste their soundcloud
       links etc.
 - [ ] expire jams not started in 1 day
-- [ ] add voting!
+- [*] add voting!
 
 ### Milestone 1 - user accounts:
 
@@ -26,10 +26,18 @@ Jam View Page
 
 ### Milestone 2:
 
+- join jam button
 - Optional file upload (for pro users because hosting costs real dinero.)
 
 # Ideas:
 
-### achievements:
+- sample packs
+
+achievements:
 
 - created number of successful jams (created & had more than 3 people submit and vote and declare a winner.)
+
+## other rules to implement
+
+- get a vote token by submitting an entry
+- can't start a jam unless 3 people say 'go'

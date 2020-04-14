@@ -1,6 +1,12 @@
 <script context="module">
   // initial state
-  import { jamStore, entryStore, jamRoomStore, userStore } from "../store";
+  import {
+    jamStore,
+    entryStore,
+    jamRoomStore,
+    userStore,
+    voteStore
+  } from "../store";
 
   export async function preload(page) {
     const jamsRes = await this.fetch("/api/jams");
@@ -12,8 +18,14 @@
     entryStore.set(entriesData);
 
     // get initial app state and populate stores
+
     // get jam rooms
+    // get participants
     // get chats
+    // get all votes
+
+    // shit could also just do a `socket.emit("initialState")` then init right back to that bro.
+    // fuck restapi
 
     userStore.set({});
 
@@ -42,10 +54,11 @@
     console.log("Jams Updated!", jams);
     jamStore.set(jams);
   });
-  socket.on("vote", socket => {
+  socket.on("votesUpdated", votes => {
     // Milestone 1
     // check jam id to see if it's relevant
-    console.log("Vote Happened!");
+    voteStore.set(votes);
+    console.log("Vote Happened!", votes);
   });
   socket.on("jamRoomsUpdated", rooms => {
     console.log("jam rooms updated!", rooms);

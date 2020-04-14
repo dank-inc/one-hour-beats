@@ -11,7 +11,6 @@
   import { stores } from "@sapper/app";
   const { page } = stores();
   const { getSocket } = getContext("socket");
-
   // if no entries by jam end, archive jam / delete
   // Add a socket for a room to add numbers
 

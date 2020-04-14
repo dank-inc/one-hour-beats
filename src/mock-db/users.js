@@ -13,4 +13,11 @@ export default [
     thumbs: 0,
     wins: 0,
   },
+  {
+    id: "zoolio",
+    password: "zoolio",
+    name: "B Pliz",
+    thumbs: 0,
+    wins: 0,
+  },
 ];
