@@ -22,18 +22,11 @@
 
     const chatLogs = await this.fetch("/api/chatLogs");
     chatLogStore.set(await chatLogs.json());
-    // get initial app state and populate stores
 
-    // get jam rooms
-    // get participants
-    // get chats
-    // get all votes
-
-    // shit could also just do a `socket.emit("initialState")` then init right back to that bro.
-    // fuck restapi
+    const votes = await this.fetch("/api/votes");
+    voteStore.set(await votes.json());
 
     userStore.set({});
-
     return Promise.resolve();
   }
 </script>

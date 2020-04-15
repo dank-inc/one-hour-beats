@@ -86,6 +86,9 @@ app
   .get("/api/chatLogs", (req, res, next) => {
     send(res, 200, app.store.chatLogs);
   })
+  .get("/api/votes", (req, res, next) => {
+    send(res, 200, app.store.votesIndex);
+  })
   .get("/api/users/:id?", ({ params }, res, next) => {
     if (!params.id) {
       send(res, 200, app.store.userIndex);

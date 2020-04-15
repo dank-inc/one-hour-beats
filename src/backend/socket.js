@@ -49,15 +49,18 @@ export const initializeSockets = (io, server, app) => {
     });
 
     socket.on("addEntry", (entry) => {
+      const id = `${entry.userId}-${entry.jamId}-${entry.title}`;
       const entryWithID = {
         ...entry,
-        id: `${entry.userId}-${entry.jamId}-${entry.title}`,
+        id,
       };
       const jamEntries = [
         ...(app.store.entriesByJam[entry.jamId] || []),
         entryWithID,
       ];
       app.store.entriesByJam[entry.jamId] = jamEntries;
+      app.store.entryIndex[id] = entryWithID;
+
       console.log("Adding Entry", entry);
       const voteTokens = {
         ...app.store.voteTokensByUser[entry.userId],

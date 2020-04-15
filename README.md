@@ -4,8 +4,6 @@
 
 # TODO before release
 
-- add vote token functionality. # good enough for now!
-- get all initial state from layout.js, either rest or a socket.
 - plug in a database
 - add password hashing (bcrypt)
 - deploy
@@ -24,8 +22,10 @@ Jam View Page
   links etc.
 
 - [*] add voting!
-- User accounts.
-- Add voting
+- [*] User accounts.
+- [*] Add voting
+- [*] add vote token functionality. # good enough for now!
+- [*] get all initial state from layout.js, either rest or a socket.
 
 ### Milestone 1 - stuff:
 
