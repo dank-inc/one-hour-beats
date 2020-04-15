@@ -11,3 +11,4 @@ export const chatLogStore = writable({});
 
 // { [entryId]: userIds[] }
 export const voteStore = writable({});
+export const voteTokenStore = writable({});

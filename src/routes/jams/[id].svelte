@@ -4,7 +4,13 @@
   import ChatForm from "../../components/ChatForm.svelte";
   import ChatLog from "../../components/ChatLog.svelte";
 
-  import { jamStore, entryStore, userStore, chatLogStore } from "../../store";
+  import {
+    jamStore,
+    entryStore,
+    userStore,
+    chatLogStore,
+    voteTokenStore
+  } from "../../store";
 
   import { onMount, getContext } from "svelte";
   import { getUnix, getTimeLeft } from "../../utils/time";
@@ -21,6 +27,7 @@
   $: jam = $jamStore[id];
   $: entries = $entryStore[id];
   $: userId = $userStore.id;
+  $: canVote = $voteTokenStore[id];
   $: currentTime = getUnix();
   $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
   $: chat = $chatLogStore[id];
@@ -101,7 +108,7 @@
         <h2>Entries</h2>
         {#if entries}
           {#each entries as entry}
-            <Entry {entry} />
+            <Entry {canVote} {entry} />
           {/each}
         {:else}
           <p>This jam has no entries 😭 {timeLeft > 0 ? '...yet' : '!!'}</p>

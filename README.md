@@ -71,4 +71,6 @@ Jam View Page
 
 ## visual shit
 
+- need cool clock thing
 - some cool header accents that span the width of the thing. maybe a mic cable? (generative!)
+- fun trippy thing that follows your mouse on the header and expands over menu clickables.

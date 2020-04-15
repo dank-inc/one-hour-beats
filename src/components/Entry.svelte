@@ -6,6 +6,7 @@
   const { getSocket } = getContext("socket");
 
   export let entry;
+  export let canVote;
   $: userId = $userStore.id;
   $: votes = $voteStore[entry.id];
 
@@ -57,7 +58,9 @@
       <a href={entry.link} target="_blank">
         Listen on {entry.link.split('://')[1].split('/')[0]}
       </a>
-      <button on:click={handleVote} class="button">vote!</button>
+      {#if canVote && entry.userId != userId}
+        <button on:click={handleVote} class="button">vote!</button>
+      {/if}
     </div>
     {#if votes}
       <Votes {votes} />

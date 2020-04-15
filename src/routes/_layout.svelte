@@ -5,17 +5,16 @@
     entryStore,
     jamRoomStore,
     userStore,
-    voteStore
+    voteStore,
+    voteTokenStore
   } from "../store";
 
   export async function preload(page) {
-    const jamsRes = await this.fetch("/api/jams");
-    const jamsData = await jamsRes.json();
-    jamStore.set(jamsData);
+    const jams = await this.fetch("/api/jams");
+    jamStore.set(await jams.json());
 
-    const entriesRes = await this.fetch("/api/entries");
-    const entriesData = await entriesRes.json();
-    entryStore.set(entriesData);
+    const entries = await this.fetch("/api/entries");
+    entryStore.set(await entries.json());
 
     // get initial app state and populate stores
 
@@ -42,21 +41,20 @@
   $: user = $userStore;
   export let segment;
 
-  const socket = io(); // we don't care about userId here?
+  const socket = io(); // could pass userid for user in sockets... hmm
 
   socket.on("entriesUpdated", entryIndex => {
-    // Milestone 1 - check user id to see if relevant
+    // Milestone 1 - scope down into user's concerns
     console.log("Entries Updated!", entryIndex);
     entryStore.set(entryIndex);
   });
   socket.on("jamsUpdated", jams => {
-    // Milestone 1 - check users jam id to see if relevant
+    // Milestone 1 - scope down into user's concerns
     console.log("Jams Updated!", jams);
     jamStore.set(jams);
   });
   socket.on("votesUpdated", votes => {
-    // Milestone 1
-    // check jam id to see if it's relevant
+    // Milestone 1 - scope down into user's concerns
     voteStore.set(votes);
     console.log("Vote Happened!", votes);
   });
@@ -65,8 +63,22 @@
     jamRoomStore.set(rooms);
   });
 
+  socket.on("voteTokensUpdated", voteTokens => {
+    console.log("vote tokens updated", voteTokens);
+    voteTokenStore.set(voteTokens);
+  });
+
   setContext("socket", {
     getSocket: () => socket
+  });
+
+  onMount(async () => {
+    const userId = window.localStorage.getItem("ohb.username");
+    if (!userId) {
+      console.log("user not found in locastorage. wtf");
+    }
+    const votes = await fetch(`/api/voteTokens/${userId}`);
+    voteTokenStore.set(await votes.json());
   });
 
   // Socket listeners and shit here.
