@@ -80,6 +80,12 @@ app
     const voteTokens = app.store.voteTokensByUser[params.userId];
     send(res, 200, voteTokens || {});
   })
+  .get("/api/jamRooms", (req, res, next) => {
+    send(res, 200, app.store.jamRooms);
+  })
+  .get("/api/chatLogs", (req, res, next) => {
+    send(res, 200, app.store.chatLogs);
+  })
   .get("/api/users/:id?", ({ params }, res, next) => {
     if (!params.id) {
       send(res, 200, app.store.userIndex);

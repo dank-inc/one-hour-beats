@@ -4,7 +4,7 @@
 
 # TODO before release
 
-- add vote token functionality.
+- add vote token functionality. # good enough for now!
 - get all initial state from layout.js, either rest or a socket.
 - plug in a database
 - add password hashing (bcrypt)

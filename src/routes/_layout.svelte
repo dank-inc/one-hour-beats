@@ -6,6 +6,7 @@
     jamRoomStore,
     userStore,
     voteStore,
+    chatLogStore,
     voteTokenStore
   } from "../store";
 
@@ -16,6 +17,11 @@
     const entries = await this.fetch("/api/entries");
     entryStore.set(await entries.json());
 
+    const jamRooms = await this.fetch("/api/jamRooms");
+    jamRoomStore.set(await jamRooms.json());
+
+    const chatLogs = await this.fetch("/api/chatLogs");
+    chatLogStore.set(await chatLogs.json());
     // get initial app state and populate stores
 
     // get jam rooms
