@@ -218,8 +218,30 @@ export class App {
         socket.broadcast.emit("entriesUpdated", entries);
       });
 
+      socket.on("addVote", async ({ entryId, userId }) => {
+        console.log("vote has been cast!", entryId, userId);
+        const jamId = this.store.entryIndex[entryId].jamId;
+
+        await this.db.VoteToken.update(
+          { entryId },
+          { where: { entryId, userId, jamID } }
+        );
+
+        this.store.votesIndex[entryId] = [
+          ...(this.store.votesIndex[entryId] || []),
+          userId,
+        ];
+
+        this.store.voteTokensByUser[userId][jamId] = false;
+
+        socket.emit("voteTokensUpdated", this.store.voteTokensByUser[userId]);
+        // get all votes
+        socket.emit("votesUpdated", this.store.votesIndex);
+        socket.broadcast.emit("votesUpdated", this.store.votesIndex);
+      });
+
       socket.on("joinJamRoom", ({ userId, jamId }) => {
-        socket.join(jamId);
+        // ephemeral
         this.socketUserMap[socket.id] = userId;
         console.log("user", userId, "joined", jamId, "socketId", socket.id);
         // map socket users to user ids
@@ -230,6 +252,7 @@ export class App {
       });
 
       socket.on("leaveJamRoom", ({ userId, jamId }) => {
+        // ephemeral
         console.log("user", userId, "left", jamId);
         const userIds = this.store.jamRooms[jamId] || [];
         this.store.jamRooms[jamId] = [...userIds.filter((id) => id !== userId)];
@@ -238,6 +261,7 @@ export class App {
       });
 
       socket.on("chat", (chat) => {
+        // ephemeral
         const { jamId } = chat;
         console.log("new chat recieved", chat);
         const messages = this.store.chatLogs[jamId] || [];
@@ -246,21 +270,6 @@ export class App {
 
         socket.emit("chatUpdated", this.store.chatLogs);
         socket.broadcast.emit("chatUpdated", this.store.chatLogs);
-      });
-
-      socket.on("addVote", ({ entryId, userId }) => {
-        console.log("vote has been cast!", entryId, userId);
-        const jamId = this.store.entryIndex[entryId].jamId;
-
-        this.store.votesIndex[entryId] = [
-          ...(this.store.votesIndex[entryId] || []),
-          userId,
-        ];
-
-        this.store.voteTokensByUser[userId][jamId] = false;
-        socket.emit("voteTokensUpdated", this.store.voteTokensByUser[userId]);
-        socket.emit("votesUpdated", this.store.votesIndex);
-        socket.broadcast.emit("votesUpdated", this.store.votesIndex);
       });
     });
   }
