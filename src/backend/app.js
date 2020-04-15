@@ -7,14 +7,23 @@ import compression from "compression";
 import io from "socket.io";
 import { getUnix } from "../utils/time";
 import { generateId } from "../utils/faker";
+// import models from "../../models";
+const { Sequelize } = require("sequelize");
 
 export class App {
   constructor({ server, store, env }) {
     this.store = store;
     this.env = env;
+    this.db = new Sequelize("one_hour_beats", "ohb", "ohb", {
+      dialect: "postgres",
+    });
+
     this.server = polka({ server });
     this.server.use(json());
     this.sockets = io(server);
+
+    this.initDB();
+
     this.defineRoutes();
     this.defineSockets();
     this.middleware();
@@ -24,15 +33,24 @@ export class App {
   middleware() {
     this.server.use(
       compression({ threshold: 0 }),
-      sirv("static", { dev: this.env.dev }),
+      sirv("static", { dev: this.env.NODE_ENV === "development" }),
       sapper.middleware()
     );
   }
 
   start() {
-    this.server.listen(this.env.port, (err) => {
+    this.server.listen(this.env.PORT, (err) => {
       if (err) console.log("error", err);
     });
+  }
+
+  async initDB() {
+    try {
+      await this.db.authenticate();
+      console.log("database connected!");
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    }
   }
 
   defineRoutes() {
