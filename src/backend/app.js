@@ -7,7 +7,7 @@ import compression from "compression";
 import io from "socket.io";
 import { getUnix } from "../utils/time";
 import { generateId } from "../utils/faker";
-// import models from "../../models";
+import models from "../../models";
 const { Sequelize } = require("sequelize");
 
 export class App {
