@@ -5,27 +5,32 @@ import { json } from "body-parser";
 import * as sapper from "@sapper/server";
 import compression from "compression";
 import io from "socket.io";
+import _ from "lodash";
 import { getUnix } from "../utils/time";
 import { generateId } from "../utils/faker";
-import models from "../../models";
+// import models from "../../models";
 const { Sequelize } = require("sequelize");
 
+import { reduceEntriesByJam } from "../utils/viewHelpers";
+
 export class App {
-  constructor({ server, store, env }) {
+  constructor({ server, store, env, models }) {
     this.store = store;
     this.env = env;
-    this.db = new Sequelize("one_hour_beats", "ohb", "ohb", {
-      dialect: "postgres",
-    });
 
     this.server = polka({ server });
     this.server.use(json());
     this.sockets = io(server);
-
-    this.initDB();
-
     this.defineRoutes();
     this.defineSockets();
+
+    this.db = new Sequelize("one_hour_beats", "ohb", "ohb", {
+      dialect: "postgres",
+    });
+    this.initDB();
+    this.initModels(models);
+    console.log("MODELS", this.models);
+
     this.middleware();
     this.start();
   }
@@ -44,6 +49,14 @@ export class App {
     });
   }
 
+  initModels(models) {
+    Object.keys(models).forEach((modelName) => {
+      const model = models[modelName](this.db);
+      this.db[modelName] = model;
+      this.db[modelName].associate(this.db);
+    });
+  }
+
   async initDB() {
     try {
       await this.db.authenticate();
@@ -55,59 +68,69 @@ export class App {
 
   defineRoutes() {
     this.server
-      .get("/api/jams/:id?", ({ params }, res, next) => {
-        const { store } = this;
-        if (params.id) {
-          send(res, 200, store.jamIndex[params.id]);
+      .get("/api/jams/:id?", async ({ params }, res, next) => {
+        if (!params.id) {
+          send(res, 200, _.keyBy(await this.db.Jam.findAll(), "id"));
         } else {
-          send(res, 200, store.jamIndex);
+          try {
+            send(res, 200, await this.db.Jam.findOne({ id: params.id }));
+          } catch {
+            send(res, 404);
+          }
         }
       })
       // post to /jams => create jam
       // put to /jams/:id => update jam
-      .get("/api/entries/:jamId?/:id?", ({ params }, res, next) => {
-        const { store } = this;
+      .get("/api/entries/:jamId?", async ({ params }, res, next) => {
+        const entriesByJam = reduceEntriesByJam(await this.db.Entry.findAll());
         if (params.jamId) {
-          send(res, 200, store.entriesByJam[params.jamId]);
+          send(res, 200, entriesByJam[params.jamId]);
         } else {
-          send(res, 200, store.entriesByJam);
+          send(res, 200, entriesByJam);
         }
       })
-      .get("/api/voteTokens/:userId", ({ params }, res, next) => {
-        const voteTokens = this.store.voteTokensByUser[params.userId];
-        send(res, 200, voteTokens || {});
+      .get("/api/voteTokens/:userId", async ({ params }, res, next) => {
+        const voteTokens = await this.db.VoteToken.findAll({
+          userId: params.userId,
+        });
+        send(res, 200, _.keyBy(voteTokens, "userId"));
       })
       .get("/api/jamRooms", (req, res, next) => {
-        send(res, 200, this.store.jamRooms);
+        send(res, 200, this.store.jamRooms); // participants? ephemeral?
       })
       .get("/api/chatLogs", (req, res, next) => {
-        send(res, 200, this.store.chatLogs);
+        send(res, 200, this.store.chatLogs); // chats, todo add to db
       })
-      .get("/api/votes", (req, res, next) => {
-        send(res, 200, this.store.votesIndex);
+      .get("/api/votes", async (req, res, next) => {
+        send(res, 200, await this.db.VoteToken.findAll());
       })
-      .get("/api/users/:id?", ({ params }, res, next) => {
+      .get("/api/users/:id?", async ({ params }, res, next) => {
         if (!params.id) {
-          send(res, 200, this.store.userIndex);
+          send(res, 200, await this.db.User.findAll());
         }
-        const user = this.store.userIndex[params.id];
-        if (user) {
-          send(res, 200, user);
-        } else {
+        try {
+          send(res, 200, await this.db.User.findOne({ id: params.id }));
+        } catch {
           send(res, 404);
         }
-        // get users
       })
-      .post("/api/users?", ({ body }, res, next) => {
-        const user = { ...body, thumbs: 0, wins: 0 };
-        this.store.userIndex = { ...this.store.userIndex, user };
-        // get users
+      .post("/api/users", async ({ body }, res, next) => {
+        try {
+          const user = { ...body, thumbs: 0, wins: 0, id: body.username };
+          await this.db.User.create(user);
+          send(res, 200);
+        } catch {
+          send(res, 422);
+        }
+        // send socekts
       })
-      .post("/api/login", ({ body }, res, next) => {
+      .post("/api/login", async ({ body }, res, next) => {
         console.log("login", body);
-        const user = this.store.userIndex[body.username];
+
+        const user = await this.db.User.findOne({ username: body.username });
+
         console.log("Login", body, user);
-        if (user.password == body.password) {
+        if (user && user.password == body.password) {
           send(res, 200);
         } else {
           send(res, 401);
@@ -140,56 +163,59 @@ export class App {
         socket.broadcast.emit("jamRoomsUpdated", this.store.jamRooms);
       });
 
-      socket.on("createJam", (jam) => {
+      socket.on("createJam", async (jam) => {
         const id = generateId();
         console.log("jam created", id);
-        this.store.jamIndex[id] = {
-          ...jam,
-          id,
-          createdAt: getUnix(),
-          startedAt: null,
-        };
-        socket.emit("jamsUpdated", this.store.jamIndex);
-        socket.broadcast.emit("jamsUpdated", this.store.jamIndex);
+
+        try {
+          await this.db.Jam.create({
+            ...jam,
+            id,
+            createdAt: getUnix(),
+            startedAt: null,
+          });
+
+          const jamIndex = _.keyBy(await this.db.Jam.getAll(), "id");
+          socket.emit("jamsUpdated", jamIndex);
+          socket.broadcast.emit("jamsUpdated", jamIndex);
+        } catch {
+          console.error("Erro creating jam", jam);
+        }
       });
 
-      socket.on("startJam", (body) => {
-        const jam = { ...this.store.jamIndex[body.id] };
-        jam.startedAt = getUnix();
-        console.log("Starting Jam", jam);
-        this.store.jamIndex = { ...this.store.jamIndex, [body.id]: jam };
-        socket.emit("jamsUpdated", this.store.jamIndex);
-        socket.broadcast.emit("jamsUpdated", this.store.jamIndex);
+      socket.on("startJam", async (body) => {
+        await this.db.Jam.update(
+          { startedAt: new Date() },
+          { where: { id: body.id } }
+        );
+
+        console.log("Starting Jam", body.id);
+
+        const jamIndex = _.keyBy(await this.db.Jam.getAll(), "id");
+        socket.emit("jamsUpdated", jamIndex);
+        socket.broadcast.emit("jamsUpdated", jamIndex);
         //
       });
 
-      socket.on("addEntry", (entry) => {
+      socket.on("addEntry", async (entry) => {
         const id = `${entry.userId}-${entry.jamId}-${entry.title}`;
+
         const entryWithID = {
           ...entry,
           id,
         };
-        const jamEntries = [
-          ...(this.store.entriesByJam[entry.jamId] || []),
-          entryWithID,
-        ];
-        this.store.entriesByJam[entry.jamId] = jamEntries;
-        this.store.entryIndex[id] = entryWithID;
-
-        console.log("Adding Entry", entry);
-        const voteTokens = {
-          ...this.store.voteTokensByUser[entry.userId],
-          [entry.jamId]: true,
-        };
-        console.log("vote tokens updated for user", entry.userId, voteTokens);
-        this.store.voteTokensByUser[entry.userId] = voteTokens;
-        socket.emit(
-          "voteTokensUpdated",
-          this.store.voteTokensByUser[entry.userId]
-        );
-
-        socket.emit("entriesUpdated", this.store.entriesByJam);
-        socket.broadcast.emit("entriesUpdated", this.store.entriesByJam);
+        await this.db.Entry.create(entryWithID);
+        await this.db.VoteToken.create({
+          userId: entry.userId,
+          jamId: entry.jamId,
+        });
+        const voteTokens = await this.db.VoteToken.findAll({
+          userId: entry.userId,
+        });
+        socket.emit("voteTokensUpdated", _.keyBy(voteTokens, "jamId"));
+        const entries = reduceEntriesByJam(await this.db.Entry.findAll());
+        socket.emit("entriesUpdated", entries);
+        socket.broadcast.emit("entriesUpdated", entries);
       });
 
       socket.on("joinJamRoom", ({ userId, jamId }) => {
