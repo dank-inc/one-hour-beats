@@ -8,31 +8,35 @@ import io from "socket.io";
 import _ from "lodash";
 import { getUnix } from "../utils/time";
 import { generateId } from "../utils/faker";
-// import models from "../../models";
+import http from "http";
+
 const { Sequelize } = require("sequelize");
 
 import { reduceEntriesByJam } from "../utils/viewHelpers";
 
 export class App {
-  constructor({ server, store, env, models }) {
-    this.store = store;
+  constructor({ env, models }) {
+    const server = http.createServer();
+    this.store = { socketUserMap: {}, jamRooms: {}, chatLogs: {} };
     this.env = env;
 
     this.server = polka({ server });
     this.server.use(json());
-    this.sockets = io(server);
+
     this.defineRoutes();
-    this.defineSockets();
 
     this.db = new Sequelize("one_hour_beats", "ohb", "ohb", {
       dialect: "postgres",
+      logging: false,
     });
+
     this.initDB();
     this.initModels(models);
-    console.log("MODELS", this.models);
-
     this.middleware();
     this.start();
+
+    this.sockets = io(server);
+    this.defineSockets();
   }
 
   middleware() {
@@ -91,7 +95,7 @@ export class App {
       })
       .get("/api/voteTokens/:userId", async ({ params }, res, next) => {
         const voteTokens = await this.db.VoteToken.findAll({
-          userId: params.userId,
+          where: { userId: params.userId },
         });
         send(res, 200, _.keyBy(voteTokens, "userId"));
       })
@@ -125,11 +129,9 @@ export class App {
         // send socekts
       })
       .post("/api/login", async ({ body }, res, next) => {
-        console.log("login", body);
+        console.log("login", body.username);
 
         const user = await this.db.User.findOne({ username: body.username });
-
-        console.log("Login", body, user);
         if (user && user.password == body.password) {
           send(res, 200);
         } else {
@@ -139,8 +141,7 @@ export class App {
   }
 
   defineSockets() {
-    this.socketUserMap = {};
-
+    console.log("making el sockets");
     this.sockets.on("connection", (socket) => {
       console.log("Connected =>", socket.id);
 
@@ -149,7 +150,7 @@ export class App {
       socket.on("disconnect", () => {
         // todo remove user from any active rooms.
         // filter out all the users
-        const userId = this.socketUserMap[socket.id];
+        const userId = this.store.socketUserMap[socket.id];
         console.log("Disonnected =>", socket.id, "userId:", userId);
 
         // iterate over all the rooms and remove userid...
@@ -210,7 +211,7 @@ export class App {
           jamId: entry.jamId,
         });
         const voteTokens = await this.db.VoteToken.findAll({
-          userId: entry.userId,
+          where: { userId: entry.userId },
         });
         socket.emit("voteTokensUpdated", _.keyBy(voteTokens, "jamId"));
         const entries = reduceEntriesByJam(await this.db.Entry.findAll());
@@ -242,7 +243,7 @@ export class App {
 
       socket.on("joinJamRoom", ({ userId, jamId }) => {
         // ephemeral
-        this.socketUserMap[socket.id] = userId;
+        this.store.socketUserMap[socket.id] = userId;
         console.log("user", userId, "joined", jamId, "socketId", socket.id);
         // map socket users to user ids
         const room = this.store.jamRooms[jamId];
