@@ -52,7 +52,7 @@
 </style>
 
 <div class="entry">
-  <h3 class="header">{entry.artist} - {entry.title}</h3>
+  <h3 class="header">{entry.userId} - {entry.title}</h3>
   <div class="details">
     <div class="details-main">
       <a href={entry.link} target="_blank">
@@ -62,6 +62,7 @@
         <button on:click={handleVote} class="button">vote!</button>
       {/if}
     </div>
+    <p>votes: {votes}</p>
     {#if votes}
       <Votes {votes} />
     {/if}

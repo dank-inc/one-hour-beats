@@ -29,6 +29,7 @@ Jam View Page
 
 ### Milestone 1 - stuff:
 
+- unique constraints on vote tokens and other fields.
 - add jam sorting
 - sort jams by most recent or most active.
 - expire jams not started in 1 day

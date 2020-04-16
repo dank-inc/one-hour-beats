@@ -13,7 +13,7 @@
   } from "../../store";
 
   import { onMount, getContext } from "svelte";
-  import { getUnix, getTimeLeft } from "../../utils/time";
+  import { getUnix, getTimeLeft, unixify } from "../../utils/time";
   import { stores } from "@sapper/app";
   const { page } = stores();
   const { getSocket } = getContext("socket");
@@ -29,7 +29,7 @@
   $: userId = $userStore.id;
   $: canVote = $voteTokenStore[id];
   $: currentTime = getUnix();
-  $: timeLeft = jam.startedAt + jam.timeLimit - currentTime;
+  $: timeLeft = unixify(jam.startedAt) + jam.timeLimit - currentTime;
   $: chat = $chatLogStore[id];
 
   onMount(() => {
@@ -90,7 +90,7 @@
   <div class="jam-room-info">
     <h2>Jam Info</h2>
     <p>description: {jam.description}</p>
-    <p>Time Limit: {jam.timeLimit / 60} minutes</p>
+    <p>Time Limit: {jam.timeLimit} minutes</p>
 
     {#if !jam.startedAt}
       <button on:click={handleStart}>Start Jam!</button>
@@ -100,6 +100,10 @@
       <p>Started At: {jam.startedAt}</p>
       <p>Time Left: {timeLeft}</p>
     {/if}
+    <h3>debug</h3>
+    <div>{userId} can vote?: {canVote}</div>
+    <div>{userId} can submit?: {!includesSelf(entries, userId)}</div>
+
   </div>
 
   <div class="jam-room-right">

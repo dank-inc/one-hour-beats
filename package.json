@@ -9,7 +9,11 @@
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "test": "run-p --race dev cy:run",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:down": "npx sequelize db:migrate:undo:all",
+    "db:seed": "npx sequelize db:seed:all",
+    "devreset": "npm run db:down && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@polka/send-type": "^0.5.2",
@@ -26,7 +30,8 @@
     "sequelize-cli": "^5.5.1",
     "sirv": "^0.4.0",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",

@@ -2,6 +2,7 @@ import User from "../models/user";
 import Jam from "../models/jam";
 import Entry from "../models/entry";
 import VoteToken from "../models/votetoken";
+// import logger from "winston";
 
 const models = {
   User,

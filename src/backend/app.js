@@ -15,7 +15,8 @@ const { Sequelize } = require("sequelize");
 import { reduceEntriesByJam } from "../utils/viewHelpers";
 
 export class App {
-  constructor({ env, models }) {
+  constructor({ env, models, logger }) {
+    this.logger = logger;
     const server = http.createServer();
     this.store = { socketUserMap: {}, jamRooms: {}, chatLogs: {} };
     this.env = env;
@@ -105,22 +106,44 @@ export class App {
       .get("/api/chatLogs", (req, res, next) => {
         send(res, 200, this.store.chatLogs); // chats, todo add to db
       })
-      .get("/api/votes", async (req, res, next) => {
-        send(res, 200, await this.db.VoteToken.findAll());
+      .get("/api/votes/:jamId?", async ({ params }, res, next) => {
+        try {
+          if (params.jamId) {
+          } else {
+            console.log("VoteIndex", {});
+            send(res, 200, {});
+          }
+        } catch {
+          send(res, 401);
+        }
       })
       .get("/api/users/:id?", async ({ params }, res, next) => {
         if (!params.id) {
           send(res, 200, await this.db.User.findAll());
-        }
-        try {
-          send(res, 200, await this.db.User.findOne({ id: params.id }));
-        } catch {
-          send(res, 404);
+        } else {
+          try {
+            const user = await this.db.User.findOne({
+              where: { id: params.id },
+            });
+            if (user) {
+              send(res, 200, user);
+            } else {
+              send(res, 404);
+            }
+          } catch {
+            send(res, 404);
+          }
         }
       })
       .post("/api/users", async ({ body }, res, next) => {
         try {
-          const user = { ...body, thumbs: 0, wins: 0, id: body.username };
+          console.log("CREATING UESR", body);
+          const user = {
+            ...body,
+            thumbs: 0,
+            wins: 0,
+            id: body.id,
+          };
           await this.db.User.create(user);
           send(res, 200);
         } catch {
@@ -130,8 +153,9 @@ export class App {
       })
       .post("/api/login", async ({ body }, res, next) => {
         console.log("login", body.username);
-
-        const user = await this.db.User.findOne({ username: body.username });
+        const user = await this.db.User.findOne({
+          where: { username: body.username },
+        });
         if (user && user.password == body.password) {
           send(res, 200);
         } else {
