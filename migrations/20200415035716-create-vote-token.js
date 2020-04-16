@@ -1,33 +1,23 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('VoteTokens', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
+    return queryInterface.createTable("VoteTokens", {
       userId: {
-        type: Sequelize.STRING
+        primaryKey: true,
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       jamId: {
-        type: Sequelize.STRING
+        primaryKey: true,
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       entryId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('VoteTokens');
-  }
+    return queryInterface.dropTable("VoteTokens");
+  },
 };

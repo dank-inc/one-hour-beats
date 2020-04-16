@@ -1,7 +1,10 @@
-export const reduceEntriesByJam = (entries) => {
-  const entriesByJam = {};
-  for (let entry of entries) {
-    entriesByJam[entry.jamId] = [...(entriesByJam[entry.jamId] || []), entry];
+export const getVoteTokenIndex = (tokens) => {
+  const index = {};
+  for (const token of tokens) {
+    index[token.userId] = {
+      ...index[token.userId],
+      [token.jamId]: token.jamId ? !token.entryId : false,
+    };
   }
-  return entriesByJam;
+  return index;
 };

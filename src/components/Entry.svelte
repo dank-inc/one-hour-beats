@@ -62,7 +62,6 @@
         <button on:click={handleVote} class="button">vote!</button>
       {/if}
     </div>
-    <p>votes: {votes}</p>
     {#if votes}
       <Votes {votes} />
     {/if}

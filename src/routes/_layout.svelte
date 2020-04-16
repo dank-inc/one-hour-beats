@@ -26,6 +26,9 @@
     const votes = await this.fetch("/api/votes");
     voteStore.set(await votes.json());
 
+    const voteTokens = await this.fetch("/api/voteTokens");
+    voteTokenStore.set(await voteTokens.json());
+
     userStore.set({});
     return Promise.resolve();
   }
@@ -76,8 +79,6 @@
     if (!userId) {
       console.log("user not found in locastorage. wtf");
     }
-    const votes = await fetch(`/api/voteTokens/${userId}`);
-    voteTokenStore.set(await votes.json());
   });
 
   // Socket listeners and shit here.

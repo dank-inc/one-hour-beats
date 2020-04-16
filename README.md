@@ -29,6 +29,7 @@ Jam View Page
 
 ### Milestone 1 - stuff:
 
+- creating entry automatically creates voteToken (trigger)
 - unique constraints on vote tokens and other fields.
 - add jam sorting
 - sort jams by most recent or most active.

@@ -10,9 +10,9 @@ import { getUnix } from "../utils/time";
 import { generateId } from "../utils/faker";
 import http from "http";
 
-const { Sequelize } = require("sequelize");
+import { getVoteTokenIndex } from "../utils/viewHelpers";
 
-import { reduceEntriesByJam } from "../utils/viewHelpers";
+const { Sequelize } = require("sequelize");
 
 export class App {
   constructor({ env, models, logger }) {
@@ -60,6 +60,15 @@ export class App {
       this.db[modelName] = model;
       this.db[modelName].associate(this.db);
     });
+
+    this.db.Entry.afterCreate(async ({ userId, jamId }) => {
+      console.log("Creating Vote Token Automagically", userId, jamId);
+      try {
+        await this.db.VoteToken.create({ userId, jamId });
+      } catch (err) {
+        console.log("FAILED to create VoteToken!", err);
+      }
+    });
   }
 
   async initDB() {
@@ -87,18 +96,26 @@ export class App {
       // post to /jams => create jam
       // put to /jams/:id => update jam
       .get("/api/entries/:jamId?", async ({ params }, res, next) => {
-        const entriesByJam = reduceEntriesByJam(await this.db.Entry.findAll());
+        const entriesByJam = _.groupBy(await this.db.Entry.findAll(), "jamId");
         if (params.jamId) {
           send(res, 200, entriesByJam[params.jamId]);
         } else {
           send(res, 200, entriesByJam);
         }
       })
-      .get("/api/voteTokens/:userId", async ({ params }, res, next) => {
-        const voteTokens = await this.db.VoteToken.findAll({
-          where: { userId: params.userId },
-        });
-        send(res, 200, _.keyBy(voteTokens, "userId"));
+      .get("/api/voteTokens/:userId?", async ({ params }, res, next) => {
+        try {
+          const tokens = await this.db.VoteToken.findAll();
+
+          const voteIndex = getVoteTokenIndex(tokens);
+          if (!params.userId) {
+            send(res, 200, voteIndex);
+          }
+
+          send(res, 200, voteIndex[params.userId] || {});
+        } catch (err) {
+          send(res, 500, { message: "wtf", err });
+        }
       })
       .get("/api/jamRooms", (req, res, next) => {
         send(res, 200, this.store.jamRooms); // participants? ephemeral?
@@ -110,11 +127,15 @@ export class App {
         try {
           if (params.jamId) {
           } else {
-            console.log("VoteIndex", {});
-            send(res, 200, {});
+            const votes = _.groupBy(
+              await this.db.VoteToken.findAll(),
+              "entryId"
+            );
+            send(res, 200, votes);
           }
-        } catch {
-          send(res, 401);
+        } catch (err) {
+          console.error("Error getting votes:", err);
+          send(res, 404);
         }
       })
       .get("/api/users/:id?", async ({ params }, res, next) => {
@@ -190,35 +211,40 @@ export class App {
 
       socket.on("createJam", async (jam) => {
         const id = generateId();
-        console.log("jam created", id);
 
         try {
-          await this.db.Jam.create({
+          const created = await this.db.Jam.create({
             ...jam,
             id,
             createdAt: getUnix(),
             startedAt: null,
           });
+          console.log(">> jam created =>", id);
 
-          const jamIndex = _.keyBy(await this.db.Jam.getAll(), "id");
+          const jamIndex = _.keyBy(await this.db.Jam.findAll(), "id");
           socket.emit("jamsUpdated", jamIndex);
           socket.broadcast.emit("jamsUpdated", jamIndex);
-        } catch {
-          console.error("Erro creating jam", jam);
+        } catch (err) {
+          console.error("Erro creating jam", err);
         }
       });
 
       socket.on("startJam", async (body) => {
-        await this.db.Jam.update(
-          { startedAt: new Date() },
-          { where: { id: body.id } }
-        );
+        try {
+          const created = await this.db.Jam.update(
+            { startedAt: new Date() },
+            { where: { id: body.id } }
+          );
 
-        console.log("Starting Jam", body.id);
+          console.log("Started Jam", body.id, created);
 
-        const jamIndex = _.keyBy(await this.db.Jam.getAll(), "id");
-        socket.emit("jamsUpdated", jamIndex);
-        socket.broadcast.emit("jamsUpdated", jamIndex);
+          const jamIndex = _.keyBy(await this.db.Jam.findAll(), "id");
+          socket.emit("jamsUpdated", jamIndex);
+          socket.broadcast.emit("jamsUpdated", jamIndex);
+        } catch {
+          console.error("Could not start jam!", body);
+        }
+
         //
       });
 
@@ -229,40 +255,63 @@ export class App {
           ...entry,
           id,
         };
-        await this.db.Entry.create(entryWithID);
-        await this.db.VoteToken.create({
-          userId: entry.userId,
-          jamId: entry.jamId,
-        });
-        const voteTokens = await this.db.VoteToken.findAll({
-          where: { userId: entry.userId },
-        });
-        socket.emit("voteTokensUpdated", _.keyBy(voteTokens, "jamId"));
-        const entries = reduceEntriesByJam(await this.db.Entry.findAll());
-        socket.emit("entriesUpdated", entries);
-        socket.broadcast.emit("entriesUpdated", entries);
+        try {
+          await this.db.Entry.create(entryWithID);
+          console.log("entry added!", id);
+          const voteTokens = await this.db.VoteToken.findAll({
+            where: { userId: entry.userId },
+          });
+          socket.emit("voteTokensUpdated", _.keyBy(voteTokens, "jamId"));
+          const entries = _.groupBy(await this.db.Entry.findAll(), "jamId");
+          socket.emit("entriesUpdated", entries);
+          socket.broadcast.emit("entriesUpdated", entries);
+        } catch (err) {
+          console.error("something happened while creating entry", err);
+        }
+        // await this.db.VoteToken.create({
+        //   userId: entry.userId,
+        //   jamId: entry.jamId,
+        // });
       });
 
       socket.on("addVote", async ({ entryId, userId }) => {
-        console.log("vote has been cast!", entryId, userId);
-        const jamId = this.store.entryIndex[entryId].jamId;
+        try {
+          const { jamId } = await this.db.Entry.findOne({
+            where: { id: entryId },
+          });
 
-        await this.db.VoteToken.update(
-          { entryId },
-          { where: { entryId, userId, jamID } }
-        );
+          console.log("casting vote!", jamId, entryId, userId);
+          await this.db.VoteToken.update(
+            { entryId },
+            { where: { userId, jamId } }
+          );
 
-        this.store.votesIndex[entryId] = [
-          ...(this.store.votesIndex[entryId] || []),
-          userId,
-        ];
+          const votes = await this.db.VoteToken.findAll();
 
-        this.store.voteTokensByUser[userId][jamId] = false;
+          // group by user
+          const voteIndex = {};
+          for (let v of votes) {
+            voteIndex[v.userID] = {
+              ...voteIndex[v.userID],
+              [v.jamId]: v.entryId,
+            };
+          }
 
-        socket.emit("voteTokensUpdated", this.store.voteTokensByUser[userId]);
-        // get all votes
-        socket.emit("votesUpdated", this.store.votesIndex);
-        socket.broadcast.emit("votesUpdated", this.store.votesIndex);
+          const userTokens = await this.db.VoteToken.findAll({
+            where: { userId },
+          });
+          const votesByEntry = _.groupBy(votes, "entryId");
+          const votesByUser = {};
+          for (let v of userTokens) {
+            votesByUser[v.jamId] = v.entryId;
+          }
+
+          socket.emit("voteTokensUpdated", votesByUser);
+          socket.emit("votesUpdated", votesByEntry);
+          socket.broadcast.emit("votesUpdated", votesByEntry);
+        } catch (err) {
+          console.log("error casting vote", err);
+        }
       });
 
       socket.on("joinJamRoom", ({ userId, jamId }) => {

@@ -10,6 +10,7 @@ export default (sequelize) => {
     },
     {}
   );
+  VoteToken.removeAttribute("id");
   VoteToken.associate = function (models) {};
   return VoteToken;
 };
