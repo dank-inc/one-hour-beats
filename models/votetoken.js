@@ -8,9 +8,11 @@ export default (sequelize) => {
       jamId: DataTypes.STRING,
       entryId: DataTypes.STRING,
     },
-    {}
+    { timestamps: false }
   );
   VoteToken.removeAttribute("id");
+  // VoteToken.removeAttribute("createdAt");
+  // VoteToken.removeAttribute("updatedAt");
   VoteToken.associate = function (models) {};
   return VoteToken;
 };

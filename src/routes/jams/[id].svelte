@@ -27,7 +27,7 @@
   $: jam = $jamStore[id];
   $: entries = $entryStore[id];
   $: userId = $userStore.id;
-  $: canVote = $voteTokenStore[id];
+  $: canVote = $voteTokenStore[userId] && $voteTokenStore[userId][id];
   $: currentTime = getUnix();
   $: timeLeft = unixify(jam.startedAt) + jam.timeLimit - currentTime;
   $: chat = $chatLogStore[id];

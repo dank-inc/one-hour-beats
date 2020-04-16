@@ -103,16 +103,12 @@ export class App {
           send(res, 200, entriesByJam);
         }
       })
-      .get("/api/voteTokens/:userId?", async ({ params }, res, next) => {
+      .get("/api/voteTokens", async ({ params }, res, next) => {
         try {
           const tokens = await this.db.VoteToken.findAll();
-
+          // send(res, 200, tokens);
           const voteIndex = getVoteTokenIndex(tokens);
-          if (!params.userId) {
-            send(res, 200, voteIndex);
-          }
-
-          send(res, 200, voteIndex[params.userId] || {});
+          send(res, 200, voteIndex);
         } catch (err) {
           send(res, 500, { message: "wtf", err });
         }
@@ -258,20 +254,16 @@ export class App {
         try {
           await this.db.Entry.create(entryWithID);
           console.log("entry added!", id);
-          const voteTokens = await this.db.VoteToken.findAll({
-            where: { userId: entry.userId },
-          });
-          socket.emit("voteTokensUpdated", _.keyBy(voteTokens, "jamId"));
+
+          const voteTokens = await this.db.VoteToken.findAll();
+          socket.emit("voteTokensUpdated", getVoteTokenIndex(voteTokens));
+
           const entries = _.groupBy(await this.db.Entry.findAll(), "jamId");
           socket.emit("entriesUpdated", entries);
           socket.broadcast.emit("entriesUpdated", entries);
         } catch (err) {
           console.error("something happened while creating entry", err);
         }
-        // await this.db.VoteToken.create({
-        //   userId: entry.userId,
-        //   jamId: entry.jamId,
-        // });
       });
 
       socket.on("addVote", async ({ entryId, userId }) => {
@@ -289,24 +281,10 @@ export class App {
           const votes = await this.db.VoteToken.findAll();
 
           // group by user
-          const voteIndex = {};
-          for (let v of votes) {
-            voteIndex[v.userID] = {
-              ...voteIndex[v.userID],
-              [v.jamId]: v.entryId,
-            };
-          }
+          const voteIndex = getVoteTokenIndex(votes);
+          socket.emit("voteTokensUpdated", voteIndex);
 
-          const userTokens = await this.db.VoteToken.findAll({
-            where: { userId },
-          });
           const votesByEntry = _.groupBy(votes, "entryId");
-          const votesByUser = {};
-          for (let v of userTokens) {
-            votesByUser[v.jamId] = v.entryId;
-          }
-
-          socket.emit("voteTokensUpdated", votesByUser);
           socket.emit("votesUpdated", votesByEntry);
           socket.broadcast.emit("votesUpdated", votesByEntry);
         } catch (err) {
