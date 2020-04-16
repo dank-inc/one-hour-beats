@@ -11,11 +11,12 @@
   function handleSubmit() {
     const socket = getSocket();
 
-    socket.emit("createJam", { name, description, timeLimit, userId });
-    // send jam to db
-    // generate id for jam
-    // return id from server
-    // navigate to `jams/id`
+    socket.emit("createJam", {
+      name,
+      description,
+      timeLimit: timeLimit * 60,
+      userId
+    });
     console.log("submitting form");
     goto("/jams");
   }
