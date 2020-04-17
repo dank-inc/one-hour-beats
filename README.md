@@ -5,8 +5,11 @@
 # TODO before release
 
 - plug in a database
+
+- set up remote db.
 - add password hashing (bcrypt)
 - deploy
+
 
 ### MVP - three pages:
 
@@ -33,7 +36,9 @@ Jam View Page
 - unique constraints on vote tokens and other fields.
 - add jam sorting
 - sort jams by most recent or most active.
-- expire jams not started in 1 day
+- expire jams not started in 1 day (shows countdown to expiry on frontpage.)
+- user can only create 1 "alive jam" at a time
+- user can delete tehir jam
 - vote to start jam?
 - jam expires maybe 1 day after opening it?
 - profile page.
