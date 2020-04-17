@@ -5,16 +5,19 @@
 </script>
 
 <style>
-.self {
-  background: var(--accent-color-light);
-  color: #fff;
-}
+  .self {
+    background: var(--accent-color-light);
+    color: #fff;
+  }
 
-.other {
-
-}
+  .other {
+    color: var(--accent-color-light);
+    background: #fff;
+  }
 </style>
 
 {#each chat.slice(0, 10) as message}
-  <di class={userId === chat.userId ? "self" : "other"}v>{message.userId} - {message.text}</div>
+  <div class={userId === chat.userId ? 'self' : 'other'}>
+    {message.userId} - {message.text}
+  </div>
 {/each}
