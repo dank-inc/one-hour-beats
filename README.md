@@ -10,6 +10,7 @@
 - deploy
 - countdown disappears after user votes.
 - while you're in a jamroom show names at top of who is currently there.
+- add entry count to rooms on main
 
 ### MVP - three pages:
 
