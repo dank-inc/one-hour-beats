@@ -7,12 +7,19 @@
   $: user = $userStore;
   let artist = $userStore.id;
   let title = "";
-
   let error = "";
 
   const handleSubmit = () => {
     if (!title) {
       error = "you must supply a title";
+      return;
+    }
+    if (!linl) {
+      error = "you must supply a link!";
+      return;
+    }
+    if (!artist) {
+      error = "needs an artist name!";
       return;
     }
     let entry = {
