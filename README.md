@@ -4,12 +4,12 @@
 
 # TODO before release
 
-- plug in a database
-
-- set up remote db.
 - add password hashing (bcrypt)
+- make chat less ugly
+- make mobile experience 30% less bad
 - deploy
-
+- countdown disappears after user votes.
+- while you're in a jamroom show names at top of who is currently there.
 
 ### MVP - three pages:
 
@@ -29,6 +29,8 @@ Jam View Page
 - [*] Add voting
 - [*] add vote token functionality. # good enough for now!
 - [*] get all initial state from layout.js, either rest or a socket.
+- [*] set up remote db.
+- [*] plug in a database
 
 ### Milestone 1 - stuff:
 
