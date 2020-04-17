@@ -14,7 +14,7 @@
       error = "you must supply a title";
       return;
     }
-    if (!linl) {
+    if (!link) {
       error = "you must supply a link!";
       return;
     }
