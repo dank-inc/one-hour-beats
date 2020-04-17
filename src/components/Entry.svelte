@@ -37,7 +37,6 @@
     font-size: 8pt;
     border-radius: 0.5rem;
     padding: 0.2rem 1rem 0.1rem;
-    margin: 0;
   }
   .details {
     padding: 1rem 1rem 1rem;

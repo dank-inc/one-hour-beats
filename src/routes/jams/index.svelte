@@ -1,3 +1,9 @@
+<script context="module">
+  export async function preload() {
+    this.redirect(302, "/");
+  }
+</script>
+
 <script>
   import JamLink from "../../components/JamLink.svelte";
   import { jamStore } from "../../store";
@@ -18,7 +24,5 @@
 </header>
 
 <div class="page-content">
-  {#each Object.entries(jamIndex) as [id, jam]}
-    <JamLink {jam} />
-  {/each}
+  you should be redirected. please tell Elijah he did this wrong!
 </div>
