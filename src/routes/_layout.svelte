@@ -1,5 +1,6 @@
 <script context="module">
   // initial state
+  import axios from "axios";
   import {
     jamStore,
     entryStore,
@@ -11,11 +12,11 @@
   } from "../store";
 
   export async function preload(page) {
-    const jams = await this.fetch("/api/jams");
-    jamStore.set(await jams.json());
+    const jams = await axios.get("/api/jams");
+    jamStore.set(jams.data);
 
-    const entries = await this.fetch("/api/entries");
-    entryStore.set(await entries.json());
+    const entries = await axios.get("/api/entries");
+    entryStore.set(await entries.data);
 
     const jamRooms = await this.fetch("/api/jamRooms");
     jamRoomStore.set(await jamRooms.json());
@@ -78,6 +79,10 @@
     const userId = window.localStorage.getItem("ohb.username");
     if (!userId) {
       console.log("user not found in locastorage. wtf");
+    } else {
+      const user = axios.get(`/api/users/${userId}`);
+      if (!user) window.localStorage.removeItem("ohb.username");
+      window.location.reload();
     }
   });
 
