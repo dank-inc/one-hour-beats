@@ -1,6 +1,7 @@
 <script context="module">
   // initial state
   import axios from "axios";
+  axios;
   import {
     jamStore,
     entryStore,
@@ -12,11 +13,11 @@
   } from "../store";
 
   export async function preload(page) {
-    const jams = await axios.get("/api/jams");
-    jamStore.set(jams.data);
+    const jams = await this.fetch("/api/jams");
+    jamStore.set(await jams.json());
 
-    const entries = await axios.get("/api/entries");
-    entryStore.set(await entries.data);
+    const entries = await this.fetch("/api/entries");
+    entryStore.set(await entries.json());
 
     const jamRooms = await this.fetch("/api/jamRooms");
     jamRoomStore.set(await jamRooms.json());
