@@ -23,7 +23,7 @@
       if (data) {
         console.log("user found =>", data);
         userStore.set(data);
-        localStorage.setItem("ohb.username");
+        localStorage.setItem("ohb.username", id);
       } else {
         console.log("user not found!", id);
         localStorage.removeItem("ohb.username");
