@@ -77,16 +77,16 @@
   });
 
   onMount(async () => {
-    const userId = window.localStorage.getItem("ohb.username");
-    if (!userId) {
-      console.log("user not found in locastorage. wtf");
-    } else {
-      const { data } = await axios.get(`/api/users/${userId}`);
-      if (!data) {
-        window.localStorage.removeItem("ohb.username");
-        window.location.reload();
-      }
-    }
+    // const userId = window.localStorage.getItem("ohb.username");
+    // if (!userId) {
+    //   console.log("user not found in locastorage. wtf");
+    // } else {
+    //   const { data } = await axios.get(`/api/users/${userId}`);
+    //   if (!data) {
+    //     window.localStorage.removeItem("ohb.username");
+    //     window.location.reload();
+    //   }
+    // }
   });
 
   // Socket listeners and shit here.

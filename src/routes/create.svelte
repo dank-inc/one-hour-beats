@@ -30,12 +30,6 @@
     border-radius: 1vmin;
   }
   .sexyform input {
-    font-size: 14pt;
-    padding: 2vmin;
-    border-radius: 2vmin;
-    color: #555;
-    letter-spacing: 0.05em;
-    width: 100%;
   }
 
   .sexyform label {

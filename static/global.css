@@ -41,10 +41,12 @@ label {
 }
 
 input {
-  padding: 0.3rem;
-  font-size: 1.3rem;
-  border-radius: 0.3rem;
-  letter-spacing: 0.2rem;
+  font-size: 14pt;
+  padding: 2vmin;
+  border-radius: 2vmin;
+  color: #555;
+  letter-spacing: 0.05em;
+  width: 100%;
 }
 
 h1 {
