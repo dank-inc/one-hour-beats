@@ -81,8 +81,8 @@
     if (!userId) {
       console.log("user not found in locastorage. wtf");
     } else {
-      const user = await axios.get(`/api/users/${userId}`);
-      if (!user) window.localStorage.removeItem("ohb.username");
+      const { data } = await axios.get(`/api/{data}s/${userId}`);
+      if (!data) window.localStorage.removeItem("ohb.username");
       window.location.reload();
     }
   });
