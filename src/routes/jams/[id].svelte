@@ -3,6 +3,7 @@
   import EntryForm from "../../components/EntryForm.svelte";
   import ChatForm from "../../components/ChatForm.svelte";
   import ChatLog from "../../components/ChatLog.svelte";
+  import Clock from "../../components/Clock.svelte";
 
   import {
     jamStore,
@@ -90,7 +91,7 @@
   <div class="jam-room-info">
     <h2>Jam Info</h2>
     <p>description: {jam.description}</p>
-    <p>Time Limit: {jam.timeLimit} minutes</p>
+    <p>Time Limit: {Math.floor(jam.timeLimit / 60)} minutes</p>
 
     {#if !jam.startedAt}
       <button on:click={handleStart}>Start Jam!</button>
@@ -99,10 +100,12 @@
     {:else}
       <p>Started At: {jam.startedAt}</p>
       <p>Time Left: {timeLeft}</p>
+      <Clock total={jam.timeLimit} startedAt={jam.startedAt} />
     {/if}
-    <h3>debug</h3>
+
+    <!-- <h3>debug</h3>
     <div>{userId} can vote?: {canVote}</div>
-    <div>{userId} can submit?: {!includesSelf(entries, userId)}</div>
+    <div>{userId} can submit?: {!includesSelf(entries, userId)}</div> -->
 
   </div>
 
