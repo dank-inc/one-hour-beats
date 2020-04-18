@@ -130,7 +130,7 @@
     <div class="jam-chat">
       <h2>Chatroom</h2>
       {#if chat}
-        <ChatLog {chat} />
+        <ChatLog {chat} {userId} />
       {:else}
         <div>All is quiet...</div>
       {/if}

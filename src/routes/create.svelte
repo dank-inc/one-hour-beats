@@ -17,6 +17,10 @@
       timeLimit: timeLimit * 60,
       userId
     });
+    // send jam to db
+    // generate id for jam
+    // return id from server
+    // navigate to `jams/id`
     console.log("submitting form");
     goto("/jams");
   }
@@ -31,12 +35,6 @@
     border-radius: 1vmin;
   }
   .sexyform input {
-    font-size: 14pt;
-    padding: 2vmin;
-    border-radius: 2vmin;
-    color: #555;
-    letter-spacing: 0.05em;
-    width: 100%;
   }
 
   .sexyform label {

@@ -19,7 +19,15 @@
     const id = localStorage.getItem("ohb.username");
 
     if (id) {
-      userStore.set({ id, name: id });
+      const { data } = await axios.get(`/api/users/${id}`);
+      if (data) {
+        console.log("user found =>", data);
+        userStore.set(data);
+        localStorage.setItem("ohb.username", id);
+      } else {
+        console.log("user not found!", id);
+        localStorage.removeItem("ohb.username");
+      }
     }
   });
 
@@ -55,10 +63,11 @@
           email,
           password
         });
-        userStore.set({ id: username, name: username });
+        const { data } = await axios.get(`api/users/${username}`);
+        userStore.set(data);
         localStorage.setItem("ohb.username", username);
-      } catch {
-        error = "something went wrong!!!";
+      } catch (err) {
+        error = "something went wrong!!!" + err;
         return;
       }
     }

@@ -7,12 +7,19 @@
   $: user = $userStore;
   let artist = $userStore.id;
   let title = "";
-
   let error = "";
 
   const handleSubmit = () => {
     if (!title) {
       error = "you must supply a title";
+      return;
+    }
+    if (!link) {
+      error = "you must supply a link!";
+      return;
+    }
+    if (!artist) {
+      error = "needs an artist name!";
       return;
     }
     let entry = {
@@ -29,7 +36,20 @@
   };
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
+<style>
+  .entry-form {
+  }
+
+  .entry-form div {
+    margin-bottom: 1rem;
+  }
+
+  .entry-form button {
+    margin-right: 0;
+  }
+</style>
+
+<form on:submit|preventDefault={handleSubmit} class="entry-form">
   <div>
     <label>
       Artist Name:
@@ -54,5 +74,7 @@
   {#if error}
     <div class="error">{error}</div>
   {/if}
-  <button>Submit Entry</button>
+  <div>
+    <button>Submit Entry</button>
+  </div>
 </form>

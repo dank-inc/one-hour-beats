@@ -25,6 +25,7 @@
     "faker": "^4.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "pg": "^8.0.2",
     "polka": "next",
     "sequelize": "^5.21.6",
     "sequelize-cli": "^5.5.1",

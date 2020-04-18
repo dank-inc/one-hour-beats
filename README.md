@@ -4,9 +4,13 @@
 
 # TODO before release
 
-- plug in a database
 - add password hashing (bcrypt)
+- make chat less ugly
+- make mobile experience 30% less bad
 - deploy
+- countdown disappears after user votes.
+- while you're in a jamroom show names at top of who is currently there.
+- add entry count to rooms on main
 
 ### MVP - three pages:
 
@@ -26,6 +30,8 @@ Jam View Page
 - [*] Add voting
 - [*] add vote token functionality. # good enough for now!
 - [*] get all initial state from layout.js, either rest or a socket.
+- [*] set up remote db.
+- [*] plug in a database
 
 ### Milestone 1 - stuff:
 
@@ -33,7 +39,9 @@ Jam View Page
 - unique constraints on vote tokens and other fields.
 - add jam sorting
 - sort jams by most recent or most active.
-- expire jams not started in 1 day
+- expire jams not started in 1 day (shows countdown to expiry on frontpage.)
+- user can only create 1 "alive jam" at a time
+- user can delete tehir jam
 - vote to start jam?
 - jam expires maybe 1 day after opening it?
 - profile page.
