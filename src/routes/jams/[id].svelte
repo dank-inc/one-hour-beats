@@ -63,21 +63,6 @@
   };
 </script>
 
-<style>
-  .jam-room {
-    padding: 1rem;
-    display: flex;
-  }
-
-  .jam-room-info {
-    flex: 5;
-  }
-
-  .jam-room-right {
-    flex: 3;
-  }
-</style>
-
 <svelte:head>
   <title>One Hour Beats - {jam.name}</title>
 </svelte:head>
@@ -127,14 +112,42 @@
       <EntryForm jamId={id} />
     {/if}
 
-    <div class="jam-chat">
+    <div class="jam-chat-box">
       <h2>Chatroom</h2>
-      {#if chat}
-        <ChatLog {chat} {userId} />
-      {:else}
-        <div>All is quiet...</div>
-      {/if}
+      <div class="jam-chat">
+        {#if chat}
+          <ChatLog {chat} {userId} />
+        {:else}
+          <div>All is quiet...</div>
+        {/if}
+      </div>
       <ChatForm jamId={id} />
     </div>
   </div>
 </div>
+
+<style>
+  .jam-room {
+    padding: 1rem;
+    display: flex;
+  }
+  .jam-chat {
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px #aaa solid;
+    padding: 0.2em 0.5rem 0;
+    border-radius: 1rem;
+    margin: 0 0 0.5rem;
+  }
+  .jam-chat-box {
+    padding: 1rem 0;
+  }
+  .jam-room-info {
+    flex: 5;
+  }
+  .jam-room-right {
+    flex: 3;
+  }
+</style>

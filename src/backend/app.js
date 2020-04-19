@@ -18,7 +18,25 @@ export class App {
   constructor({ env, models, logger }) {
     this.logger = logger;
     const server = http.createServer();
-    this.store = { socketUserMap: {}, jamRooms: {}, chatLogs: {} };
+    this.store = {
+      socketUserMap: {},
+      jamRooms: {},
+      chatLogs: {
+        "dank-rhinos": [
+          {
+            userId: "toffee",
+            jamId: "dank-rhinos",
+            text: "we can start it now",
+          },
+          {
+            userId: "eli7vh",
+            jamId: "dank-rhinos",
+            text: "hello when dis jam start?",
+          },
+        ],
+      },
+    };
+
     this.env = env;
 
     this.server = polka({ server });
@@ -315,7 +333,9 @@ export class App {
       socket.on("chat", (chat) => {
         // ephemeral
         const { jamId } = chat;
+
         console.log("new chat recieved", chat);
+
         const messages = this.store.chatLogs[jamId] || [];
         const message = { ...chat, createdAt: getUnix() };
         this.store.chatLogs[jamId] = [message, ...messages];

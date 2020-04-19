@@ -17,43 +17,10 @@
       timeLimit: timeLimit * 60,
       userId
     });
-    // send jam to db
-    // generate id for jam
-    // return id from server
-    // navigate to `jams/id`
     console.log("submitting form");
-    goto("/jams");
+    goto("/");
   }
 </script>
-
-<style>
-  .sexyform {
-    font-size: 16pt;
-    width: 100%;
-    padding: 4vmin;
-    margin: auto;
-    border-radius: 1vmin;
-  }
-  .sexyform input {
-  }
-
-  .sexyform label {
-    display: block;
-  }
-  .sexyform textarea {
-    font-size: 14pt;
-    width: 100%;
-    padding: 2vmin;
-    border-radius: 1vmin;
-    font-family: "Fira Code", sans-serif;
-    color: #555;
-    letter-spacing: 0.05em;
-  }
-  .sexyform button {
-    border-radius: 1vmin;
-    padding: 1vmin;
-  }
-</style>
 
 <svelte:head>
   <title>One Hour Beats - Create Jam</title>
@@ -85,3 +52,32 @@
     </div>
   </form>
 </div>
+
+<style>
+  .sexyform {
+    font-size: 16pt;
+    width: 100%;
+    padding: 4vmin;
+    margin: auto;
+    border-radius: 1vmin;
+  }
+  .sexyform input {
+  }
+
+  .sexyform label {
+    display: block;
+  }
+  .sexyform textarea {
+    font-size: 14pt;
+    width: 100%;
+    padding: 2vmin;
+    border-radius: 1vmin;
+    font-family: "Fira Code", sans-serif;
+    color: #555;
+    letter-spacing: 0.05em;
+  }
+  .sexyform button {
+    border-radius: 1vmin;
+    padding: 1vmin;
+  }
+</style>
