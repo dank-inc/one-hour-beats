@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
-    "devserver": "npm run dev > /var/log/ohb/log.txt& && tail -f /var/log/ohb/log.txt",
+    "devserver": "npm run dev > /var/log/ohb/log.txt&",
+    "watchlog": "tail -f /var/log/ohb/log.txt",
     "build": "sapper build --legacy",
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
