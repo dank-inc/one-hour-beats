@@ -17,7 +17,7 @@
   <p>Welcome, {userName}</p>
 </header>
 
-<div class="page-content">
+<div class="page-content jam-list">
   {#each Object.entries(jamIndex) as [id, jam]}
     <JamLink {jam} />
   {/each}
@@ -28,6 +28,10 @@
 </div>
 
 <style>
+  .jam-list {
+    display: flex;
+    flex-direction: column-reverse;
+  }
   p.right {
     width: 100%;
     text-align: right;

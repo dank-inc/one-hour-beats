@@ -25,6 +25,23 @@
   // todo socket on votes - animate in thumbs
 </script>
 
+<div class="entry">
+  <h3 class="header">{entry.userId} - {entry.title}</h3>
+  <div class="details">
+    <div class="details-main">
+      <a href={entry.link} target="_blank">
+        Listen on {entry.link.split('://')[1].split('/')[0]}
+      </a>
+      {#if canVote && entry.userId != userId}
+        <button on:click={handleVote} class="button">vote!</button>
+      {/if}
+    </div>
+    {#if votes}
+      <Votes {votes} />
+    {/if}
+  </div>
+</div>
+
 <style>
   .header {
     background: #ccc;
@@ -49,20 +66,3 @@
     justify-content: space-between;
   }
 </style>
-
-<div class="entry">
-  <h3 class="header">{entry.userId} - {entry.title}</h3>
-  <div class="details">
-    <div class="details-main">
-      <a href={entry.link} target="_blank">
-        Listen on {entry.link.split('://')[1].split('/')[0]}
-      </a>
-      {#if canVote && entry.userId != userId}
-        <button on:click={handleVote} class="button">vote!</button>
-      {/if}
-    </div>
-    {#if votes}
-      <Votes {votes} />
-    {/if}
-  </div>
-</div>

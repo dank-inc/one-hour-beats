@@ -3,6 +3,14 @@
   export let votes;
 </script>
 
+<div class="votes">
+  {#each votes as vote}
+    <div class="vote">
+      <div class="vote-letter">{vote.userId[0]}</div>
+    </div>
+  {/each}
+</div>
+
 <style>
   .votes {
     display: flex;
@@ -42,11 +50,3 @@
     text-align: center;
   }
 </style>
-
-<div class="votes">
-  {#each votes as vote}
-    <div class="vote">
-      <div class="vote-letter">{vote.userId[0]}</div>
-    </div>
-  {/each}
-</div>

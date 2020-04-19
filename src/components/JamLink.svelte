@@ -11,6 +11,16 @@
   // TODO: add animation when a new jam is created.
 </script>
 
+<a href={`/jams/${jam.id}`}>
+  <div class="jam-link">
+    <h2>{jam.name}</h2>
+    <p>{getJamState(jam)}</p>
+    <p class="users">
+      {#if userIds}{userIds.length} participants!{:else}0 participants!{/if}
+    </p>
+  </div>
+</a>
+
 <style>
   .jam-link {
     box-sizing: border-box;
@@ -39,13 +49,3 @@
     margin: auto 0 auto auto;
   }
 </style>
-
-<a href={`/jams/${jam.id}`}>
-  <div class="jam-link">
-    <h2>{jam.name}</h2>
-    <p>{getJamState(jam)}</p>
-    <p class="users">
-      {#if userIds}{userIds.length} participants!{:else}0 participants!{/if}
-    </p>
-  </div>
-</a>
