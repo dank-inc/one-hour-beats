@@ -5,15 +5,8 @@
   $: userName = $userStore.name;
 
   let currentTime = parseInt(new Date().getTime() / 1000);
-  let jamIndex = $jamStore;
+  $: jamIndex = $jamStore;
 </script>
-
-<style>
-  p.right {
-    width: 100%;
-    text-align: right;
-  }
-</style>
 
 <svelte:head>
   <title>One Hour Beats - Home</title>
@@ -33,3 +26,10 @@
     <a class="button" href="/create">Make a new Jam</a>
   </p>
 </div>
+
+<style>
+  p.right {
+    width: 100%;
+    text-align: right;
+  }
+</style>

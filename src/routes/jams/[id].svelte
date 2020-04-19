@@ -141,7 +141,7 @@
     flex-direction: column-reverse;
     max-height: 250px;
     overflow-y: auto;
-    border: 1px #aaa solid;
+    /* border: 1px #aaa solid; */
     padding: 0.2em 0.5rem 0;
     border-radius: 1rem;
     margin: 0 0 0.5rem;

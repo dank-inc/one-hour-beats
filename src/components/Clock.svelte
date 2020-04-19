@@ -14,11 +14,24 @@
 
   const draw = () => {
     const u = 1 - remaining / total;
+    const minute = Math.abs(1 - (remaining % 60) / 60);
     const second = Math.abs(1 - (remaining % 1));
     const w = width / 2;
     const h = height / 2;
     const hr = w * 0.9;
-    const sr = w * 0.8;
+    const mr = w * 0.8;
+    const sr = w * 0.7;
+
+    const warning = u > 0.8;
+
+    if (warning) {
+      const flicker = Math.sin(u * Math.PI * 2 * total);
+      if (flicker > 0) {
+        document.title = "WARNING";
+      } else {
+        document.title = "Jam Ending";
+      }
+    }
 
     ctx.save();
     ctx.fillStyle = "#fff8";
@@ -28,23 +41,26 @@
     ctx.rotate(Math.PI / 2);
 
     ctx.lineWidth = 5;
-    // ctx.fillStyle = "#333";
-    ctx.strokeStyle = "#333";
+
+    // ctx.strokeStyle = `hsl()`;
+    ctx.strokeStyle = warning ? "#f33" : "#333";
     ctx.beginPath();
     ctx.arc(0, 0, hr, 0, u * Math.PI * 2);
     ctx.stroke();
-    // ctx.fill();
-    // ctx.fillRect(u * width, height / 2, 20, 20);
 
-    ctx.fillStyle = "#0004";
-    ctx.strokeStyle = "#0004";
+    // ctx.strokeStyle = `hsl()`;
+    ctx.strokeStyle = warning ? "#955" : "#555";
+    ctx.beginPath();
+    ctx.arc(0, 0, mr, 0, minute * Math.PI * 2);
+    ctx.stroke();
+
+    // ctx.strokeStyle = `hsl()`;
+    ctx.strokeStyle = warning ? "#4004" : "#0004";
     ctx.beginPath();
     ctx.arc(0, 0, sr, 0, second * Math.PI * 2);
-    // ctx.fill();
     ctx.stroke();
 
     ctx.restore();
-    // ctx.fillRect(second * width, height * 0.33, 20, 20);
   };
 
   onMount(() => {
