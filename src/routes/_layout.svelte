@@ -103,7 +103,7 @@
   {/if}
 </main>
 
-<footer>
+<!-- <footer>
   <p>Made by Elijah Lucian - elijahlucian.ca</p>
   <p>&copy; The year of our LORD this twenty and two thousand</p>
-</footer>
+</footer> -->
