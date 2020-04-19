@@ -17,7 +17,8 @@
     const second = Math.abs(1 - (remaining % 1));
     const w = width / 2;
     const h = height / 2;
-    const r = w * 0.9;
+    const hr = w * 0.9;
+    const sr = w * 0.8;
 
     ctx.save();
     ctx.fillStyle = "#fff8";
@@ -27,16 +28,18 @@
     ctx.rotate(Math.PI / 2);
 
     ctx.lineWidth = 5;
-    ctx.fillStyle = "#333";
+    // ctx.fillStyle = "#333";
+    ctx.strokeStyle = "#333";
     ctx.beginPath();
-    ctx.arc(0, 0, r, 0, u * Math.PI * 2);
-    ctx.fill();
+    ctx.arc(0, 0, hr, 0, u * Math.PI * 2);
+    ctx.stroke();
+    // ctx.fill();
     // ctx.fillRect(u * width, height / 2, 20, 20);
 
     ctx.fillStyle = "#0004";
     ctx.strokeStyle = "#0004";
     ctx.beginPath();
-    ctx.arc(0, 0, r * second, 0, second * Math.PI * 2);
+    ctx.arc(0, 0, sr, 0, second * Math.PI * 2);
     // ctx.fill();
     ctx.stroke();
 
