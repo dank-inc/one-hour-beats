@@ -84,7 +84,12 @@
       <div>Time To Vote!</div>
     {:else}
       <p>Started At: {jam.startedAt}</p>
-      <p>Time Left: {timeLeft}</p>
+      <p>
+        Time Left:
+        {#if timeLeft / 60 > 1}{Math.floor(timeLeft / 60)} minutes{/if}
+        , {Math.floor(timeLeft % 60)} seconds
+      </p>
+
       <Clock total={jam.timeLimit} startedAt={jam.startedAt} />
     {/if}
 
