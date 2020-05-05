@@ -23,32 +23,48 @@
 </script>
 
 <svelte:head>
-  <title>One Hour Beats - Create Jam</title>
+  <title>One Hour Beats - Create Challenge</title>
 </svelte:head>
 
 <header>
-  <h1>Create Jam!</h1>
-  <p>Make your very own jam here!</p>
+  <h1>Create Challenge!</h1>
+  <p>Make your very own challenge here!</p>
 </header>
 
 <div class="page-content">
   <form on:submit|preventDefault={handleSubmit} class="sexyform">
     <div>
-      <label>Name of Jam:</label>
-      <input bind:value={name} placeholder="Jam Name" />
+      <label>Name of Challenge:</label>
+      <input bind:value={name} placeholder="Challenge Name" />
     </div>
     <div>
       <label>time limit (in minutes):</label>
       <input bind:value={timeLimit} type="number" min="0" max="240" />
     </div>
+    <h3>Outline of the rules of the challenge:</h3>
     <div>
-      <label>Outline of the rules of the jam:</label>
-    </div>
-    <textarea
-      bind:value={description}
-      placeholder="Eg: every sound must be in reverse" />
-    <div>
-      <button type="submit">Create!</button>
+      <div>
+        <label>General Prompt</label>
+        <input
+          type="text"
+          placeholder="eg: make a track that sounds like a childhood nightmare" />
+      </div>
+      <div>
+        <div>
+          <label>(optional) Video Prompt - link</label>
+          <input
+            type="url"
+            placeholder="eg: Make a background track to match the muted video" />
+        </div>
+        <div>
+          <label>(optional) Lyrical Prompt</label>
+          <input
+            type="text"
+            placeholder="eg: First line must contain these words: love, dank" />
+        </div>
+        <button type="submit">Create!</button>
+      </div>
+
     </div>
   </form>
 </div>

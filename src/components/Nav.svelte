@@ -37,7 +37,7 @@
   }
 
   img {
-    height: 6vw;
+    height: 75px;
     margin-right: 1vmin;
     filter: invert(1);
     mix-blend-mode: lighten;

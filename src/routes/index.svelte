@@ -14,7 +14,7 @@
 
 <header>
   <h1>Home</h1>
-  <p>Welcome, {userName}</p>
+  <p>Welcome, {userName} - Pick a challenge and get jammin!</p>
 </header>
 
 <div class="page-content jam-list">

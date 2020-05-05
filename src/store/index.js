@@ -5,7 +5,7 @@ export const entryStore = writable({});
 
 export const userStore = writable();
 
-// { [jamId]: number }
+// { [challengeId]: number }
 export const jamRoomStore = writable({});
 export const chatLogStore = writable({});
 

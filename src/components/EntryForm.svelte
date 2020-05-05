@@ -2,7 +2,7 @@
   import { userStore } from "../store";
   import { getContext } from "svelte";
   let { getSocket } = getContext("socket");
-  export let jamId;
+  export let challengeId;
   let link;
   $: user = $userStore;
   let artist = $userStore.id;
@@ -27,7 +27,7 @@
       artist,
       title,
       userId: user.id,
-      jamId: jamId
+      challengeId
     };
     link = "";
     console.log("Adding Entry", entry);

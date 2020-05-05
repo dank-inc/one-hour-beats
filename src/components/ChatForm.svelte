@@ -1,5 +1,5 @@
 <script>
-  export let jamId;
+  export let challengeId;
   import { getContext } from "svelte";
   import { userStore } from "../store";
   const { getSocket } = getContext("socket");
@@ -10,7 +10,7 @@
   const handleSubmit = () => {
     const socket = getSocket();
 
-    socket.emit("chat", { jamId, userId, text });
+    socket.emit("chat", { challengeId, userId, text });
     text = "";
   };
 </script>

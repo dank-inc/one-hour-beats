@@ -120,7 +120,9 @@ main {
   padding: 2em;
   align-self: flex-start;
   width: 100%;
+  max-width: 1200px;
   height: 100%;
+  margin: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
