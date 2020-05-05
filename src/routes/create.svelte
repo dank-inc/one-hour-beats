@@ -1,8 +1,18 @@
 <script>
   import { getContext } from "svelte";
   import { userStore } from "../store";
-  let { getSocket } = getContext("socket");
   import { goto } from "@sapper/app";
+  let { getSocket } = getContext("socket");
+
+  const placeholders = [
+    "eg: make a track that sounds like a childhood nightmare",
+    "eg: First line must contain these words: love, dank",
+    "eg: Make a background track to match the muted video"
+  ];
+
+  const placeholder =
+    placeholders[Math.floor(Math.random() * (placeholders.length - 1))];
+
   let name;
   let description;
   let timeLimit = 60;
@@ -17,14 +27,9 @@
       timeLimit: timeLimit * 60,
       userId
     });
-    console.log("submitting form");
     goto("/");
   }
 </script>
-
-<svelte:head>
-  <title>One Hour Beats - Create Challenge</title>
-</svelte:head>
 
 <header>
   <h1>Create Challenge!</h1>
@@ -45,23 +50,9 @@
     <div>
       <div>
         <label>General Prompt</label>
-        <input
-          type="text"
-          placeholder="eg: make a track that sounds like a childhood nightmare" />
+        <textarea bind:value={description} {placeholder} />
       </div>
       <div>
-        <div>
-          <label>(optional) Video Prompt - link</label>
-          <input
-            type="url"
-            placeholder="eg: Make a background track to match the muted video" />
-        </div>
-        <div>
-          <label>(optional) Lyrical Prompt</label>
-          <input
-            type="text"
-            placeholder="eg: First line must contain these words: love, dank" />
-        </div>
         <button type="submit">Create!</button>
       </div>
 
