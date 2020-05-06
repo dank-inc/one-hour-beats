@@ -2,16 +2,12 @@
   import { getContext } from "svelte";
   import { userStore } from "../store";
   import { goto } from "@sapper/app";
+  import { prompts } from "../constants/prompts";
+
   let { getSocket } = getContext("socket");
 
-  const placeholders = [
-    "eg: make a track that sounds like a childhood nightmare",
-    "eg: First line must contain these words: love, dank",
-    "eg: Make a background track to match the muted video"
-  ];
-
   const placeholder =
-    placeholders[Math.floor(Math.random() * (placeholders.length - 1))];
+    prompts[Math.floor(Math.random() * (prompts.length - 1))];
 
   let name;
   let description;
