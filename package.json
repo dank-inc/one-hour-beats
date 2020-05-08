@@ -1,7 +1,7 @@
 {
   "name": "one-hour-beats",
   "description": "Where the dankest beats are made!",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "scripts": {
     "dev": "sapper dev",
     "devserver": "npm run dev > /var/log/ohb/log.txt&",
