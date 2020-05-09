@@ -75,7 +75,7 @@
 <div class="jam-room page-content">
   <div class="jam-room-info">
     <h2>Jam Info</h2>
-    <p>description: {jam.description}</p>
+    <p>Challenge Prompt: {jam.description}</p>
     <p>Time Limit: {Math.floor(jam.timeLimit / 60)} minutes</p>
 
     {#if !jam.startedAt}
@@ -113,7 +113,7 @@
       </div>
     {/if}
 
-    {#if jam.startedAt && !includesSelf(entries, userId)}
+    {#if timeLeft > -600 && jam.startedAt && !includesSelf(entries, userId)}
       <EntryForm jamId={id} />
     {/if}
 
@@ -140,7 +140,7 @@
     display: flex;
     flex-direction: column-reverse;
     max-height: 250px;
-    overflow-y: auto;
+    overflow-y: scroll;
     /* border: 1px #aaa solid; */
     padding: 0.2em 0.5rem 0;
     border-radius: 1rem;

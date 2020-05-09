@@ -1,7 +1,6 @@
 <script>
   export let chat;
   export let userId;
-  console.log("chat => ", chat, userId);
 </script>
 
 {#each chat.slice(0, 10) as message}
