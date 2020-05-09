@@ -39,16 +39,16 @@
       currentTime = getUnix();
     }, 1000);
 
-    const challengeId = $page.params.id;
+    const jamId = $page.params.id;
 
     socket.on("chatUpdated", chatLog => {
       console.log("your chat has been updated", chatLog);
       chatLogStore.set(chatLog);
     });
 
-    socket.emit("joinJamRoom", { challengeId, userId });
+    socket.emit("joinJamRoom", { jamId, userId });
     return () => {
-      socket.emit("leaveJamRoom", { challengeId, userId });
+      socket.emit("leaveJamRoom", { jamId, userId });
       clearInterval(interval);
     };
   });
@@ -140,7 +140,7 @@
     {/if}
 
     {#if timeLeft > 0 && jam.startedAt && !includesSelf(entries, userId)}
-      <EntryForm challengeId={id} />
+      <EntryForm jamId={id} />
     {/if}
 
     <div class="jam-chat-box">
@@ -152,7 +152,7 @@
           <div>All is quiet...</div>
         {/if}
       </div>
-      <ChatForm challengeId={id} />
+      <ChatForm jamId={id} />
     </div>
   </div>
 </div>
