@@ -10,7 +10,7 @@
     entryStore,
     userStore,
     chatLogStore,
-    voteTokenStore
+    voteTokenStore,
   } from "../../store";
 
   import { onMount, getContext } from "svelte";
@@ -22,7 +22,7 @@
   // Add a socket for a room to add numbers
 
   let {
-    params: { id }
+    params: { id },
   } = $page;
 
   $: jam = $jamStore[id];
@@ -41,7 +41,7 @@
 
     const jamId = $page.params.id;
 
-    socket.on("chatUpdated", chatLog => {
+    socket.on("chatUpdated", (chatLog) => {
       console.log("your chat has been updated", chatLog);
       chatLogStore.set(chatLog);
     });
@@ -54,7 +54,7 @@
   });
 
   const includesSelf = (arr, userId) => {
-    return arr && !!arr.find(a => a.userId === userId);
+    return arr && !!arr.find((a) => a.userId === userId);
   };
 
   const handleStart = () => {
@@ -62,32 +62,6 @@
     socket.emit("startJam", { id });
   };
 </script>
-
-<style>
-  .jam-room {
-    padding: 1rem;
-    display: flex;
-  }
-  .jam-chat {
-    display: flex;
-    flex-direction: column-reverse;
-    max-height: 250px;
-    overflow-y: auto;
-    /* border: 1px #aaa solid; */
-    padding: 0.2em 0.5rem 0;
-    border-radius: 1rem;
-    margin: 0 0 0.5rem;
-  }
-  .jam-chat-box {
-    padding: 1rem 0;
-  }
-  .jam-room-info {
-    flex: 5;
-  }
-  .jam-room-right {
-    flex: 3;
-  }
-</style>
 
 <svelte:head>
   <title>One Hour Beats - {jam.name}</title>
@@ -139,7 +113,7 @@
       </div>
     {/if}
 
-    {#if timeLeft > 0 && jam.startedAt && !includesSelf(entries, userId)}
+    {#if jam.startedAt && !includesSelf(entries, userId)}
       <EntryForm jamId={id} />
     {/if}
 
@@ -156,3 +130,29 @@
     </div>
   </div>
 </div>
+
+<style>
+  .jam-room {
+    padding: 1rem;
+    display: flex;
+  }
+  .jam-chat {
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 250px;
+    overflow-y: auto;
+    /* border: 1px #aaa solid; */
+    padding: 0.2em 0.5rem 0;
+    border-radius: 1rem;
+    margin: 0 0 0.5rem;
+  }
+  .jam-chat-box {
+    padding: 1rem 0;
+  }
+  .jam-room-info {
+    flex: 5;
+  }
+  .jam-room-right {
+    flex: 3;
+  }
+</style>
