@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  const width = 300;
-  const height = 300;
+  const width = 150;
+  const height = 150;
 
   export let total;
   export let startedAt;
@@ -13,16 +13,16 @@
   $: remaining = started - current + total;
 
   const draw = () => {
-    const u = 1 - remaining / total;
-    const minute = Math.abs(1 - (remaining % 60) / 60);
-    const second = Math.abs(1 - (remaining % 1));
+    const u = remaining / total;
+    const minute = (remaining % 60) / 60;
+    const second = remaining % 1;
     const w = width / 2;
     const h = height / 2;
-    const hr = w * 0.9;
-    const mr = w * 0.8;
-    const sr = w * 0.7;
+    const hr = w * 0.8;
+    const mr = w * 0.6;
+    const sr = w * 0.4;
 
-    const warning = u > 0.8;
+    const warning = u < 0.3;
 
     if (warning) {
       const flicker = Math.sin(u * Math.PI * 2 * total);
@@ -40,7 +40,7 @@
     ctx.translate(w, h);
     ctx.rotate(Math.PI / 2);
 
-    ctx.lineWidth = 5;
+    ctx.lineWidth = width / 10;
 
     // ctx.strokeStyle = `hsl()`;
     ctx.strokeStyle = warning ? "#f33" : "#333";
