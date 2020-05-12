@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("VoteTokens", {
+    return queryInterface.createTable("vote_tokens", {
       userId: {
         primaryKey: true,
         allowNull: false,

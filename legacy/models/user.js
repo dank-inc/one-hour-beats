@@ -11,7 +11,9 @@ export default (sequelize) => {
       thumbs: DataTypes.INTEGER,
       wins: DataTypes.INTEGER,
     },
-    {}
+    {
+      tableName: "users",
+    }
   );
   User.associate = function (models) {
     // associations can be defined here

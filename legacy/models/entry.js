@@ -10,7 +10,9 @@ export default (sequelize) => {
       userId: DataTypes.STRING,
       jamId: DataTypes.STRING,
     },
-    {}
+    {
+      tableName: "entries",
+    }
   );
   Entry.associate = function (models) {
     // associations can be defined here

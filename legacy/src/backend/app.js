@@ -44,9 +44,10 @@ export class App {
 
     this.defineRoutes();
 
-    this.db = new Sequelize("one_hour_beats", "ohb", "ohb", {
+    this.db = new Sequelize("one_hour_beats", "postgres", "ohb", {
       dialect: "postgres",
       logging: false,
+      host: "db",
     });
 
     this.initDB();

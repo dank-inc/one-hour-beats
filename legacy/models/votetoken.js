@@ -8,7 +8,10 @@ export default (sequelize) => {
       jamId: DataTypes.STRING,
       entryId: DataTypes.STRING,
     },
-    { timestamps: false }
+    {
+      tableName: "vote_tokens",
+      timestamps: false,
+    }
   );
   VoteToken.removeAttribute("id");
   // VoteToken.removeAttribute("createdAt");

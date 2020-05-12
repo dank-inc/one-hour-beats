@@ -15,7 +15,9 @@
     "db:migrate": "npx sequelize db:migrate",
     "db:down": "npx sequelize db:migrate:undo:all",
     "db:seed": "npx sequelize db:seed:all",
-    "devreset": "npm run db:down && npm run db:migrate && npm run db:seed"
+    "db:drop": "npx sequelize db:drop",
+    "db:create": "npx sequelize db:create",
+    "db:init": "npm run db:drop && npm run db:create && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@polka/send-type": "^0.5.2",

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (q, Sequelize) => {
-    return q.bulkInsert("VoteTokens", [
+    return q.bulkInsert("vote_tokens", [
       { jamId: "dank-rhinos", userId: "eli7vh" },
     ]);
   },

@@ -1,0 +1,34 @@
+version: "3.8"
+
+volumes:
+  el_database:
+  legacy_node_modules:
+
+services:
+  legacy:
+    depends_on:
+      - db
+    volumes:
+      - ./legacy:/usr/src/legacy
+      - legacy_node_modules:/usr/src/legacy/node_modules
+    build:
+      context: ./legacy
+    ports:
+      - 3000:3000
+    # entrypoint: npm run dev
+
+  db:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=ohb
+    volumes:
+      - el_database:/var/lib/postgresql/data
+
+  pgweb:
+    image: sosedoff/pgweb
+    ports:
+      - 8081:8081
+    depends_on:
+      - db
