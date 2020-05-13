@@ -1,6 +1,16 @@
 # One Hour Beats
 
-## Setup
+## Frontend Instructions
+
+### Run frontend locally
+
+```sh
+cd frontend
+npm install
+npm run start
+```
+
+## Legacy Setup
 
 ### setup the legacy app:
 
