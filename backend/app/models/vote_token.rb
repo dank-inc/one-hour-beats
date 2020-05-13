@@ -1,0 +1,2 @@
+class VoteToken < ApplicationRecord
+end

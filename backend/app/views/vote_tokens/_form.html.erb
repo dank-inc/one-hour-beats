@@ -1,0 +1,32 @@
+<%= form_with(model: vote_token, local: true) do |form| %>
+  <% if vote_token.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vote_token.errors.count, "error") %> prohibited this vote_token from being saved:</h2>
+
+      <ul>
+        <% vote_token.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jam_id %>
+    <%= form.text_field :jam_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :entry_id %>
+    <%= form.text_field :entry_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

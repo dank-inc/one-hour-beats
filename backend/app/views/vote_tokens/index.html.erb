@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vote Tokens</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Jam</th>
+      <th>Entry</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vote_tokens.each do |vote_token| %>
+      <tr>
+        <td><%= vote_token.user_id %></td>
+        <td><%= vote_token.jam_id %></td>
+        <td><%= vote_token.entry_id %></td>
+        <td><%= link_to 'Show', vote_token %></td>
+        <td><%= link_to 'Edit', edit_vote_token_path(vote_token) %></td>
+        <td><%= link_to 'Destroy', vote_token, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vote Token', new_vote_token_path %>

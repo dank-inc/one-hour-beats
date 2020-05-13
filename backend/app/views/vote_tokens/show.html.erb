@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @vote_token.user_id %>
+</p>
+
+<p>
+  <strong>Jam:</strong>
+  <%= @vote_token.jam_id %>
+</p>
+
+<p>
+  <strong>Entry:</strong>
+  <%= @vote_token.entry_id %>
+</p>
+
+<%= link_to 'Edit', edit_vote_token_path(@vote_token) %> |
+<%= link_to 'Back', vote_tokens_path %>

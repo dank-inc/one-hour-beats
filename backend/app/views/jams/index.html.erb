@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jams</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Time limit</th>
+      <th>User</th>
+      <th>Started at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jams.each do |jam| %>
+      <tr>
+        <td><%= jam.name %></td>
+        <td><%= jam.description %></td>
+        <td><%= jam.time_limit %></td>
+        <td><%= jam.user_id %></td>
+        <td><%= jam.started_at %></td>
+        <td><%= link_to 'Show', jam %></td>
+        <td><%= link_to 'Edit', edit_jam_path(jam) %></td>
+        <td><%= link_to 'Destroy', jam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jam', new_jam_path %>

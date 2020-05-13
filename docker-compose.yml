@@ -13,7 +13,7 @@ services:
     build:
       context: ./backend
     ports:
-      - 3030:3000
+      - 3000:3000
 
   frontend:
     volumes:
@@ -25,22 +25,20 @@ services:
     ports:
       - 3030:3000
 
-  legacy:
-    depends_on:
-      - db
-    volumes:
-      - ./legacy:/usr/src/legacy
-      - legacy_node_modules:/usr/src/legacy/node_modules
-    build:
-      context: ./legacy
-    command: exit
-    ports:
-      - 3333:3000
-    # entrypoint: npm run dev
+  # legacy:
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./legacy:/usr/src/legacy
+  #     - legacy_node_modules:/usr/src/legacy/node_modules
+  #   build:
+  #     context: ./legacy
+  #   command: exit
+  #   ports:
+  #     - 3333:3000
+  #   # entrypoint: npm run dev
 
   db:
-    depends_on:
-      - pgweb
     image: postgres:12
     environment:
       - POSTGRES_PASSWORD=ohb
@@ -49,5 +47,9 @@ services:
 
   pgweb:
     image: sosedoff/pgweb
+    depends_on:
+      - db
     ports:
       - 8081:8081
+    environment:
+      - DATABASE_URL=postgres://postgres:ohb@db:5432/one_hour_beats?sslmode=disable
