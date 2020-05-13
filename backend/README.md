@@ -1,24 +1,10 @@
-# README
+# One Hour Beats Server
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## scaffold shit
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+rails generate scaffold users username:string name:string email:string password:string thumbs:integer wins:integer
+rails generate scaffold jams name:string description:string time_limit:integer user_id:string started_at:datetime
+rails generate scaffold entries title:string link:string user_id:string jam_id: string
+rails generate scaffold vote_tokens user_id:string jam_id:string entry_id:string
+```
