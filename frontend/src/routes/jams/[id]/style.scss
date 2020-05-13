@@ -1,0 +1,9 @@
+.jam-details {
+  display: flex;
+  justify-content: space-between;
+
+  .jam-left,
+  .jam-right {
+    flex: 1;
+  }
+}
