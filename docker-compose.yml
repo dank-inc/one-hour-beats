@@ -3,6 +3,7 @@ version: "3.8"
 volumes:
   el_database:
   legacy_node_modules:
+  node_modules:
 
 services:
   backend:
@@ -18,6 +19,7 @@ services:
   frontend:
     volumes:
       - ./frontend:/usr/src/frontend
+      - node_modules:/usr/src/frontend/node_modules
     # depends_on:
     #   - backend
     build:
