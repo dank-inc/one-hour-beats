@@ -1,8 +1,23 @@
 # One Hour Beats
 
-## Frontend Instructions
+# First Time Setup
 
-### Run frontend locally
+```sh
+# step 1
+docker-compose build
+# frontend
+docker-compose run --rm frontend npm i
+# backend
+docker-compose run --rm bash
+> rails db:create
+> rails db:migrate
+> rails db:seed
+> exit
+```
+
+## Other Instructions
+
+### Run frontend locally (w/o Docker)
 
 ```sh
 cd frontend
