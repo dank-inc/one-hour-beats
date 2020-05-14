@@ -1,4 +1,4 @@
-# One Hour Beats
+# One Hour Beats YA
 
 # First Time Setup
 
