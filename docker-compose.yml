@@ -13,8 +13,8 @@ services:
       - db
     build:
       context: ./backend
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
 
   frontend:
     volumes:
@@ -23,21 +23,8 @@ services:
     build:
       context: ./frontend
     tty: true
-    ports:
-      - 3001:3000
-
-  # legacy:
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - ./legacy:/usr/src/legacy
-  #     - legacy_node_modules:/usr/src/legacy/node_modules
-  #   build:
-  #     context: ./legacy
-  #   command: exit
-  #   ports:
-  #     - 3333:3000
-  #   # entrypoint: npm run dev
+    # ports:
+    #   - 3001:3000
 
   nginx:
     build:
