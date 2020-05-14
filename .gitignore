@@ -7,3 +7,5 @@ yarn-error.log
 tmp/
 cache/
 .env
+
+log/*
