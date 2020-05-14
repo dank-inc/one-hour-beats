@@ -9,3 +9,4 @@ cache/
 .env
 
 log/*
+backend/log/development.log
