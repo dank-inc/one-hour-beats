@@ -336,3 +336,497 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 10ms (Views: 8.0ms | ActiveRecord: 0.0ms | Allocations: 881)
 
 
+Started GET "/dashboard/calendar" for 192.168.48.1 at 2020-05-14 01:30:06 +0000
+Cannot render console from 192.168.48.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/dashboard/calendar"):
+  
+actionpack (6.0.3) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.0.2) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.0.2) lib/web_console/middleware.rb:19:in `block in call'
+web-console (4.0.2) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.0.2) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+webpacker (4.2.2) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.3) lib/rails/engine.rb:527:in `call'
+puma (4.3.3) lib/puma/configuration.rb:228:in `call'
+puma (4.3.3) lib/puma/server.rb:682:in `handle_request'
+puma (4.3.3) lib/puma/server.rb:472:in `process_client'
+puma (4.3.3) lib/puma/server.rb:328:in `block in run'
+puma (4.3.3) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/" for 192.168.48.1 at 2020-05-14 01:30:09 +0000
+Cannot render console from 192.168.48.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 5.0ms | Allocations: 183)
+Completed 200 OK in 8ms (Views: 7.3ms | ActiveRecord: 0.0ms | Allocations: 881)
+
+
+Started GET "/" for 192.168.80.1 at 2020-05-14 01:33:31 +0000
+Cannot render console from 192.168.80.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 7.5ms | Allocations: 294)
+Completed 200 OK in 24ms (Views: 16.1ms | ActiveRecord: 0.0ms | Allocations: 1556)
+
+
+Started GET "/users" for 192.168.80.1 at 2020-05-14 01:33:34 +0000
+Cannot render console from 192.168.80.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#index as JSON
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/views/users/index.json.jbuilder:1
+  Rendered users/_user.json.jbuilder (Duration: 2.7ms | Allocations: 200)
+  Rendered users/index.json.jbuilder (Duration: 37.2ms | Allocations: 6626)
+Completed 200 OK in 54ms (Views: 36.8ms | ActiveRecord: 7.0ms | Allocations: 8495)
+
+
+Started GET "/users/1" for 192.168.80.1 at 2020-05-14 01:33:46 +0000
+Cannot render console from 192.168.80.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:67:in `set_user'
+  Rendering users/show.json.jbuilder
+  Rendered users/_user.json.jbuilder (Duration: 1.1ms | Allocations: 162)
+  Rendered users/show.json.jbuilder (Duration: 4.6ms | Allocations: 526)
+Completed 200 OK in 14ms (Views: 6.2ms | ActiveRecord: 0.6ms | Allocations: 1987)
+
+
+Started GET "/users/new" for 192.168.80.1 at 2020-05-14 01:33:49 +0000
+Cannot render console from 192.168.80.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#show as JSON
+  Parameters: {"id"=>"new"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:67:in `set_user'
+Completed 404 Not Found in 4ms (ActiveRecord: 0.5ms | Allocations: 971)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=new):
+  
+app/controllers/users_controller.rb:67:in `set_user'
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (1.8ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:37:33.250912"], ["updated_at", "2020-05-14 01:37:33.250912"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:37:33.272661"], ["updated_at", "2020-05-14 01:37:33.272661"]]
+  [1m[35m (2.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (1.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:38:14.954973"], ["updated_at", "2020-05-14 01:38:14.954973"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (1.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:38:14.971717"], ["updated_at", "2020-05-14 01:38:14.971717"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (1.4ms)[0m  [1m[32mINSERT INTO "jams" ("id", "name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["id", 0], ["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:38:14.997189"], ["created_at", "2020-05-14 01:38:15.012636"], ["updated_at", "2020-05-14 01:38:15.012636"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:38:35.886585"], ["updated_at", "2020-05-14 01:38:35.886585"]]
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:38:35.903878"], ["updated_at", "2020-05-14 01:38:35.903878"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (3.3ms)[0m  [1m[32mINSERT INTO "jams" ("id", "name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["id", 0], ["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:38:35.921996"], ["created_at", "2020-05-14 01:38:35.944181"], ["updated_at", "2020-05-14 01:38:35.944181"]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (31.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "one_hour_beats"[0m
+  [1m[35m (23.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "one_hour_beats_test"[0m
+  [1m[35m (189.1ms)[0m  [1m[35mCREATE DATABASE "one_hour_beats" ENCODING = 'utf8'[0m
+  [1m[35m (111.5ms)[0m  [1m[35mCREATE DATABASE "one_hour_beats_test" ENCODING = 'utf8'[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (10.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5629214056339743870)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20200513062345)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "name" character varying, "email" character varying, "password" character varying, "thumbs" integer, "wins" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062345"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJams (20200513062401)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "jams" ("id" bigserial primary key, "name" character varying, "description" character varying, "time_limit" integer, "user_id" character varying, "started_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062401"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEntries (20200513062408)
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "entries" ("id" bigserial primary key, "title" character varying, "link" character varying, "user_id" character varying, "jam_id" character varying, "string" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062408"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVoteTokens (20200513062412)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "vote_tokens" ("id" bigserial primary key, "user_id" character varying, "jam_id" character varying, "entry_id" character varying)[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062412"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-05-14 01:39:06.598529"], ["updated_at", "2020-05-14 01:39:06.598529"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5629214056339743870)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:39:11.515568"], ["updated_at", "2020-05-14 01:39:11.515568"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:39:11.536981"], ["updated_at", "2020-05-14 01:39:11.536981"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (1.5ms)[0m  [1m[32mINSERT INTO "jams" ("id", "name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["id", 0], ["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:39:11.553851"], ["created_at", "2020-05-14 01:39:11.571819"], ["updated_at", "2020-05-14 01:39:11.571819"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (3.7ms)[0m  [1m[32mINSERT INTO "jams" ("id", "name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 0], ["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:39:11.591218"], ["updated_at", "2020-05-14 01:39:11.591218"]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:39:39.091981"], ["updated_at", "2020-05-14 01:39:39.091981"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:39:39.110677"], ["updated_at", "2020-05-14 01:39:39.110677"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.9ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:39:39.130532"], ["created_at", "2020-05-14 01:39:39.148610"], ["updated_at", "2020-05-14 01:39:39.148610"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (1.1ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:39:39.163961"], ["updated_at", "2020-05-14 01:39:39.163961"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:39:49.103655"], ["updated_at", "2020-05-14 01:39:49.103655"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:39:49.125657"], ["updated_at", "2020-05-14 01:39:49.125657"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.6ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:39:49.143110"], ["created_at", "2020-05-14 01:39:49.161311"], ["updated_at", "2020-05-14 01:39:49.161311"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.4ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:39:49.178592"], ["updated_at", "2020-05-14 01:39:49.178592"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (1.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:40:10.997410"], ["updated_at", "2020-05-14 01:40:10.997410"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:40:11.013992"], ["updated_at", "2020-05-14 01:40:11.013992"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.6ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:40:11.033864"], ["created_at", "2020-05-14 01:40:11.052990"], ["updated_at", "2020-05-14 01:40:11.052990"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.5ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:40:11.069014"], ["updated_at", "2020-05-14 01:40:11.069014"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:40:20.251450"], ["updated_at", "2020-05-14 01:40:20.251450"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:40:20.271880"], ["updated_at", "2020-05-14 01:40:20.271880"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.6ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:40:20.292907"], ["created_at", "2020-05-14 01:40:20.316921"], ["updated_at", "2020-05-14 01:40:20.316921"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.6ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:40:20.331298"], ["updated_at", "2020-05-14 01:40:20.331298"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEntry Create (0.7ms)[0m  [1m[32mINSERT INTO "entries" ("title", "link", "user_id", "jam_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "whats a dik 4"], ["link", "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4"], ["user_id", "eli7vh"], ["jam_id", "dank-rhinos"], ["created_at", "2020-05-14 01:40:20.364343"], ["updated_at", "2020-05-14 01:40:20.364343"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVoteToken Create (0.6ms)[0m  [1m[32mINSERT INTO "vote_tokens" ("user_id", "jam_id") VALUES ($1, $2) RETURNING "id"[0m  [["user_id", "eli7vh"], ["jam_id", "dank-rhinos"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (35.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "one_hour_beats"[0m
+  [1m[35m (31.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "one_hour_beats_test"[0m
+  [1m[35m (111.0ms)[0m  [1m[35mCREATE DATABASE "one_hour_beats" ENCODING = 'utf8'[0m
+  [1m[35m (112.3ms)[0m  [1m[35mCREATE DATABASE "one_hour_beats_test" ENCODING = 'utf8'[0m
+  [1m[35m (10.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (18.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5629214056339743870)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20200513062345)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (14.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "name" character varying, "email" character varying, "password" character varying, "thumbs" integer, "wins" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062345"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJams (20200513062401)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "jams" ("id" bigserial primary key, "name" character varying, "description" character varying, "time_limit" integer, "user_id" character varying, "started_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062401"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEntries (20200513062408)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "entries" ("id" bigserial primary key, "title" character varying, "link" character varying, "user_id" character varying, "jam_id" character varying, "string" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062408"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVoteTokens (20200513062412)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.1ms)[0m  [1m[35mCREATE TABLE "vote_tokens" ("id" bigserial primary key, "user_id" character varying, "jam_id" character varying, "entry_id" character varying)[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200513062412"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-05-14 01:40:35.063437"], ["updated_at", "2020-05-14 01:40:35.063437"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(5629214056339743870)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "eli7vh"], ["name", "elijah"], ["email", "elijahlucian@gmail.com"], ["password", "toffee15"], ["thumbs", 50], ["wins", 2], ["created_at", "2020-05-14 01:40:35.192446"], ["updated_at", "2020-05-14 01:40:35.192446"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "name", "email", "password", "thumbs", "wins", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["username", "toffee"], ["name", "El Doge"], ["email", "vapsquad@gmail.com"], ["password", "toffee15"], ["thumbs", 20], ["wins", 5], ["created_at", "2020-05-14 01:40:35.200570"], ["updated_at", "2020-05-14 01:40:35.200570"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.7ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "started_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "first one hour beat!"], ["description", "make a beat within the hour! anything goes!"], ["time_limit", 240], ["user_id", "eli7vh"], ["started_at", "2020-05-14 01:40:35.209728"], ["created_at", "2020-05-14 01:40:35.218434"], ["updated_at", "2020-05-14 01:40:35.218434"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mJam Create (0.4ms)[0m  [1m[32mINSERT INTO "jams" ("name", "description", "time_limit", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "a new ohb"], ["description", "make a sketch with only human noises!"], ["time_limit", 3600], ["user_id", "toffee"], ["created_at", "2020-05-14 01:40:35.226495"], ["updated_at", "2020-05-14 01:40:35.226495"]]
+  [1m[35m (2.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEntry Create (0.6ms)[0m  [1m[32mINSERT INTO "entries" ("title", "link", "user_id", "jam_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "whats a dik 4"], ["link", "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4"], ["user_id", "eli7vh"], ["jam_id", "dank-rhinos"], ["created_at", "2020-05-14 01:40:35.250491"], ["updated_at", "2020-05-14 01:40:35.250491"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mVoteToken Create (0.6ms)[0m  [1m[32mINSERT INTO "vote_tokens" ("user_id", "jam_id") VALUES ($1, $2) RETURNING "id"[0m  [["user_id", "eli7vh"], ["jam_id", "dank-rhinos"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mEntry Load (0.4ms)[0m  [1m[34mSELECT "entries".* FROM "entries" WHERE "entries"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mEntry Load (0.5ms)[0m  [1m[34mSELECT "entries".* FROM "entries" WHERE "entries"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mEntry Load (0.4ms)[0m  [1m[34mSELECT "entries".* FROM "entries" WHERE "entries"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/" for 192.168.96.1 at 2020-05-14 01:49:23 +0000
+Cannot render console from 192.168.96.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 7.8ms | Allocations: 294)
+Completed 200 OK in 30ms (Views: 15.5ms | ActiveRecord: 0.0ms | Allocations: 1696)
+
+
+Started GET "/users" for 192.168.96.1 at 2020-05-14 01:49:26 +0000
+Cannot render console from 192.168.96.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#index as JSON
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/views/users/index.json.jbuilder:1
+  Rendered users/_user.json.jbuilder (Duration: 2.0ms | Allocations: 199)
+  Rendered users/_user.json.jbuilder (Duration: 0.3ms | Allocations: 90)
+  Rendered users/index.json.jbuilder (Duration: 33.8ms | Allocations: 6905)
+Completed 200 OK in 49ms (Views: 32.2ms | ActiveRecord: 5.6ms | Allocations: 8887)
+
+
+Started GET "/users/new" for 192.168.112.1 at 2020-05-14 01:49:50 +0000
+Cannot render console from 192.168.112.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#new as JSON
+Completed 406 Not Acceptable in 54ms (ActiveRecord: 4.8ms | Allocations: 7149)
+
+
+  
+ActionController::UnknownFormat (UsersController#new is missing a template for this request format and variant.
+
+request.formats: ["application/json"]
+request.variant: []):
+  
+actionpack (6.0.3) lib/action_controller/metal/implicit_render.rb:42:in `default_render'
+actionpack (6.0.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `block in send_action'
+actionpack (6.0.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `tap'
+actionpack (6.0.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (6.0.3) lib/abstract_controller/base.rb:195:in `process_action'
+actionpack (6.0.3) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (6.0.3) lib/abstract_controller/callbacks.rb:42:in `block in process_action'
+activesupport (6.0.3) lib/active_support/callbacks.rb:135:in `run_callbacks'
+actionpack (6.0.3) lib/abstract_controller/callbacks.rb:41:in `process_action'
+actionpack (6.0.3) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (6.0.3) lib/action_controller/metal/instrumentation.rb:33:in `block in process_action'
+activesupport (6.0.3) lib/active_support/notifications.rb:180:in `block in instrument'
+activesupport (6.0.3) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (6.0.3) lib/active_support/notifications.rb:180:in `instrument'
+actionpack (6.0.3) lib/action_controller/metal/instrumentation.rb:32:in `process_action'
+actionpack (6.0.3) lib/action_controller/metal/params_wrapper.rb:245:in `process_action'
+activerecord (6.0.3) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (6.0.3) lib/abstract_controller/base.rb:136:in `process'
+actionview (6.0.3) lib/action_view/rendering.rb:39:in `process'
+actionpack (6.0.3) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.0.3) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.0.3) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.0.3) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.0.3) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.3) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.3) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.3) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.2.2) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.2) lib/rack/etag.rb:27:in `call'
+rack (2.2.2) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.2) lib/rack/head.rb:12:in `call'
+actionpack (6.0.3) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.2) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.2) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/cookies.rb:648:in `call'
+activerecord (6.0.3) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.3) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.3) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.0.2) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.0.2) lib/web_console/middleware.rb:19:in `block in call'
+web-console (4.0.2) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.0.2) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+webpacker (4.2.2) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.3) lib/rails/engine.rb:527:in `call'
+puma (4.3.3) lib/puma/configuration.rb:228:in `call'
+puma (4.3.3) lib/puma/server.rb:682:in `handle_request'
+puma (4.3.3) lib/puma/server.rb:472:in `process_client'
+puma (4.3.3) lib/puma/server.rb:328:in `block in run'
+puma (4.3.3) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/users" for 192.168.112.1 at 2020-05-14 01:49:59 +0000
+Cannot render console from 192.168.112.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#index as JSON
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/views/users/index.json.jbuilder:1
+  Rendered users/_user.json.jbuilder (Duration: 2.5ms | Allocations: 200)
+  Rendered users/_user.json.jbuilder (Duration: 0.4ms | Allocations: 90)
+  Rendered users/index.json.jbuilder (Duration: 12.2ms | Allocations: 1718)
+Completed 200 OK in 19ms (Views: 15.9ms | ActiveRecord: 0.7ms | Allocations: 3404)
+
+
+Started GET "/users.html" for 192.168.112.1 at 2020-05-14 01:50:03 +0000
+Cannot render console from 192.168.112.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#index as HTML
+  Rendering users/index.html.erb within layouts/application
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/views/users/index.html.erb:19
+  Rendered users/index.html.erb within layouts/application (Duration: 5.3ms | Allocations: 1348)
+Completed 500 Internal Server Error in 571ms (ActiveRecord: 0.4ms | Allocations: 18711)
+
+
+  
+ActionView::Template::Error (File exists @ dir_s_mkdir - /usr/src/backend/tmp/cache/assets/sprockets/v4.0.0/gO):
+     5:     <%= csrf_meta_tags %>
+     6:     <%= csp_meta_tag %>
+     7: 
+     8:     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+     9:     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    10:   </head>
+    11: 
+  
+app/views/layouts/application.html.erb:8
+Started GET "/" for 192.168.160.1 at 2020-05-14 02:23:45 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 6.8ms | Allocations: 294)
+Completed 200 OK in 34ms (Views: 19.8ms | ActiveRecord: 0.0ms | Allocations: 1696)
+
+
+Started GET "/" for 192.168.160.1 at 2020-05-14 02:24:55 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 4.7ms | Allocations: 542)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 0.0ms | Allocations: 2145)
+
+
+Started GET "/" for 192.168.160.1 at 2020-05-14 02:24:56 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 8)
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.0ms | Allocations: 360)
+
+
+Started GET "/" for 192.168.160.1 at 2020-05-14 02:24:57 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 7)
+Completed 200 OK in 3ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 357)
+
+
+Started GET "/" for 192.168.160.1 at 2020-05-14 02:24:57 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.5ms | Allocations: 7)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.0ms | Allocations: 356)
+
+
+Started GET "/users" for 192.168.160.1 at 2020-05-14 02:25:00 +0000
+Cannot render console from 192.168.160.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#index as JSON
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/views/users/index.json.jbuilder:1
+  Rendered users/_user.json.jbuilder (Duration: 2.3ms | Allocations: 199)
+  Rendered users/_user.json.jbuilder (Duration: 0.5ms | Allocations: 90)
+  Rendered users/index.json.jbuilder (Duration: 25.3ms | Allocations: 6905)
+Completed 200 OK in 40ms (Views: 25.0ms | ActiveRecord: 6.4ms | Allocations: 8874)
+
+
+Started GET "/" for 172.19.0.1 at 2020-05-14 02:33:47 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 7.7ms | Allocations: 294)
+Completed 200 OK in 32ms (Views: 19.7ms | ActiveRecord: 0.0ms | Allocations: 1696)
+
+

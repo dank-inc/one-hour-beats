@@ -28,33 +28,29 @@ User.create!({
 })
 
 Jam.create!({
-  id: "dank-rhinos",
   name: "first one hour beat!",
   description: "make a beat within the hour! anything goes!",
-  timeLimit: 60 * 4,
-  startedAt: new Date(),
-  userId: "eli7vh", // createdBy
+  time_limit: 60 * 4,
+  started_at: Time.now,
+  user_id: "eli7vh", # createdBy
 })
 
 Jam.create!({
-  id: "cool-unicorns",
   name: "a new ohb",
   description: "make a sketch with only human noises!",
-  timeLimit: 3600,
-  startedAt: null,
-  userId: "toffee",
+  time_limit: 3600,
+  started_at: nil,
+  user_id: "toffee",
 })
 
 Entry.create!({
-  id: "whatsadik4",
-  link: `https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4`,
+  link: "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4",
   title: "whats a dik 4",
-  artist: "vapsquad",
-  userId: "eli7vh",
-  jamId: "dank-rhinos",
+  user_id: "eli7vh",
+  jam_id: "dank-rhinos",
 })
 
 VoteToken.create!({ 
-  jamId: "dank-rhinos", 
-  userId: "eli7vh"
+  jam_id: "dank-rhinos", 
+  user_id: "eli7vh"
 })
