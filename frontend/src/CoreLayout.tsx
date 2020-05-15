@@ -19,7 +19,6 @@ export const CoreLayout = () => {
       <AppContextProvider>
         <Switch>
           <Route path="/jams/:id/:view" component={JamPopout} />
-
           <div>
             <header>
               <h2>One Hour Beats</h2>

@@ -1,9 +1,11 @@
 class JamroomChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
+    jam = Jam.find params[:id]
+    stream_for jam
   end
 
-  def unsubscribed
+  def unsubscribed 
+    puts ">>> SOMEBODY UNSUBSCRIBED #{params}"
     # Any cleanup needed when channel is unsubscribed
   end
 end

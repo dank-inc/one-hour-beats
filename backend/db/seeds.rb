@@ -29,6 +29,16 @@ User.create!({
   wins: 5,
 })
 
+User.create({
+  id: 'otherdude',
+  username: 'otherdude',
+  name: 'blah',
+  password: 'toffee15',
+  email: 'toffee@toffee.com',
+  thumbs: 20,
+  wins: 10,
+})
+
 Jam.create!({
   id: 'dank-rhinos',
   name: "first one hour beat!",
