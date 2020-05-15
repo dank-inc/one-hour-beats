@@ -3,6 +3,7 @@ import { CoreLayout } from './CoreLayout'
 import 'antd/dist/antd.css'
 import './App.scss'
 import { UserContextProvider } from './contexts/UserContext'
+import { ActionCableContextProvider } from 'contexts/ActionCableContext'
 
 function App() {
   // TODO: Store
@@ -13,7 +14,9 @@ function App() {
 
   return (
     <UserContextProvider>
-      <CoreLayout />
+      <ActionCableContextProvider>
+        <CoreLayout />
+      </ActionCableContextProvider>
     </UserContextProvider>
   )
 }

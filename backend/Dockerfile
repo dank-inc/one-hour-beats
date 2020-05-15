@@ -15,6 +15,7 @@ COPY . /usr/src/backend
 # Add a script to be executed every time the container starts.
 # ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
+EXPOSE 6379
 
 # Start the main process.
 

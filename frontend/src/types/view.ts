@@ -11,6 +11,6 @@ export type EntryView = Entry & {
 }
 
 export type Chat = {
-  userId: string
+  user_id: string
   message: string
 }
