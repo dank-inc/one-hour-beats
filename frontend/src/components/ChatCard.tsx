@@ -8,7 +8,7 @@ type Props = {
 
 export const ChatCard = ({ chat }: Props) => {
   //If the chat id equals login user, reverse chat bubbles
-  if (chat.userId === 'eli7vh') {
+  if (chat.user_id === 'eli7vh') {
     return (
       <Row align="bottom" justify="end" gutter={[2, 16]}>
         <Col span={19}>
@@ -24,14 +24,14 @@ export const ChatCard = ({ chat }: Props) => {
     return (
       <Row align="bottom" gutter={[2, 16]}>
         <Col span={3}>
-          <Tooltip placement="left" title={chat.userId}>
+          <Tooltip placement="left" title={chat.user_id}>
             <Avatar
               style={{
                 color: '#f56a00',
                 backgroundColor: '#fde3cf',
               }}
             >
-              {chat.userId[0]}
+              {chat.user_id[0]}
             </Avatar>
           </Tooltip>
         </Col>

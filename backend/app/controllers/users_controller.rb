@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def login 
-    puts ">>> LOGGING IN " + params[:username]
     @user = User.find_by(username: params[:username])
     if @user && @user.password == params[:password]
       render json: @user
@@ -77,6 +76,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :name, :email, :password, :thumbs, :wins)
+      params.permit(:username, :name, :email, :password, :thumbs, :wins)
     end
 end

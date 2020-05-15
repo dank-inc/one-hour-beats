@@ -9,7 +9,7 @@ type Props = {
 }
 type Context = {
   chats: Chat[]
-  handleSubmit: (userId: string, message: string) => void
+  handleSubmit: (user_id: string, message: string) => void
 }
 
 const ChatContext = createContext<Context | null>(null)
@@ -20,7 +20,7 @@ export const ChatContextProvider = ({ children, jamId }: Props) => {
 
   useEffect(() => {
     // add socket listener
-    // socket payload ([{userId: string, message: string}])
+    // socket payload ([{user_id: string, message: string}])
     // setChats(payload)
     const get = () => {
       setChats(chatIndex[jamId] || [])
@@ -28,7 +28,7 @@ export const ChatContextProvider = ({ children, jamId }: Props) => {
     setTimeout(get, 1000)
   }, [jamId])
 
-  const handleSubmit = (userId: string, message: string) => {
+  const handleSubmit = (user_id: string, message: string) => {
     // submit chat
     // socket will do the thing
   }
