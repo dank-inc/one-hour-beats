@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'login', to: 'users#login'
+
   resources :vote_tokens, defaults: {format: :json}
   resources :entries, defaults: {format: :json}
   resources :jams, defaults: {format: :json}

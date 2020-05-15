@@ -9,7 +9,6 @@ type Props = {
 export const Login = ({ handleLogin }: Props) => {
   const onFinish = (values: Store) => {
     handleLogin(values.username, values.password)
-    console.log('logging in', values)
   }
 
   return (

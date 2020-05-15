@@ -20,26 +20,22 @@ export const UserContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    // const login = () => {
-    //   setUser(userByUsername['eli7vh'])
-    //   message.success('logged in as eli7vh')
-    // }
-    // setTimeout(login, 500)
+    // some kind of JWT
   }, [])
 
-  const handleLogin = (username: string, password: string) => {
-    const user = userByUsername[username]
-    if (user?.password === password) {
-      setUser(user)
-      message.success(`logged in as ${username}`)
-    } else {
-      // say user login failed
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      const { data } = await axios.post(`/api/login`, { username, password })
+      setUser(data)
+      message.success(`logged in as ${username}`, 0.5)
+    } catch (err) {
+      message.error('Login Failed!')
     }
   }
 
   const handleLogout = () => {
-    console.log('logging out')
     setUser(null)
+    message.success('logged out!', 0.5)
   }
 
   return user ? (
