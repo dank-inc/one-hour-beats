@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { User } from 'types/database'
 import { Login } from 'routes/login'
-import { userByUsername } from 'mock/users'
 import { message } from 'antd'
 import axios from 'axios'
 
