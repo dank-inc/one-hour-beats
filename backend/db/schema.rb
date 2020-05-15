@@ -16,39 +16,38 @@ ActiveRecord::Schema.define(version: 2020_05_13_062412) do
   enable_extension "plpgsql"
 
   create_table "entries", force: :cascade do |t|
-    t.string "title"
-    t.string "link"
-    t.string "user_id"
-    t.string "jam_id"
-    t.string "string"
+    t.string "title", null: false
+    t.string "link", null: false
+    t.string "user_id", null: false
+    t.string "jam_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "jams", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "time_limit"
-    t.string "user_id"
+    t.string "name", null: false
+    t.string "description", null: false
+    t.integer "time_limit", default: 60, null: false
+    t.string "user_id", null: false
     t.datetime "started_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.integer "thumbs"
-    t.integer "wins"
+    t.string "username", null: false
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.integer "thumbs", default: 0
+    t.integer "wins", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "vote_tokens", force: :cascade do |t|
-    t.string "user_id"
-    t.string "jam_id"
+    t.string "user_id", null: false
+    t.string "jam_id", null: false
     t.string "entry_id"
   end
 
