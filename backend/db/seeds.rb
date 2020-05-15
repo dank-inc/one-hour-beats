@@ -10,6 +10,7 @@
 # TODO: bcrypt
 
 User.create!({
+  id: 'eli7vh',
   username: 'eli7vh',
   name: 'elijah',
   email: 'elijahlucian@gmail.com',
@@ -19,6 +20,7 @@ User.create!({
 })
 
 User.create!({
+  id: 'toffee',
   username: "toffee",
   name: "El Doge",
   password: "toffee15",
@@ -28,6 +30,7 @@ User.create!({
 })
 
 Jam.create!({
+  id: 'dank-rhinos',
   name: "first one hour beat!",
   description: "make a beat within the hour! anything goes!",
   time_limit: 60,
@@ -36,6 +39,7 @@ Jam.create!({
 })
 
 Jam.create!({
+  id: 'cool-unicorns',
   name: "a new ohb",
   description: "make a sketch with only human noises!",
   time_limit: 60,
@@ -44,6 +48,7 @@ Jam.create!({
 })
 
 Entry.create!({
+  id: 'cool-unicorns-eli7vh-whats-a-dik-4',
   link: "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4",
   title: "whats a dik 4",
   user_id: "eli7vh",

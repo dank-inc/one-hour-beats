@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_062412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "entries", force: :cascade do |t|
+  create_table "entries", id: :string, force: :cascade do |t|
     t.string "title", null: false
     t.string "link", null: false
     t.string "user_id", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_062412) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "jams", force: :cascade do |t|
+  create_table "jams", id: :string, force: :cascade do |t|
     t.string "name", null: false
     t.string "description", null: false
     t.integer "time_limit", default: 60, null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_062412) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :string, force: :cascade do |t|
     t.string "username", null: false
     t.string "name", null: false
     t.string "email", null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_062412) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "vote_tokens", force: :cascade do |t|
+  create_table "vote_tokens", id: false, force: :cascade do |t|
     t.string "user_id", null: false
     t.string "jam_id", null: false
     t.string "entry_id"

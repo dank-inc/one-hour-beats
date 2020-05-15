@@ -24,6 +24,11 @@ export const JamDetails = ({ match }: Props) => {
     message.loading('Starting challenge...')
   }
 
+  const handleStop = async () => {
+    await api.stopJam(jam.id)
+    message.loading('Stopping challenge...')
+  }
+
   if (!jam) return <Redirect to="/jams" />
 
   return (
@@ -39,7 +44,12 @@ export const JamDetails = ({ match }: Props) => {
           </div>
 
           {jam.started_at ? (
-            <Clock jam={jam} />
+            <>
+              <Clock jam={jam} />
+              <Button type="primary" onClick={handleStop}>
+                Stop Jam Now!
+              </Button>
+            </>
           ) : (
             <Button type="primary" onClick={handleStart}>
               Start Jam Now!

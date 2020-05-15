@@ -1,5 +1,5 @@
 class JamsController < ApplicationController
-  before_action :set_jam, only: [:start, :show, :edit, :update, :destroy]
+  before_action :set_jam, only: [:start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
   def start
