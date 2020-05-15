@@ -1,14 +1,28 @@
 class JamsController < ApplicationController
-  before_action :set_jam, only: [:show, :edit, :update, :destroy]
+  before_action :set_jam, only: [:start, :show, :edit, :update, :destroy]
+
+  # POST /jams/:id/start
+  def start
+    if @jam.started_at
+      head :unprocessable_entity
+    else 
+      @jam.start! 
+      head :ok
+    end
+  end 
+
+  # POST /jams/:id/stop
+  def stop
+    @jam.stop!
+    head :ok
+  end 
 
   # GET /jams
-  # GET /jams.json
   def index
     @jams = Jam.all
   end
 
   # GET /jams/1
-  # GET /jams/1.json
   def show
   end
 
@@ -22,30 +36,24 @@ class JamsController < ApplicationController
   end
 
   # POST /jams
-  # POST /jams.json
   def create
     @jam = Jam.new(jam_params)
 
     respond_to do |format|
       if @jam.save
-        format.html { redirect_to @jam, notice: 'Jam was successfully created.' }
         format.json { render :show, status: :created, location: @jam }
       else
-        format.html { render :new }
         format.json { render json: @jam.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /jams/1
-  # PATCH/PUT /jams/1.json
   def update
     respond_to do |format|
       if @jam.update(jam_params)
-        format.html { redirect_to @jam, notice: 'Jam was successfully updated.' }
         format.json { render :show, status: :ok, location: @jam }
       else
-        format.html { render :edit }
         format.json { render json: @jam.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +64,6 @@ class JamsController < ApplicationController
   def destroy
     @jam.destroy
     respond_to do |format|
-      format.html { redirect_to jams_url, notice: 'Jam was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -2,11 +2,11 @@ export type Jam = {
   id: string
   name: string
   description: string
-  started_at?: String
+  started_at?: string
   time_limit: number
   user_id: string // created By
-  created_at?: String
-  updated_at?: String
+  created_at?: string
+  updated_at?: string
 }
 
 export type Entry = {
@@ -15,8 +15,8 @@ export type Entry = {
   title: string
   user_id: string // FK
   jam_id: string // FK
-  created_at?: String
-  updated_at?: String
+  created_at?: string
+  updated_at?: string
 }
 
 export type User = {
@@ -25,8 +25,8 @@ export type User = {
   password: string
   name: string // full name
   email: string
-  created_at?: String
-  updated_at?: String
+  created_at?: string
+  updated_at?: string
 }
 
 export type VoteToken = {
@@ -39,6 +39,6 @@ export type Chat = {
   jam_id: string
   user_id: string
   message: string
-  created_at?: String
-  updated_at?: String
+  created_at?: string
+  updated_at?: string
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Card, Input, Row, Col } from 'antd'
+import { PageHeader, Card, Input, Row, Col, Button, message } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
@@ -7,6 +7,7 @@ import { useAppContext } from 'contexts/AppContext'
 import './style.scss'
 import { ChatCard } from 'components/ChatCard'
 import { chatIndex } from 'mock/chats'
+import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
 import { FrownOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
@@ -18,11 +19,12 @@ export const JamDetails = ({ match }: Props) => {
   const chats = chatIndex[match.params.id] // TODO: ChatContext
   const jam = jamIndex[match.params.id]
 
-  const { Search } = Input
+  const handleStart = async () => {
+    await api.startJam(jam.id)
+    message.loading('Starting challenge...')
+  }
 
   if (!jam) return <Redirect to="/jams" />
-
-  console.log(jam)
 
   return (
     <main>
@@ -36,7 +38,13 @@ export const JamDetails = ({ match }: Props) => {
             {jam.started_at && <p>started at: {jam.started_at}</p>}
           </div>
 
-          {jam.started_at ? <Clock jam={jam} /> : <p>Jam Not Started...</p>}
+          {jam.started_at ? (
+            <Clock jam={jam} />
+          ) : (
+            <Button type="primary" onClick={handleStart}>
+              Start Jam Now!
+            </Button>
+          )}
         </div>
         <div className="jam-right">
           {jam.entries ? (
@@ -83,7 +91,7 @@ export const JamDetails = ({ match }: Props) => {
                 </Row>
               )}
             </Card>
-            <Search
+            <Input.Search
               placeholder="Send a chat message..."
               enterButton="Send"
               size="large"

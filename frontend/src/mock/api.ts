@@ -4,7 +4,6 @@ import _ from 'lodash'
 import { User } from 'types/database'
 
 export const getJamIndex = () => {
-  console.log('API', entriesByJam)
   const jamsView = jams.map((jam) => {
     return { ...jam, entries: entriesByJam[jam.id] }
   })

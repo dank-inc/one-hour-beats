@@ -20,7 +20,7 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
     const draw = () => {
       if (!ctx || !canvasRef.current || !jam.started_at) return
 
-      const started_at = jam.started_at.clone()
+      const started_at = moment(jam.started_at)
       const currentTime = +moment()
       const endTime = started_at.clone().add(jam.time_limit, 'minutes')
 

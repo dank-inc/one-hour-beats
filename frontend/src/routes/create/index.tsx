@@ -12,7 +12,6 @@ export const Create = (props: Props) => {
     message.loading('Creating Challenge', 0.5)
     try {
       const body = { ...values, user_id: user.username }
-      console.log('Creating challenge', body)
       await axios.post('/api/jams', body)
       message.success('Challenge Created!')
     } catch (err) {

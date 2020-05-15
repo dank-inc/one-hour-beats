@@ -9,7 +9,7 @@ export const jams: Jam[] = [
     description: 'Make a song that reminds you of "Friday"!',
     user_id: 'eli7vh',
     started_at: moment().subtract(20, 'minutes').toISOString(),
-    timeLimit: 60,
+    time_limit: 60,
   },
   {
     id: 'dank-rhinos',

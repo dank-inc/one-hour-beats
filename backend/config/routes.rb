@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   resources :jams, defaults: {format: :json}
   resources :users, defaults: {format: :json}
   
+  post 'jams/:id/start', to: 'jams#start'
+  post 'jams/:id/stop', to: 'jams#stop'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
