@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PageHeader, Card, Input, Row, Col, Button, message } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
-import { useAppContext } from 'contexts/AppContext'
+import { useAppContext, AppContextProvider } from 'contexts/AppContext'
 import './style.scss'
 import { ChatCard } from 'components/ChatCard'
 import { chatIndex } from 'mock/chats'
@@ -11,13 +11,19 @@ import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
 import { FrownOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
+import { useActionCableContext } from 'contexts/ActionCableContext'
 
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
-  const { jamIndex } = useAppContext()
+  const { jamIndex, subscribeToJam, unsubscribeFromJam } = useAppContext()
+  const { consumer } = useActionCableContext()
   const chats = chatIndex[match.params.id] // TODO: ChatContext
   const jam = jamIndex[match.params.id]
+
+  useEffect(() => {
+    subscribeToJam(match.params.id)
+  }, [match.params.id])
 
   const handleStart = async () => {
     await api.startJam(jam.id)
@@ -61,7 +67,7 @@ export const JamDetails = ({ match }: Props) => {
             jam.entries.map((entry, i) => (
               <EntryCard
                 entry={entry}
-                key={`jam-entry-${jam.id}-${entry.id}`}
+                key={`jam-entry-${jam.id}-${entry.id}-${i}`}
               />
             ))
           ) : (
@@ -83,7 +89,12 @@ export const JamDetails = ({ match }: Props) => {
               }}
             >
               {chats ? (
-                chats.map((chat, i) => <ChatCard chat={chat} />)
+                chats.map((chat, i) => (
+                  <ChatCard
+                    key={`chat-message-${chat.user_id}-${i}`}
+                    chat={chat}
+                  />
+                ))
               ) : (
                 <Row align="bottom" justify="center" gutter={[2, 16]}>
                   <Col span={19}>

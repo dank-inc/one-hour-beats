@@ -1,32 +1,33 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import actioncable from 'actioncable'
+import ActionCable from 'actioncable'
 import { Spin, message } from 'antd'
 
 type Props = {
   children: React.ReactNode
 }
 type Context = {
-  cable: ActionCable.Cable
+  consumer: ActionCable.Cable
 }
 
 const ActionCableContext = createContext<Context | null>(null)
 
 export const ActionCableContextProvider = ({ children }: Props) => {
-  const [cable, setCable] = useState<ActionCable.Cable | null>(null)
+  const [consumer, setConsumer] = useState<ActionCable.Cable | null>(null)
 
   useEffect(() => {
-    const consumer = actioncable.createConsumer()
+    const consumer = ActionCable.createConsumer()
     consumer.connect()
-    message.success('action cable connected!', 0.5)
-    setCable(consumer)
+    message.success('action consumer connected!', 0.5)
+
+    setConsumer(consumer)
 
     return () => {
       consumer.disconnect()
     }
   }, [])
 
-  return cable ? (
-    <ActionCableContext.Provider value={{ cable }}>
+  return consumer ? (
+    <ActionCableContext.Provider value={{ consumer }}>
       {children}
     </ActionCableContext.Provider>
   ) : (
