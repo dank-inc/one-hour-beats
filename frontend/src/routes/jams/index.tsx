@@ -3,13 +3,14 @@ import { PageHeader } from 'antd'
 import './style.scss'
 import { JamCard } from 'components/JamCard'
 import moment from 'moment'
-import { jams } from 'mock/jams'
 import { useUserContext } from 'contexts/UserContext'
+import { useAppContext } from 'contexts/AppContext'
 
 window.moment = moment
 
 export const Jams = () => {
   const { user } = useUserContext()
+  const { jamIndex } = useAppContext()
 
   return (
     <main>
@@ -18,8 +19,8 @@ export const Jams = () => {
         subTitle={`Welcome ${user.name}, Pick a challenge and get jammin!`}
       />
       <div className="main-content">
-        {jams.map((jam, i) => (
-          <JamCard jam={jam} key={jam.id} />
+        {Object.entries(jamIndex).map(([id, jam]) => (
+          <JamCard jam={jam} key={`jam-list-${id}`} />
         ))}
       </div>
     </main>

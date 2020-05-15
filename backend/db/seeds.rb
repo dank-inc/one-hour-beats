@@ -30,7 +30,7 @@ User.create!({
 Jam.create!({
   name: "first one hour beat!",
   description: "make a beat within the hour! anything goes!",
-  time_limit: 60 * 4,
+  time_limit: 60,
   started_at: Time.now,
   user_id: "eli7vh", # createdBy
 })
@@ -38,7 +38,7 @@ Jam.create!({
 Jam.create!({
   name: "a new ohb",
   description: "make a sketch with only human noises!",
-  time_limit: 3600,
+  time_limit: 60,
   started_at: nil,
   user_id: "toffee",
 })

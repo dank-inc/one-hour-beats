@@ -18,14 +18,14 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
     canvasRef.current.height = height
 
     const draw = () => {
-      if (!ctx || !canvasRef.current || !jam.startedAt) return
+      if (!ctx || !canvasRef.current || !jam.started_at) return
 
-      const startedAt = jam.startedAt.clone()
+      const started_at = jam.started_at.clone()
       const currentTime = +moment()
-      const endTime = startedAt.clone().add(jam.timeLimit, 'minutes')
+      const endTime = started_at.clone().add(jam.time_limit, 'minutes')
 
-      const elapsed = currentTime - +startedAt // ms
-      const total = +endTime - +startedAt // ms
+      const elapsed = currentTime - +started_at // ms
+      const total = +endTime - +started_at // ms
       const remaining = total - elapsed // ms
 
       const u = remaining / total // percent
@@ -82,7 +82,7 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
     return () => {
       clearInterval(interval)
     }
-  }, [canvasRef, width, height, jam.startedAt, jam.timeLimit])
+  }, [canvasRef, width, height, jam.started_at, jam.time_limit])
 
   return <canvas ref={canvasRef} />
 }

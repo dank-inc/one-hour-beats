@@ -31,7 +31,7 @@ export const EntryCard = ({ entry }: Props) => {
       ]}
     >
       <Card.Meta
-        title={entry.artist}
+        title={entry.user_id}
         description={entry.title}
         avatar={<Avatar icon={<UserOutlined />} />}
       ></Card.Meta>

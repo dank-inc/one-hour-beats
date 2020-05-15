@@ -3,9 +3,7 @@ import { useUserContext } from './UserContext'
 import { Jam } from '../types/database'
 import { JamView } from '../types/view'
 import { Spin } from 'antd'
-const api = require(process.env.NODE_ENV === 'production'
-  ? 'prod/api'
-  : 'mock/api')
+import * as api from 'prod/api'
 
 type Props = {
   children: React.ReactNode
@@ -33,13 +31,11 @@ export const AppContextProvider = ({ children }: Props) => {
     // jamRoom Listener
     // - index of all users in jam rooms
     // - can refresh whole thing, small
-    const get = () => {
-      setJamIndex(api.getJamIndex())
+    const get = async () => {
+      setJamIndex(await api.getJamIndex())
     }
-    setTimeout(get, 1000)
+    get()
   }, [])
-
-  console.log('App Context', jamIndex)
 
   return jamIndex ? (
     <AppContext.Provider value={{ jamIndex }}>{children}</AppContext.Provider>

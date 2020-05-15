@@ -32,11 +32,11 @@ export const JamDetails = ({ match }: Props) => {
           <div className="jam-info">
             <p>Name: {jam.name}</p>
             <p>Description: {jam.description}</p>
-            <p>time limit: {jam.timeLimit}</p>
-            {jam.startedAt && <p>started at: {jam.startedAt.toISOString()}</p>}
+            <p>time limit: {jam.time_limit} minutes</p>
+            {jam.started_at && <p>started at: {jam.started_at}</p>}
           </div>
 
-          {jam.startedAt ? <Clock jam={jam} /> : <p>Jam Not Started...</p>}
+          {jam.started_at ? <Clock jam={jam} /> : <p>Jam Not Started...</p>}
         </div>
         <div className="jam-right">
           {jam.entries ? (

@@ -1,11 +1,23 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
 import { Form, Input, Button, InputNumber, message } from 'antd'
+import axios from 'axios'
+import { useUserContext } from 'contexts/UserContext'
 
 type Props = {}
 export const Create = (props: Props) => {
-  const onFinish = (values: Store) => {
-    message.loading('Creating Challenge')
+  const { user } = useUserContext()
+
+  const onFinish = async (values: Store) => {
+    message.loading('Creating Challenge', 0.5)
+    try {
+      const body = { ...values, user_id: user.username }
+      console.log('Creating challenge', body)
+      await axios.post('/api/jams', body)
+      message.success('Challenge Created!')
+    } catch (err) {
+      message.error(`couldn't create jam!`)
+    }
   }
 
   const onFinishFailed = () => {
@@ -21,7 +33,7 @@ export const Create = (props: Props) => {
       <div className="main-content">
         <Form
           onFinish={onFinish}
-          initialValues={{ timeLimit: 60 }}
+          initialValues={{ time_limit: 60 }}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
@@ -33,7 +45,7 @@ export const Create = (props: Props) => {
           </Form.Item>
           <Form.Item
             label="Time Limit (in minutes)"
-            name="timeLimit"
+            name="time_limit"
             rules={[
               {
                 required: true,
