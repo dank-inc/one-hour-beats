@@ -5,6 +5,7 @@ import { Create } from './routes/create'
 import { Jams } from './routes/jams'
 import { About } from './routes/about'
 import { JamDetails } from './routes/jams/[id]'
+import { Preferences } from './routes/preferences'
 import { useUserContext } from './contexts/UserContext'
 import { Button } from 'antd'
 import { JamPopout } from './routes/jams/[id]/JamPopout'
@@ -27,6 +28,7 @@ export const CoreLayout = () => {
                 <Link to="/create">Create</Link>
                 <Link to="/about">About</Link>
                 <Link to="/jams">Jams</Link>
+                <Link to="/preferences">Preferences</Link>
                 <Button onClick={userContext.handleLogout}>Logout</Button>
               </nav>
             </header>
@@ -35,6 +37,8 @@ export const CoreLayout = () => {
 
             <Route path="/jams/:id" component={JamDetails} />
             <Route exact path="/jams" component={Jams} />
+
+            <Route path="/preferences" component={Preferences} />
 
             <Redirect to="/jams" />
           </div>
