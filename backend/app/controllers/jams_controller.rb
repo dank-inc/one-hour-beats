@@ -25,9 +25,12 @@ class JamsController < ApplicationController
   def submit_chat 
     # TODO: need a chat controller, dog
     puts "chat recieved #{params}"
+    user = User.find params[:user_id]
     chat = {
       message: params[:message],
-      user_id: params[:user_id], # TODO: get form session
+      user_id: user.id, # TODO: get form session
+      username: user.username,
+      # TODO COLOR
       jam_id: @jam.id
     }
 

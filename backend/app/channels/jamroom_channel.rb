@@ -8,9 +8,9 @@ class JamroomChannel < ApplicationCable::Channel
     @user = User.find params[:user_id]
 
     if @@jam_index[@jam.id] 
-      @@jam_index[@jam.id].append @user.name
+      @@jam_index[@jam.id].append @user.username
     else 
-      @@jam_index[@jam.id] = [@user.name]
+      @@jam_index[@jam.id] = [@user.username]
     end
      
     UserLocationChannel.broadcast_to 'global', @@jam_index
@@ -21,7 +21,7 @@ class JamroomChannel < ApplicationCable::Channel
 
   def unsubscribed 
     puts ">>> #{@user.id} UNSUBSCRIBED #{@jam.id}"
-    @@jam_index[@jam.id]&.delete @user.name
+    @@jam_index[@jam.id]&.delete @user.username
 
     UserLocationChannel.broadcast_to 'global', @@jam_index
 

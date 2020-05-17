@@ -22,14 +22,14 @@ export const ChatCard = ({ chat }: Props) => {
           </div>
         </Col>
         <Col span={3}>
-          <Tooltip placement="left" title={chat.user_id}>
+          <Tooltip placement="left" title={chat.username}>
             <Avatar
               style={{
                 color: '#f56a00',
                 backgroundColor: '#fde3cf',
               }}
             >
-              {chat.user_id[0]}
+              {chat.username?.[0]}
             </Avatar>
           </Tooltip>
         </Col>
@@ -39,14 +39,14 @@ export const ChatCard = ({ chat }: Props) => {
     return (
       <Row align="bottom" gutter={[2, 16]}>
         <Col span={3}>
-          <Tooltip placement="left" title={chat.user_id}>
+          <Tooltip placement="left" title={chat.username}>
             <Avatar
               style={{
                 color: '#f56a00',
                 backgroundColor: '#fde3cf',
               }}
             >
-              {chat.user_id[0]}
+              {chat.username?.[0]}
             </Avatar>
           </Tooltip>
         </Col>

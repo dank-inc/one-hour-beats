@@ -14,5 +14,7 @@ export type EntryView = Entry & {
 
 export type Chat = {
   user_id: string
+  username?: string
+  jam_id: string
   message: string
 }
