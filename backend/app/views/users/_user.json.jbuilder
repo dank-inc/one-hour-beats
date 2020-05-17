@@ -1,1 +1,10 @@
-json.extract! user, :id, :username, :name, :email, :password, :thumbs, :wins, :vote_tokens, :created_at, :updated_at
+json.id           user.id
+json.username     user.username
+json.name         user.name
+json.email        user.email
+json.password     user.password
+json.thumbs       user.thumbs
+json.wins         user.wins
+json.vote_tokens  user.vote_tokens
+json.created_at   user.created_at
+json.updated_at   user.updated_at
