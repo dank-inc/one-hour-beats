@@ -11,7 +11,7 @@ export const Create = (props: Props) => {
   const onFinish = async (values: Store) => {
     message.loading('Creating Challenge', 0.5)
     try {
-      const body = { ...values, user_id: user.username }
+      const body = { ...values, user_id: user.id }
       await axios.post('/api/jams', body)
       message.success('Challenge Created!')
       // redirect to jams page.

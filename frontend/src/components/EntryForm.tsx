@@ -55,21 +55,10 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   return (
-    <Form
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      initialValues={{ artist: user?.username }}
-    >
+    <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <Form.Item
         label="Song Title"
         name="title"
-        rules={[{ required: true, message: 'This needs a title!' }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Artist Name"
-        name="artist"
         rules={[{ required: true, message: 'This needs a title!' }]}
       >
         <Input />

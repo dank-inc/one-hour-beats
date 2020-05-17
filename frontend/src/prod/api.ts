@@ -2,6 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import { Entry } from 'types/database'
 import { JamView } from 'types/view'
+import { message } from 'antd'
 
 // GET - gets data
 // PUT - update a given record with body (can be partial)
@@ -66,9 +67,10 @@ export const submitEntry = async (body: Entry) => {
 
 export const voteForEntry = async (entry_id: string, user_id: string) => {
   try {
-    await axios.post(`/api/entries/${entry_id}`, { user_id })
+    const res = await axios.post(`/api/entries/${entry_id}/vote`, { user_id })
+    console.log('vote for entry res', res)
   } catch (error) {
-    console.error('vote for entry', error)
+    message.error('Vote Failed, vote token not found!')
   }
 }
 

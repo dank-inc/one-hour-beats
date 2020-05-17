@@ -1,1 +1,9 @@
-json.extract! entry, :id, :title, :link, :user_id, :jam_id, :created_at, :updated_at, :votes
+json.id            entry.id
+json.artist_name   entry.artist_name
+json.title         entry.title
+json.link          entry.link
+json.user_id       entry.user_id
+json.jam_id        entry.jam_id
+json.created_at    entry.created_at
+json.updated_at    entry.updated_at
+json.votes         entry.votes

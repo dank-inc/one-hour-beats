@@ -6,13 +6,15 @@ class EntriesController < ApplicationController
     # TODO: get use credentials from session
     @user = User.find(params[:user_id])
     @entry = Entry.find(params[:id])
-    @jam = entry.jam
+    @jam = @entry.jam
 
-    VoteToken.find_by(
-      user_id: @user.id
+    vote_token = VoteToken.find_by!(
+      user_id: @user.id,
       jam_id: @jam.id
-    ).update!(
-      entry_id: @entry_id
+    )
+    
+    vote_token.update!(
+      entry_id: @entry.id
     )
 
     head :ok
@@ -30,7 +32,7 @@ class EntriesController < ApplicationController
   # POST /entries
   def create
     @entry = Entry.new(entry_params)
-    @entry.id = "#{@entry.jam_id}_#{@entry.user_id}_#{@entry.title.split(' ').join('_').downcase}"
+    @entry.id = SecureRandom.uuid
 
       if @entry.save
         VoteToken.create!(

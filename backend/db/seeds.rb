@@ -9,8 +9,7 @@
 # TODO: UUID
 # TODO: bcrypt
 
-User.create!({
-  id: 'eli7vh',
+elijah = User.create!({
   username: 'eli7vh',
   name: 'elijah',
   email: 'elijahlucian@gmail.com',
@@ -19,8 +18,7 @@ User.create!({
   wins: 2,
 })
 
-User.create!({
-  id: 'toffee',
+toffee = User.create!({
   username: "toffee",
   name: "El Doge",
   password: "toffee15",
@@ -30,7 +28,6 @@ User.create!({
 })
 
 User.create({
-  id: 'otherdude',
   username: 'otherdude',
   name: 'blah',
   password: 'toffee15',
@@ -39,13 +36,13 @@ User.create({
   wins: 10,
 })
 
-Jam.create!({
+jam = Jam.create!({
   id: 'dank-rhinos',
   name: "first one hour beat!",
   description: "make a beat within the hour! anything goes!",
   time_limit: 60,
   started_at: Time.now,
-  user_id: "eli7vh", # createdBy
+  user_id: elijah.id, 
 })
 
 Jam.create!({
@@ -54,18 +51,17 @@ Jam.create!({
   description: "make a sketch with only human noises!",
   time_limit: 60,
   started_at: nil,
-  user_id: "toffee",
+  user_id: toffee.id,
 })
 
 Entry.create!({
-  id: 'cool-unicorns-eli7vh-whats-a-dik-4',
   link: "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4",
   title: "whats a dik 4",
-  user_id: "eli7vh",
-  jam_id: "dank-rhinos",
+  user_id: elijah.id,
+  jam_id: jam.id,
 })
 
 VoteToken.create!({ 
-  jam_id: "dank-rhinos", 
-  user_id: "eli7vh"
+  user_id: elijah.id,
+  jam_id: jam.id,
 })

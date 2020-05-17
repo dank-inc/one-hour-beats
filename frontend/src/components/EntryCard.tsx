@@ -3,6 +3,7 @@ import { Entry } from 'types/database'
 import { Button, Card, message, Avatar } from 'antd'
 import { CustomerServiceOutlined, UserOutlined } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
+import { voteForEntry } from 'prod/api'
 
 type Props = {
   entry: Entry
@@ -14,6 +15,8 @@ export const EntryCard = ({ entry }: Props) => {
 
   const castVote = () => {
     message.loading('casting vote!')
+    // TODO: remove user id params
+    voteForEntry(entry.id, user.id)
   }
 
   const listenToEntry = () => {
