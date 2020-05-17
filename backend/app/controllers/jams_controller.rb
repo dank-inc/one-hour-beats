@@ -1,5 +1,5 @@
 class JamsController < ApplicationController
-  before_action :set_jam, only: [:entries, :start, :stop, :show, :edit, :update, :destroy]
+  before_action :set_jam, only: [:submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
   def start
@@ -21,6 +21,22 @@ class JamsController < ApplicationController
   def entries
     render json: @jam.entries, status: :ok
   end 
+
+  def submit_chat 
+    # TODO: need a chat controller, dog
+    puts "chat recieved #{params}"
+    chat = {
+      message: params[:message],
+      user_id: params[:user_id], # TODO: get form session
+      jam_id: @jam.id
+    }
+
+    $chat[@jam.id] = [] if $chat[@jam].nil?
+    $chat[@jam.id].append(chat)
+    puts "chat submitted #{chat}"
+
+    JamroomChannel.broadcast_to @jam, chat: chat
+  end
 
   def upload 
     @jam = Jam.find(params[:id])
@@ -88,6 +104,6 @@ class JamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def jam_params
-      params.require(:jam).permit(:name, :description, :time_limit, :user_id, :started_at)
+      params.require(:jam).permit(:name, :description, :time_limit, :user_id, :started_at, :message)
     end
 end

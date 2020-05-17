@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
-import { Entry } from '../types/database'
-import { JamView, Chat } from '../types/view'
+import { JamView, Chat, EntryView } from '../types/view'
 import { Spin } from 'antd'
 import * as api from 'prod/api'
 import { useActionCableContext } from './ActionCableContext'
@@ -13,13 +12,14 @@ type Props = {
 type JamRoomUsers = Record<string, string[]>
 
 type JamRoomChannelRes = {
-  entry: Entry
-  chatMessage: Chat
+  entry: EntryView
+  chat: Chat
 }
 
 type Context = {
   jamIndex: Record<string, JamView>
   jamRoomUsers: JamRoomUsers
+  chatIndex: Record<string, Chat[]>
   subscribeToJam: (id: string) => ActionCable.Channel
   unsubscribeFromJam: (id: string) => void
 }
@@ -31,6 +31,7 @@ export const AppContextProvider = ({ children }: Props) => {
   const { consumer } = useActionCableContext()
   const [jamIndex, setJamIndex] = useState<Record<string, JamView> | null>(null)
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
+  const [chatIndex, setChatIndex] = useState<Record<string, Chat[]>>({})
 
   useEffect(() => {
     // fetch all jams w/ entries w/ votes
@@ -75,7 +76,7 @@ export const AppContextProvider = ({ children }: Props) => {
         user_id: user.id,
       },
       {
-        received: ({ entry, chatMessage }: JamRoomChannelRes) => {
+        received: ({ entry, chat }: JamRoomChannelRes) => {
           if (!jamIndex) return
 
           if (entry) {
@@ -91,8 +92,18 @@ export const AppContextProvider = ({ children }: Props) => {
                 },
               }
             })
-          } else if (chatMessage) {
+          } else if (chat) {
+            // TODO: make a chat context yo
+            console.log('chat has been updated', chat)
             // append to chat log
+            setChatIndex((chatIndex) => {
+              if (!chatIndex) return {}
+
+              return {
+                ...chatIndex,
+                [jam_id]: [...(chatIndex[jam_id] || []), chat],
+              }
+            })
           }
         },
       }
@@ -103,7 +114,13 @@ export const AppContextProvider = ({ children }: Props) => {
 
   return jamIndex ? (
     <AppContext.Provider
-      value={{ jamIndex, subscribeToJam, unsubscribeFromJam, jamRoomUsers }}
+      value={{
+        jamIndex,
+        subscribeToJam,
+        unsubscribeFromJam,
+        jamRoomUsers,
+        chatIndex,
+      }}
     >
       {children}
     </AppContext.Provider>

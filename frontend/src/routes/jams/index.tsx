@@ -19,10 +19,10 @@ export const Jams = () => {
         subTitle={`Welcome ${user.name}, Pick a challenge and get jammin!`}
       />
       <div className="main-content">
-        {Object.entries(jamIndex).map(([id, jam]) => (
+        {Object.values(jamIndex).map((jam) => (
           <JamCard
             jam={jam}
-            key={`jam-list-${id}`}
+            key={`jam-list-${jam.id}-${jam.name}`}
             users={jamRoomUsers[jam.id]}
           />
         ))}

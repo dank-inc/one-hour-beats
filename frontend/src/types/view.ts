@@ -8,6 +8,7 @@ export type JamView = Jam & {
 
 export type EntryView = Entry & {
   // entry.votes
+  artist_name: string
   votes?: VoteToken[]
 }
 

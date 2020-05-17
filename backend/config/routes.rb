@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post 'jams/:id/stop', to: 'jams#stop'
   
   post 'jams/:id/upload', to: 'jams#upload'
+  post 'jams/:id/chat', to: 'jams#submit_chat'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

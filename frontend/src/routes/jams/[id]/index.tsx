@@ -1,30 +1,29 @@
-import React, { useEffect } from 'react'
-import { PageHeader, Card, Input, Row, Col, Button, message, Tag } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { PageHeader, Button, message } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
-import { useAppContext, AppContextProvider } from 'contexts/AppContext'
+import { useAppContext } from 'contexts/AppContext'
 import './style.scss'
-import { ChatCard } from 'components/ChatCard'
-import { chatIndex } from 'mock/chats'
 import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
-import { FrownOutlined, ConsoleSqlOutlined } from '@ant-design/icons'
+import { FrownOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
-import { useActionCableContext } from 'contexts/ActionCableContext'
+import { Chat } from 'types/database'
+import { Chatroom } from 'components/Chatroom'
 
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
-  const { jamIndex, subscribeToJam, jamRoomUsers } = useAppContext()
-  const { consumer } = useActionCableContext()
-  const chats = chatIndex[match.params.id] // TODO: ChatContext
+  const { jamIndex, subscribeToJam } = useAppContext()
+  const [chats, setChats] = useState<Chat[] | null>([])
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
-    // get initial state of jam
     const subscription = subscribeToJam(match.params.id)
+
     console.log('subscription created for ', jam.id, subscription)
+
     return () => {
       subscription.unsubscribe()
     }
@@ -86,60 +85,7 @@ export const JamDetails = ({ match }: Props) => {
 
           <EntryForm jam_id={jam.id} />
 
-          <div>
-            <h1>Chatroom</h1>
-            <div>
-              Active:
-              {jamRoomUsers[jam.id]?.map((user_id) => (
-                <Tag key={`active-users-${user_id}`} color="magenta">
-                  {user_id}
-                </Tag>
-              ))}
-            </div>
-            <Card
-              style={{
-                width: 400,
-                height: 400,
-                overflowY: 'scroll',
-                overflowX: 'hidden',
-              }}
-            >
-              {chats ? (
-                chats.map((chat) => (
-                  <ChatCard
-                    key={`chat-message-${chat.user_id}-${chat.message}`}
-                    chat={chat}
-                  />
-                ))
-              ) : (
-                <Row align="bottom" justify="center" gutter={[2, 16]}>
-                  <Col span={19}>
-                    <div
-                      style={{
-                        borderRadius: 15,
-                        backgroundColor: '#fdfacf',
-                        padding: 5,
-                        textAlign: 'center',
-                      }}
-                    >
-                      Break the ice!
-                    </div>
-                  </Col>
-                </Row>
-              )}
-            </Card>
-            <Input.Search
-              placeholder="Send a chat message..."
-              enterButton="Send"
-              size="large"
-              onSearch={(value) => console.log(value)}
-              style={{
-                width: 400,
-                margin: 16,
-                marginTop: -16,
-              }}
-            />
-          </div>
+          {chats && <Chatroom jam_id={jam.id} chats={chats} />}
         </div>
       </div>
     </main>

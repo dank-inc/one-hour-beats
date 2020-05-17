@@ -1,12 +1,12 @@
 import React from 'react'
-import { Entry } from 'types/database'
 import { Button, Card, message, Avatar } from 'antd'
 import { CustomerServiceOutlined, UserOutlined } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { voteForEntry } from 'prod/api'
+import { EntryView } from 'types/view'
 
 type Props = {
-  entry: Entry
+  entry: EntryView
 }
 
 export const EntryCard = ({ entry }: Props) => {
@@ -40,7 +40,7 @@ export const EntryCard = ({ entry }: Props) => {
       ]}
     >
       <Card.Meta
-        title={entry.user_id}
+        title={entry.artist_name}
         description={entry.title}
         avatar={<Avatar icon={<UserOutlined />} />}
       ></Card.Meta>
