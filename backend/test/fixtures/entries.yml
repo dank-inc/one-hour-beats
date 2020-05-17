@@ -5,11 +5,9 @@ one:
   link: MyString
   user_id: MyString
   jam_id: MyString
-  string: MyString
 
 two:
   title: MyString
   link: MyString
   user_id: MyString
   jam_id: MyString
-  string: MyString
