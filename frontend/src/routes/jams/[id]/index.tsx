@@ -16,13 +16,16 @@ import { useActionCableContext } from 'contexts/ActionCableContext'
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
-  const { jamIndex, subscribeToJam, unsubscribeFromJam } = useAppContext()
+  const { jamIndex, subscribeToJam } = useAppContext()
   const { consumer } = useActionCableContext()
   const chats = chatIndex[match.params.id] // TODO: ChatContext
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
-    subscribeToJam(match.params.id)
+    const subscription = subscribeToJam(match.params.id)
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [match.params.id])
 
   const handleStart = async () => {
@@ -76,7 +79,7 @@ export const JamDetails = ({ match }: Props) => {
             </div>
           )}
 
-          <EntryForm />
+          <EntryForm jam_id={jam.id} />
 
           <h1>Chatroom</h1>
           <div>

@@ -18,6 +18,7 @@ export const ActionCableContextProvider = ({ children }: Props) => {
     const consumer = ActionCable.createConsumer()
     consumer.connect()
     message.success('action consumer connected!', 0.5)
+    console.log('action cable consumer created', consumer)
 
     setConsumer(consumer)
 

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
-import { Jam } from '../types/database'
+import { Jam, Chat } from '../types/database'
 import { JamView } from '../types/view'
 import { Spin } from 'antd'
 import * as api from 'prod/api'
@@ -9,9 +9,13 @@ import { useActionCableContext } from './ActionCableContext'
 type Props = {
   children: React.ReactNode
 }
+
+type JamRoomUsers = Record<string, string[]>
+
 type Context = {
   jamIndex: Record<string, JamView>
-  subscribeToJam: (id: string) => void
+  jamRoomUsers: JamRoomUsers
+  subscribeToJam: (id: string) => ActionCable.Channel
   unsubscribeFromJam: (id: string) => void
 }
 
@@ -21,39 +25,61 @@ export const AppContextProvider = ({ children }: Props) => {
   const { user } = useUserContext()
   const { consumer } = useActionCableContext()
   const [jamIndex, setJamIndex] = useState<Record<string, Jam> | null>(null)
-  const [jamRoomMeta, setJamRoomMeta] = useState<Record<string, string[]>>({})
+  const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
 
   useEffect(() => {
     // fetch all jams w/ entries w/ votes
     // get user's voteTokens
     // set up jam socket listeners (attendance, status, blah)
 
-    // setJamSocket Listener
-    // - socket returns an object like {id: jamID, body: jam}
-    // setJamIndex({...jamIndex, [id]: body})
+    // jamIndex listener - global jam creations and events
 
-    // jamRoom Listener
-    // - index of all users in jam rooms
-    // - can refresh whole thing, small
+    const subscription = consumer.subscriptions.create(
+      {
+        channel: 'UserLocationChannel',
+        user_id: user.id,
+      },
+      {
+        received: (data: JamRoomUsers) => {
+          console.log('Jam Room User Lists Updated!', data)
+          setJamRoomUsers(data)
+        },
+      }
+    )
 
     const get = async () => {
       setJamIndex(await api.getJamIndex())
     }
     get()
+
+    return () => {
+      subscription.unsubscribe()
+    }
+
+    // const jamRoomListener = consumer.subscriptions.create({channel: 'jam'})
   }, [])
 
-  const subscribeToJam = (id: string) => {
-    consumer.subscriptions.create({
-      channel: 'JamroomChannel',
-      id,
-    })
+  const subscribeToJam = (jam_id: string) => {
+    return consumer.subscriptions.create(
+      {
+        channel: 'JamroomChannel',
+        jam_id,
+        user_id: user.id,
+      },
+      {
+        received: (data: Chat) => {
+          console.log('updating chat', data)
+          // append to chat log
+        },
+      }
+    )
   }
 
   const unsubscribeFromJam = (id: string) => {}
 
   return jamIndex ? (
     <AppContext.Provider
-      value={{ jamIndex, subscribeToJam, unsubscribeFromJam }}
+      value={{ jamIndex, subscribeToJam, unsubscribeFromJam, jamRoomUsers }}
     >
       {children}
     </AppContext.Provider>

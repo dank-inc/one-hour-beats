@@ -10,7 +10,7 @@ window.moment = moment
 
 export const Jams = () => {
   const { user } = useUserContext()
-  const { jamIndex } = useAppContext()
+  const { jamIndex, jamRoomUsers } = useAppContext()
 
   return (
     <main>
@@ -20,7 +20,11 @@ export const Jams = () => {
       />
       <div className="main-content">
         {Object.entries(jamIndex).map(([id, jam]) => (
-          <JamCard jam={jam} key={`jam-list-${id}`} />
+          <JamCard
+            jam={jam}
+            key={`jam-list-${id}`}
+            users={jamRoomUsers[jam.id]}
+          />
         ))}
       </div>
     </main>
