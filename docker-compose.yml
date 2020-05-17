@@ -2,15 +2,21 @@ version: "3.8"
 
 volumes:
   el_database:
-  legacy_node_modules:
   node_modules:
 
 services:
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+
   backend:
     volumes:
       - ./backend:/usr/src/backend
     depends_on:
       - db
+      - redis
     build:
       context: ./backend
     # ports:

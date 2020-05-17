@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Tag } from 'antd'
 import { Jam } from '../types/database'
 import { useHistory } from 'react-router'
 
-type Props = { jam: Jam }
+type Props = { jam: Jam; users?: string[] }
 
-export const JamCard = ({ jam }: Props) => {
+export const JamCard = ({ jam, users }: Props) => {
   const history = useHistory()
   // would be cool if we used unsplash to randomize entry cover art!
 
@@ -17,7 +17,12 @@ export const JamCard = ({ jam }: Props) => {
     <Card title={jam.name} hoverable onClick={handleClick}>
       <div className="jam-card">
         <p>active: true</p>
-        <p>participants: 5</p>
+        <p>
+          participants:{' '}
+          {users?.map((u) => (
+            <Tag color="volcano">{u}</Tag>
+          ))}
+        </p>
       </div>
     </Card>
   )

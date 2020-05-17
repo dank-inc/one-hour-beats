@@ -17,6 +17,28 @@ class JamsController < ApplicationController
     head :ok
   end 
 
+  def upload 
+    @jam = Jam.find(params[:id])
+    @file = params[:file] 
+    
+    puts ">> uploading: #{@jam.id}/#{@file.original_filename}"
+
+    uploaddir = "uploads/#{@jam.id}"
+
+    # TODO: get user_id from auth token.
+    # TODO: get title
+
+    # filename = "#{user_id}-#{title.split(' ').join('_').downcase}"
+
+    path = "#{uploaddir}/#{@file.original_filename}"
+    FileUtils.mkdir_p("public/#{uploaddir}") unless File.directory?("public/#{uploaddir}")
+    newfile = File.open("public/#{path}", "wb") { |f| f.write @file.read }
+
+    render json: { path: path }, status: :ok
+
+  end
+
+
   # GET /jams
   def index
     @jams = Jam.all
@@ -37,7 +59,9 @@ class JamsController < ApplicationController
 
   # POST /jams
   def create
+
     @jam = Jam.new(jam_params)
+    @jam.id = @jam.name.split(' ').join('_')
 
     respond_to do |format|
       if @jam.save
