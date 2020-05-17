@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'jams/:id/entries', to: 'jams#entries'
   
+  post 'entries/:id/vote', to: 'entries#vote'
+
   post 'jams/:id/start', to: 'jams#start'
   post 'jams/:id/stop', to: 'jams#stop'
   

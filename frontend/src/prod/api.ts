@@ -7,6 +7,8 @@ import { JamView } from 'types/view'
 // PUT - update a given record with body (can be partial)
 // POST - CREATE a record with body (must be full record)
 
+// JAM ENDPOINTS
+
 export const getJamIndex = async (): Promise<Record<string, JamView>> => {
   try {
     const { data } = await axios.get('/api/jams')
@@ -52,12 +54,21 @@ export const getChatForJam = async (jam_id: string) => {
   }
 }
 
+// ENTRY ENDPOINTS
+
 export const submitEntry = async (body: Entry) => {
   try {
-    const { data } = await axios.post(`/api/entries`, body)
-    return Promise.resolve(true)
+    await axios.post(`/api/entries`, body)
   } catch (error) {
     console.error('submitEntry', error)
+  }
+}
+
+export const voteForEntry = async (entry_id: string, user_id: string) => {
+  try {
+    await axios.post(`/api/entries/${entry_id}`, { user_id })
+  } catch (error) {
+    console.error('vote for entry', error)
   }
 }
 

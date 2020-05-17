@@ -8,6 +8,4 @@ class Entry < ApplicationRecord
   def votes
     self.vote_tokens.pluck(:user_id)
   end
-
-  after_save :generate_vote_token
 end
