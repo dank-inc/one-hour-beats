@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { PageHeader, Card, Input, Row, Col, Button, message } from 'antd'
+import { PageHeader, Card, Input, Row, Col, Button, message, Tag } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
@@ -16,7 +16,7 @@ import { useActionCableContext } from 'contexts/ActionCableContext'
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
-  const { jamIndex, subscribeToJam } = useAppContext()
+  const { jamIndex, subscribeToJam, jamRoomUsers } = useAppContext()
   const { consumer } = useActionCableContext()
   const chats = chatIndex[match.params.id] // TODO: ChatContext
   const jam = jamIndex[match.params.id]
@@ -49,6 +49,7 @@ export const JamDetails = ({ match }: Props) => {
             <p>Name: {jam.name}</p>
             <p>Description: {jam.description}</p>
             <p>time limit: {jam.time_limit} minutes</p>
+
             {jam.started_at && <p>started at: {jam.started_at}</p>}
           </div>
 
@@ -81,8 +82,14 @@ export const JamDetails = ({ match }: Props) => {
 
           <EntryForm jam_id={jam.id} />
 
-          <h1>Chatroom</h1>
           <div>
+            <h1>Chatroom</h1>
+            <div>
+              Active:
+              {jamRoomUsers[jam.id]?.map((u) => (
+                <Tag color="magenta">{u}</Tag>
+              ))}
+            </div>
             <Card
               style={{
                 width: 400,
