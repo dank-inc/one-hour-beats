@@ -11,3 +11,4 @@ cache/
 log/*
 backend/log/development.log
 backend/log/test.log
+public/uploads/**
