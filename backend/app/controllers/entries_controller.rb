@@ -18,6 +18,13 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save
+        
+        VoteToken.create!(
+          user_id: @entry.user_id,
+          jam_id: @entry.jam_id
+        )
+    
+        # user channel send user with vote_tokens
         JamroomChannel.broadcast_to @entry.jam, { entry: @entry }
         format.json { render :show, status: :created, location: @entry }
       else

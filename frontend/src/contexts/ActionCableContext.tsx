@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import ActionCable from 'actioncable'
 import { Spin, message } from 'antd'
+import { useUserContext } from './UserContext'
 
 type Props = {
   children: React.ReactNode
@@ -12,15 +13,20 @@ type Context = {
 const ActionCableContext = createContext<Context | null>(null)
 
 export const ActionCableContextProvider = ({ children }: Props) => {
+  const { user } = useUserContext()
   const [consumer, setConsumer] = useState<ActionCable.Cable | null>(null)
 
   useEffect(() => {
     const consumer = ActionCable.createConsumer()
     consumer.connect()
     message.success('action consumer connected!', 0.5)
-    console.log('action cable consumer created', consumer)
-
     setConsumer(consumer)
+
+    consumer.subscriptions.create('user_context', {
+      received: (user) => {
+        // set user with vote tokens
+      },
+    })
 
     return () => {
       consumer.disconnect()
