@@ -1,12 +1,13 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { Jam, User, Entry } from 'types/database'
+import { Entry } from 'types/database'
+import { JamView } from 'types/view'
 
 // GET - gets data
 // PUT - update a given record with body (can be partial)
 // POST - CREATE a record with body (must be full record)
 
-export const getJamIndex = async (): Promise<Record<string, Jam>> => {
+export const getJamIndex = async (): Promise<Record<string, JamView>> => {
   try {
     const { data } = await axios.get('/api/jams')
     return Promise.resolve(_.keyBy(data, 'id'))
@@ -15,31 +16,48 @@ export const getJamIndex = async (): Promise<Record<string, Jam>> => {
   }
 }
 
-export const startJam = async (id: string): Promise<boolean> => {
+export const startJam = async (id: string) => {
   try {
     await axios.post(`/api/jams/${id}/start`)
     return Promise.resolve(true)
-  } catch {
-    return Promise.resolve(false)
+  } catch (error) {
+    console.error('startjam', error)
   }
 }
 
-export const stopJam = async (id: string): Promise<boolean> => {
+export const stopJam = async (id: string) => {
   try {
     await axios.post(`/api/jams/${id}/stop`)
     return Promise.resolve(true)
-  } catch {
-    return Promise.resolve(false)
+  } catch (error) {
+    console.error('stopJam', error)
   }
 }
 
-export const submitEntry = async (body: Entry): Promise<boolean> => {
+export const getEntriesForJam = async (jam_id: string) => {
+  try {
+    const { data } = await axios.get(`/api/jams/${jam_id}/entries`)
+    return Promise.resolve(data)
+  } catch (error) {
+    console.error('getEntriesForJam', error)
+  }
+}
+
+export const getChatForJam = async (jam_id: string) => {
+  try {
+    const { data } = await axios.get(`/api/jams/${jam_id}/chat`)
+    return Promise.resolve(data)
+  } catch (error) {
+    console.error('getChatForJam', error)
+  }
+}
+
+export const submitEntry = async (body: Entry) => {
   try {
     const { data } = await axios.post(`/api/entries`, body)
-    console.log('entry submitted', data)
     return Promise.resolve(true)
-  } catch {
-    return Promise.resolve(false)
+  } catch (error) {
+    console.error('submitEntry', error)
   }
 }
 

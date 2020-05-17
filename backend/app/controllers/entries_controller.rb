@@ -2,34 +2,23 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   # GET /entries
-  # GET /entries.json
   def index
     @entries = Entry.all
   end
 
   # GET /entries/1
-  # GET /entries/1.json
   def show
   end
 
-  # GET /entries/new
-  def new
-    @entry = Entry.new
-  end
-
-  # GET /entries/1/edit
-  def edit
-  end
-
   # POST /entries
-  # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
-
+    
     @entry.id = "#{@entry.jam_id}_#{@entry.user_id}_#{@entry.title.split(' ').join('_').downcase}"
 
     respond_to do |format|
       if @entry.save
+        JamroomChannel.broadcast_to @entry.jam, { entry: @entry }
         format.json { render :show, status: :created, location: @entry }
       else
         format.json { render json: @entry.errors, status: :unprocessable_entity }
@@ -38,7 +27,6 @@ class EntriesController < ApplicationController
   end
 
   # PATCH/PUT /entries/1
-  # PATCH/PUT /entries/1.json
   def update
     respond_to do |format|
       if @entry.update(entry_params)
@@ -50,10 +38,10 @@ class EntriesController < ApplicationController
   end
 
   # DELETE /entries/1
-  # DELETE /entries/1.json
   def destroy
     @entry.destroy
     respond_to do |format|
+      # Add some kind of realtime shit for deleting entries
       format.json { head :no_content }
     end
   end

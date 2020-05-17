@@ -1,5 +1,5 @@
 class JamsController < ApplicationController
-  before_action :set_jam, only: [:start, :stop, :show, :edit, :update, :destroy]
+  before_action :set_jam, only: [:entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
   def start
@@ -15,6 +15,11 @@ class JamsController < ApplicationController
   def stop
     @jam.stop!
     head :ok
+  end 
+
+  # GET /jams/:id/entries
+  def entries
+    render json: @jam.entries, status: :ok
   end 
 
   def upload 
@@ -35,7 +40,6 @@ class JamsController < ApplicationController
     newfile = File.open("public/#{path}", "wb") { |f| f.write @file.read }
 
     render json: { path: path }, status: :ok
-
   end
 
 

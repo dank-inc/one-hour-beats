@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
-import { Jam, Chat } from '../types/database'
-import { JamView } from '../types/view'
+import { Entry } from '../types/database'
+import { JamView, Chat } from '../types/view'
 import { Spin } from 'antd'
 import * as api from 'prod/api'
 import { useActionCableContext } from './ActionCableContext'
@@ -11,6 +11,11 @@ type Props = {
 }
 
 type JamRoomUsers = Record<string, string[]>
+
+type JamRoomChannelRes = {
+  entry: Entry
+  chatMessage: Chat
+}
 
 type Context = {
   jamIndex: Record<string, JamView>
@@ -24,7 +29,7 @@ const AppContext = createContext<Context | null>(null)
 export const AppContextProvider = ({ children }: Props) => {
   const { user } = useUserContext()
   const { consumer } = useActionCableContext()
-  const [jamIndex, setJamIndex] = useState<Record<string, Jam> | null>(null)
+  const [jamIndex, setJamIndex] = useState<Record<string, JamView> | null>(null)
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
 
   useEffect(() => {
@@ -41,6 +46,7 @@ export const AppContextProvider = ({ children }: Props) => {
       },
       {
         received: (data: JamRoomUsers) => {
+          console.log('somebody joined room', jamIndex)
           console.log('Jam Room User Lists Updated!', data)
           setJamRoomUsers(data)
         },
@@ -48,7 +54,8 @@ export const AppContextProvider = ({ children }: Props) => {
     )
 
     const get = async () => {
-      setJamIndex(await api.getJamIndex())
+      const data = await api.getJamIndex()
+      if (data) setJamIndex(data)
     }
     get()
 
@@ -60,6 +67,9 @@ export const AppContextProvider = ({ children }: Props) => {
   }, [])
 
   const subscribeToJam = (jam_id: string) => {
+    // get initial state of jam here
+    // chat
+
     return consumer.subscriptions.create(
       {
         channel: 'JamroomChannel',
@@ -67,9 +77,21 @@ export const AppContextProvider = ({ children }: Props) => {
         user_id: user.id,
       },
       {
-        received: (data: Chat) => {
-          console.log('updating chat', data)
-          // append to chat log
+        received: ({ entry, chatMessage }: JamRoomChannelRes) => {
+          if (!jamIndex) return
+
+          if (entry) {
+            console.log('entry was uploaded!', jamIndex[jam_id], entry)
+            setJamIndex({
+              ...jamIndex,
+              [jam_id]: {
+                ...jamIndex[jam_id],
+                entries: [...jamIndex[jam_id].entries, entry],
+              },
+            })
+          } else if (chatMessage) {
+            // append to chat log
+          }
         },
       }
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Tag } from 'antd'
-import { Jam } from '../types/database'
 import { useHistory } from 'react-router'
+import { Jam } from 'types/database'
 
 type Props = { jam: Jam; users?: string[] }
 

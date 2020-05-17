@@ -12,7 +12,7 @@ class JamroomChannel < ApplicationCable::Channel
     else 
       @@jam_index[@jam.id] = [@user.id]
     end
-    
+     
     UserLocationChannel.broadcast_to 'global', @@jam_index
 
     puts ">>> The #{@jam.id} room now contains #{@@jam_index[@jam.id]}"

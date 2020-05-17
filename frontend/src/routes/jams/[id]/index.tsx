@@ -9,7 +9,7 @@ import { ChatCard } from 'components/ChatCard'
 import { chatIndex } from 'mock/chats'
 import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
-import { FrownOutlined } from '@ant-design/icons'
+import { FrownOutlined, ConsoleSqlOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
 import { useActionCableContext } from 'contexts/ActionCableContext'
 
@@ -22,7 +22,9 @@ export const JamDetails = ({ match }: Props) => {
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
+    // get initial state of jam
     const subscription = subscribeToJam(match.params.id)
+    console.log('subscription created for ', jam.id, subscription)
     return () => {
       subscription.unsubscribe()
     }
@@ -39,6 +41,8 @@ export const JamDetails = ({ match }: Props) => {
   }
 
   if (!jam) return <Redirect to="/jams" />
+
+  console.log('Jam Room Render', jam.id, jam)
 
   return (
     <main>
@@ -68,10 +72,10 @@ export const JamDetails = ({ match }: Props) => {
         </div>
         <div className="jam-right">
           {jam.entries ? (
-            jam.entries.map((entry, i) => (
+            jam.entries.map((entry) => (
               <EntryCard
                 entry={entry}
-                key={`jam-entry-${jam.id}-${entry.id}-${i}`}
+                key={`jam-entry-${jam.id}-${entry.id}`}
               />
             ))
           ) : (
@@ -86,8 +90,10 @@ export const JamDetails = ({ match }: Props) => {
             <h1>Chatroom</h1>
             <div>
               Active:
-              {jamRoomUsers[jam.id]?.map((u) => (
-                <Tag color="magenta">{u}</Tag>
+              {jamRoomUsers[jam.id]?.map((user_id) => (
+                <Tag key={`active-users-${user_id}`} color="magenta">
+                  {user_id}
+                </Tag>
               ))}
             </div>
             <Card
@@ -99,9 +105,9 @@ export const JamDetails = ({ match }: Props) => {
               }}
             >
               {chats ? (
-                chats.map((chat, i) => (
+                chats.map((chat) => (
                   <ChatCard
-                    key={`chat-message-${chat.user_id}-${i}`}
+                    key={`chat-message-${chat.user_id}-${chat.message}`}
                     chat={chat}
                   />
                 ))

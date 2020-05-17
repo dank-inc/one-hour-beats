@@ -2,7 +2,8 @@ import { Jam, Entry, VoteToken } from './database'
 
 export type JamView = Jam & {
   // jam.entries
-  entries?: EntryView[]
+  entries: EntryView[]
+  chat?: Chat[]
 }
 
 export type EntryView = Entry & {

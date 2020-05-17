@@ -14,6 +14,7 @@ export const Create = (props: Props) => {
       const body = { ...values, user_id: user.username }
       await axios.post('/api/jams', body)
       message.success('Challenge Created!')
+      // redirect to jams page.
     } catch (err) {
       message.error(`couldn't create jam!`)
     }
