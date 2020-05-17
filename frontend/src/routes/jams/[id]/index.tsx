@@ -42,7 +42,7 @@ export const JamDetails = ({ match }: Props) => {
 
   if (!jam) return <Redirect to="/jams" />
 
-  console.log('Jam Room Render', jam.id, jam)
+  console.log('Jam Room Render', jam.id, jam.entries)
 
   return (
     <main>

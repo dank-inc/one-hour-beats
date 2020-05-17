@@ -18,20 +18,21 @@ export const CoreLayout = () => {
   return (
     <BrowserRouter>
       <AppContextProvider>
-        <Switch>
-          <Route path="/jams/:id/:view" component={JamPopout} />
-          <div>
-            <header>
-              <h2>One Hour Beats</h2>
-              <nav>
-                <Link to="/">Home</Link>
-                <Link to="/create">Create</Link>
-                <Link to="/about">About</Link>
-                <Link to="/jams">Jams</Link>
-                <Link to="/preferences">Preferences</Link>
-                <Button onClick={userContext.handleLogout}>Logout</Button>
-              </nav>
-            </header>
+        <div>
+          <header>
+            <h2>One Hour Beats</h2>
+            <nav>
+              <Link to="/">Home</Link>
+              <Link to="/create">Create</Link>
+              <Link to="/about">About</Link>
+              <Link to="/jams">Jams</Link>
+              <Link to="/preferences">Preferences</Link>
+              <Button onClick={userContext.handleLogout}>Logout</Button>
+            </nav>
+          </header>
+          <Switch>
+            <Route path="/jams/:id/:view" component={JamPopout} />
+
             <Route path="/create" component={Create} />
             <Route path="/about" component={About} />
 
@@ -41,8 +42,8 @@ export const CoreLayout = () => {
             <Route path="/preferences" component={Preferences} />
 
             <Redirect to="/jams" />
-          </div>
-        </Switch>
+          </Switch>
+        </div>
       </AppContextProvider>
     </BrowserRouter>
   )

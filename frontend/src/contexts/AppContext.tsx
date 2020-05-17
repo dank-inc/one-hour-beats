@@ -46,8 +46,6 @@ export const AppContextProvider = ({ children }: Props) => {
       },
       {
         received: (data: JamRoomUsers) => {
-          console.log('somebody joined room', jamIndex)
-          console.log('Jam Room User Lists Updated!', data)
           setJamRoomUsers(data)
         },
       }
@@ -82,12 +80,16 @@ export const AppContextProvider = ({ children }: Props) => {
 
           if (entry) {
             console.log('entry was uploaded!', jamIndex[jam_id], entry)
-            setJamIndex({
-              ...jamIndex,
-              [jam_id]: {
-                ...jamIndex[jam_id],
-                entries: [...jamIndex[jam_id].entries, entry],
-              },
+            setJamIndex((jamIndex) => {
+              if (!jamIndex) return {}
+
+              return {
+                ...jamIndex,
+                [jam_id]: {
+                  ...jamIndex[jam_id],
+                  entries: [...jamIndex[jam_id].entries, entry],
+                },
+              }
             })
           } else if (chatMessage) {
             // append to chat log
