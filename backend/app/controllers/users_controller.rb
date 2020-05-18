@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   def login 
     @user = User.find_by(username: params[:username])
     if @user && @user.password == params[:password]
-      render json: @user
+      user = @user.as_json
+      user[:vote_tokens] = @user.vote_tokens
+      
+      render json: user, status: :ok
     else
       @user = nil
       render json: {}, status: 401

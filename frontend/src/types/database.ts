@@ -32,7 +32,7 @@ export type User = {
 export type VoteToken = {
   jam_id: string
   user_id: string
-  entryId: string // entry that user_id cast the vote on
+  entry_id: string // entry that user_id cast the vote on
 }
 
 export type Chat = {

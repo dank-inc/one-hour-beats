@@ -1,4 +1,4 @@
-import { Jam, Entry, VoteToken } from './database'
+import { Jam, Entry, VoteToken, User } from './database'
 
 export type JamView = Jam & {
   // jam.entries
@@ -12,7 +12,12 @@ export type EntryView = Entry & {
   votes?: VoteToken[]
 }
 
+export type UserView = User & {
+  vote_tokens: VoteToken[]
+}
+
 export type Chat = {
+  id: string
   user_id: string
   username?: string
   jam_id: string

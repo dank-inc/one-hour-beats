@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
-import { JamView, Chat, EntryView } from '../types/view'
-import { Spin } from 'antd'
+import { JamView, Chat, EntryView, UserView } from '../types/view'
+import { Spin, message } from 'antd'
 import * as api from 'prod/api'
 import { useActionCableContext } from './ActionCableContext'
 
@@ -26,13 +26,13 @@ type Context = {
 const AppContext = createContext<Context | null>(null)
 
 export const AppContextProvider = ({ children }: Props) => {
-  const { user } = useUserContext()
+  const { user, setUser } = useUserContext()
   const { consumer } = useActionCableContext()
   const [jamIndex, setJamIndex] = useState<Record<string, JamView> | null>(null)
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
 
   useEffect(() => {
-    const subscription = consumer.subscriptions.create(
+    const userLocationSubscription = consumer.subscriptions.create(
       {
         channel: 'UserLocationChannel',
         user_id: user.id,
@@ -44,6 +44,19 @@ export const AppContextProvider = ({ children }: Props) => {
       }
     )
 
+    const userContextSubscription = consumer.subscriptions.create(
+      {
+        channel: 'UserContextChannel',
+        user_id: user.id,
+      },
+      {
+        received: (user: UserView) => {
+          console.log('user context updating', user)
+          setUser(user)
+        },
+      }
+    )
+
     const get = async () => {
       const data = await api.getJamIndex()
       if (data) setJamIndex(data)
@@ -51,7 +64,8 @@ export const AppContextProvider = ({ children }: Props) => {
     get()
 
     return () => {
-      subscription.unsubscribe()
+      userContextSubscription.unsubscribe()
+      userLocationSubscription.unsubscribe()
     }
   }, [user.id])
 
@@ -67,6 +81,7 @@ export const AppContextProvider = ({ children }: Props) => {
           if (!jamIndex) return
 
           if (entry) {
+            message.success(`${entry.artist_name} submitted a song!`)
             setJamIndex((jamIndex) => {
               if (!jamIndex) return {}
 

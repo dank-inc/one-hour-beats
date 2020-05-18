@@ -11,10 +11,12 @@ import { FrownOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
 import { Chatroom } from 'components/Chatroom'
 import { ChatContextProvider } from 'contexts/ChatContext'
+import { useUserContext } from 'contexts/UserContext'
 
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
+  const { user } = useUserContext()
   const { jamIndex, subscribeToJam } = useAppContext()
   const jam = jamIndex[match.params.id]
 
@@ -24,7 +26,7 @@ export const JamDetails = ({ match }: Props) => {
     return () => {
       subscription.unsubscribe()
     }
-  }, [match.params.id, jam.id, subscribeToJam])
+  }, [match.params.id])
 
   const handleStart = async () => {
     await api.startJam(jam.id)
@@ -68,6 +70,7 @@ export const JamDetails = ({ match }: Props) => {
           {jam.entries ? (
             jam.entries.map((entry) => (
               <EntryCard
+                jam_id={jam.id}
                 entry={entry}
                 key={`jam-entry-${jam.id}-${entry.id}`}
               />
@@ -78,10 +81,12 @@ export const JamDetails = ({ match }: Props) => {
             </div>
           )}
 
-          <EntryForm jam_id={jam.id} />
+          {!jam.entries.find((entry) => entry.user_id === user.id) && (
+            <EntryForm jam_id={jam.id} />
+          )}
 
-          <ChatContextProvider jam_id={jam.id}>
-            <Chatroom jam_id={jam.id} />
+          <ChatContextProvider jam_id={match.params.id}>
+            <Chatroom jam_id={match.params.id} />
           </ChatContextProvider>
         </div>
       </div>

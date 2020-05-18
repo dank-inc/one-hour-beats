@@ -1,14 +1,23 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { User } from 'types/database'
 import { Login } from 'routes/login'
 import { message } from 'antd'
 import axios from 'axios'
+import { UserView } from 'types/view'
 
 type Props = {
   children: React.ReactNode
 }
 type Context = {
-  user: User
+  user: UserView
+  setUser: Dispatch<SetStateAction<UserView | null>>
   handleLogin: (username: string, password: string) => void
   handleLogout: () => void
 }
@@ -16,7 +25,7 @@ type Context = {
 const UserContext = createContext<Context | null>(null)
 
 export const UserContextProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<UserView | null>(null)
 
   useEffect(() => {
     // some kind of JWT
@@ -38,7 +47,7 @@ export const UserContextProvider = ({ children }: Props) => {
   }
 
   return user ? (
-    <UserContext.Provider value={{ user, handleLogin, handleLogout }}>
+    <UserContext.Provider value={{ user, setUser, handleLogin, handleLogout }}>
       {children}
     </UserContext.Provider>
   ) : (

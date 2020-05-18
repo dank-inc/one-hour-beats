@@ -56,10 +56,11 @@ ActiveRecord::Schema.define(version: 2020_05_18_001111) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "vote_tokens", id: false, force: :cascade do |t|
-    t.string "user_id", null: false
+  create_table "vote_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
     t.string "jam_id", null: false
-    t.string "entry_id"
+    t.uuid "entry_id"
+    t.index ["entry_id"], name: "index_vote_tokens_on_entry_id"
   end
 
 end

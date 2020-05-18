@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useAppContext } from 'contexts/AppContext'
-import { Tag, Card, Input, Row, Col, Form } from 'antd'
+import { Tag, Card, Input, Button, Form } from 'antd'
 import { ChatCard } from './ChatCard'
 import { Store } from 'antd/lib/form/interface'
 import { useForm } from 'antd/lib/form/util'
 import { useChatContext } from 'contexts/ChatContext'
+import './chat.scss'
 
 type Props = { jam_id: string }
 export const Chatroom = ({ jam_id }: Props) => {
   const { chats, handleSubmit } = useChatContext()
-
   const { jamRoomUsers } = useAppContext()
   const [form] = useForm()
+  const logRef = useRef<HTMLDivElement | null>(null)
 
   const onFinish = ({ message }: Store) => {
     handleSubmit(message)
     form.resetFields()
   }
+
+  useEffect(() => {
+    if (!logRef?.current) return
+
+    logRef.current.scrollTo(0, logRef.current.scrollHeight) // (logRef.current.scrollHeight)
+  }, [chats])
+
+  console.log('chatroom - rendered!')
 
   return (
     <div>
@@ -29,52 +38,41 @@ export const Chatroom = ({ jam_id }: Props) => {
           </Tag>
         ))}
       </div>
-      <Card
+      <div
+        ref={logRef}
         style={{
-          width: 400,
           height: 400,
           overflowY: 'scroll',
           overflowX: 'hidden',
         }}
       >
         {chats.length ? (
-          chats.map((chat, i) => (
-            <ChatCard
-              key={`chat-message-${i}-${chat.user_id}-${chat.message}`}
-              chat={chat}
-            />
-          ))
+          chats.map((chat) => <ChatCard key={`chat-${chat.id}`} chat={chat} />)
         ) : (
-          <Row align="bottom" justify="center" gutter={[2, 16]}>
-            <Col span={19}>
-              <div
-                style={{
-                  borderRadius: 15,
-                  backgroundColor: '#fdfacf',
-                  padding: 5,
-                  textAlign: 'center',
-                }}
-              >
-                Break the ice!
-              </div>
-            </Col>
-          </Row>
-        )}
-      </Card>
-      <Form onFinish={onFinish} form={form}>
-        <Form.Item name="message" rules={[{ required: true }]}>
-          <Input
-            placeholder="Send a chat message..."
-            size="large"
-            autoFocus
+          <div
             style={{
-              width: 400,
-              margin: 16,
-              marginTop: -16,
+              borderRadius: 15,
+              backgroundColor: '#fdfacf',
+              padding: 5,
+              textAlign: 'center',
             }}
-          />
-        </Form.Item>
-      </Form>
+          >
+            Break the ice!
+          </div>
+        )}
+        <Form onFinish={onFinish} form={form}>
+          <Form.Item name="message" rules={[{ required: true }]}>
+            <div className="chat-input">
+              <Input
+                placeholder="Send a chat message..."
+                size="large"
+                autoFocus
+              />
+              <Button type="primary">Send</Button>
+            </div>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   )
 }

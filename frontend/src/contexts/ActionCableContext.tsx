@@ -22,21 +22,10 @@ export const ActionCableContextProvider = ({ children }: Props) => {
     message.success('action consumer connected!', 0.5)
     setConsumer(consumer)
 
-    consumer.subscriptions.create(
-      { channel: 'UserContextChannel', user_id: user.id },
-      {
-        received: (user) => {
-          console.log('user context updating', user)
-          // set user with vote tokens
-          // setUser
-        },
-      }
-    )
-
     return () => {
       consumer.disconnect()
     }
-  }, [user.id])
+  }, [])
 
   return consumer ? (
     <ActionCableContext.Provider value={{ consumer }}>

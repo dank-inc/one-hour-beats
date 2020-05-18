@@ -5,5 +5,7 @@ class VoteToken < ApplicationRecord
   validates :jam, presence: true
   validates :user, presence: true
 
-  has_one :entry
+  def entry
+    Entry.find_by(id: self.entry_id)
+  end
 end

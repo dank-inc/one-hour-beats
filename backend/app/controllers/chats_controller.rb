@@ -2,11 +2,10 @@ class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :update, :destroy]
 
   # GET /jams/:id/chats
-
   def jam_chat
     jam = Jam.find(params[:id])
     @chats = jam.chats
-    render :index, status: :ok, location: @chats
+    render json: @chats # :index
   end
 
   # GET /chats
@@ -23,7 +22,8 @@ class ChatsController < ApplicationController
     @chat = Chat.new(chat_params)
     if @chat.save
       ChatContextChannel.broadcast_to @chat.jam, @chat
-      render :show, status: :created, location: @chat
+      head :ok
+      # render :show, status: :created, location: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity
     end
