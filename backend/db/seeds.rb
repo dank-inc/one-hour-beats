@@ -79,18 +79,6 @@ Jam.create!({
   user_id: toffee.id,
 })
 
-Entry.create!({
-  link: "https://soundcloud.com/vapsquad/vapsquad-whats-a-dik-4",
-  title: "whats a dik 4",
-  user_id: elijah.id,
-  jam_id: jam.id,
-})
-
-VoteToken.create!({ 
-  user_id: elijah.id,
-  jam_id: jam.id,
-})
-
 chats = [
   { jam: jam, user: toffee, message: 'hello world' },
   {
