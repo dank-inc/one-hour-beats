@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Card, message, Avatar, Tooltip } from 'antd'
-import { CustomerServiceOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  CustomerServiceOutlined,
+  UserOutlined,
+  FireTwoTone,
+} from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { voteForEntry } from 'prod/api'
 import { EntryView } from 'types/view'
@@ -56,9 +60,15 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
           </Button>
         </Tooltip>,
       ]}
+      title={entry.artist_name}
+      extra={entry.votes?.map((user_id) => (
+        <FireTwoTone
+          twoToneColor="#fa541c"
+          key={`vote-${jam_id}-${entry.id}-${user_id}`}
+        />
+      ))}
     >
       <Card.Meta
-        title={entry.artist_name}
         description={entry.title}
         avatar={<Avatar icon={<UserOutlined />} />}
       ></Card.Meta>

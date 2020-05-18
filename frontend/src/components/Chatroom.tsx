@@ -28,7 +28,7 @@ export const Chatroom = ({ jam_id }: Props) => {
   console.log('chatroom - rendered!')
 
   return (
-    <div>
+    <Card>
       <h1>Chatroom</h1>
       <div>
         Active:
@@ -73,6 +73,6 @@ export const Chatroom = ({ jam_id }: Props) => {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </Card>
   )
 }
