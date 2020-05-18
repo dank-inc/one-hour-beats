@@ -57,6 +57,29 @@ export const AppContextProvider = ({ children }: Props) => {
       }
     )
 
+    const appContextSubscription = consumer.subscriptions.create(
+      {
+        channel: 'AppContextChannel',
+      },
+      {
+        received: ({ jam }) => {
+          if (jam) {
+            setJamIndex((jamIndex) => {
+              const status = jamIndex?.[jam.id]?.started_at
+                ? 'Stopping'
+                : 'Starting'
+              message.success(`${status} ${jam.name}`)
+
+              return {
+                ...jamIndex,
+                [jam.id]: jam,
+              }
+            })
+          }
+        },
+      }
+    )
+
     const get = async () => {
       const data = await api.getJamIndex()
       if (data) setJamIndex(data)
@@ -66,6 +89,7 @@ export const AppContextProvider = ({ children }: Props) => {
     return () => {
       userContextSubscription.unsubscribe()
       userLocationSubscription.unsubscribe()
+      appContextSubscription.unsubscribe()
     }
   }, [user.id])
 

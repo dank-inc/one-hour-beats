@@ -22,7 +22,7 @@ export const Jams = () => {
         {Object.values(jamIndex).map((jam) => (
           <JamCard
             jam={jam}
-            key={`jam-list-${jam.id}-${jam.name}`}
+            key={`jam-list-${jam.id}-${jam.user_id}`}
             users={jamRoomUsers[jam.id]}
           />
         ))}

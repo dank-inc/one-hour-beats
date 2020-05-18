@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PageHeader, Button, message, Popover } from 'antd'
+import { PageHeader, Button, message, Popover, Tooltip } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
@@ -31,12 +31,12 @@ export const JamDetails = ({ match }: Props) => {
 
   const handleStart = async () => {
     await api.startJam(jam.id)
-    message.loading('Starting challenge...')
+    message.loading('Starting challenge...', 0.25)
   }
 
   const handleStop = async () => {
     await api.stopJam(jam.id)
-    message.loading('Stopping challenge...')
+    message.loading('Stopping challenge...', 0.25)
   }
 
   const toggleChat = () => {
@@ -44,6 +44,7 @@ export const JamDetails = ({ match }: Props) => {
   }
 
   if (!jam) return <Redirect to="/jams" />
+  const jamOwner = jam.user_id === user.id
 
   return (
     <main>
@@ -61,14 +62,34 @@ export const JamDetails = ({ match }: Props) => {
           {jam.started_at ? (
             <>
               <Clock jam={jam} />
-              <Button type="primary" onClick={handleStop}>
-                Stop Jam Now!
-              </Button>
+              <Tooltip
+                title={
+                  jamOwner
+                    ? 'Stop the Jam!'
+                    : 'Only the owner can stop the jam!'
+                }
+              >
+                <Button
+                  type="primary"
+                  disabled={!jamOwner}
+                  onClick={handleStop}
+                >
+                  Stop Jam Now!
+                </Button>
+              </Tooltip>
             </>
           ) : (
-            <Button type="primary" onClick={handleStart}>
-              Start Jam Now!
-            </Button>
+            <Tooltip
+              title={
+                jamOwner
+                  ? 'Start the Jam!'
+                  : 'Only the owner can start the jam!'
+              }
+            >
+              <Button type="primary" disabled={!jamOwner} onClick={handleStart}>
+                Start Jam Now!
+              </Button>
+            </Tooltip>
           )}
         </div>
         <div className="jam-right">

@@ -7,6 +7,11 @@ class JamsController < ApplicationController
       head :unprocessable_entity
     else 
       @jam.start! 
+      
+      jam = @jam.as_json
+      jam[:entries] = @jam.entries
+
+      AppContextChannel.broadcast_to 'global', jam: jam
       head :ok
     end
   end 
@@ -14,6 +19,11 @@ class JamsController < ApplicationController
   # POST /jams/:id/stop
   def stop
     @jam.stop!
+
+    jam = @jam.as_json
+    jam[:entries] = @jam.entries
+
+    AppContextChannel.broadcast_to 'global', jam: jam
     head :ok
   end 
 

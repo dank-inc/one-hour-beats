@@ -72,7 +72,7 @@ jam = Jam.create!({
 
 Jam.create!({
   id: 'cool-unicorns',
-  name: "a new ohb",
+  name: "Toffee's new ohb",
   description: "make a sketch with only human noises!",
   time_limit: 60,
   started_at: nil,
