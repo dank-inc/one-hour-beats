@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Checkbox, message, Upload } from 'antd'
+import { Form, Input, Button, Checkbox, message, Upload, Tooltip } from 'antd'
 import { useUserContext } from '../contexts/UserContext'
 import { InboxOutlined } from '@ant-design/icons'
 import { Store } from 'antd/lib/form/interface'
@@ -12,6 +12,7 @@ type Props = { jam_id: string }
 export const EntryForm = ({ jam_id }: Props) => {
   const { user } = useUserContext()
   const [link, setLink] = useState<string | null>(null)
+  const [canUpload, setCanUpload] = useState(false)
 
   const handleUpload = (uploadHandler: UploadChangeParam<UploadFile<any>>) => {
     if (uploadHandler.file.error) {
@@ -29,19 +30,24 @@ export const EntryForm = ({ jam_id }: Props) => {
     // throw file in static hosting
   }
 
-  const onFinish = (value: Store) => {
+  const handleChange = (e: Store) => {
+    setCanUpload(!e.target.value)
+    // setCanUpload(!!val)
+  }
+
+  const onFinish = (form: Store) => {
     if (!link) {
       message.error('please upload a file!')
       return
     }
 
-    console.log('Rights', value)
+    console.log('Rights', form)
 
-    if (!value.rights) {
+    if (!form.rights) {
       message.error('acknowledge you own all rights to the file!')
       return
     }
-    const body = { ...value, link, jam_id, user_id: user.id } as Entry
+    const body = { ...form, link, jam_id, user_id: user.id } as Entry
 
     submitEntry(body)
     message.loading('submitting entry')
@@ -53,7 +59,11 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   return (
-    <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+    <Form
+      onChange={handleChange}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
       <Form.Item
         label="Song Title"
         name="title"
@@ -73,10 +83,12 @@ export const EntryForm = ({ jam_id }: Props) => {
         action={`/api/jams/${jam_id}/upload`}
         multiple={false}
         name="file"
+        disabled={!canUpload}
         onChange={handleUpload}
       >
         <InboxOutlined />
-        <p>File Size Limit: 10MB</p>
+
+        <p>{canUpload ? 'File Size Limit: 10MB' : 'Please enter a title!'}</p>
       </Upload.Dragger>
 
       <Form.Item>
