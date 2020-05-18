@@ -1,22 +1,20 @@
 import React from 'react'
 import { useAppContext } from 'contexts/AppContext'
 import { Tag, Card, Input, Row, Col, Form } from 'antd'
-import { Chat } from 'types/view'
 import { ChatCard } from './ChatCard'
-import { useUserContext } from 'contexts/UserContext'
 import { Store } from 'antd/lib/form/interface'
-import { submitChatMessage } from 'prod/api'
 import { useForm } from 'antd/lib/form/util'
+import { useChatContext } from 'contexts/ChatContext'
 
-type Props = { jam_id: string; chats: Chat[] }
-export const Chatroom = ({ jam_id, chats }: Props) => {
-  const { jamRoomUsers, chatIndex } = useAppContext()
-  const { user } = useUserContext()
+type Props = { jam_id: string }
+export const Chatroom = ({ jam_id }: Props) => {
+  const { chats, handleSubmit } = useChatContext()
+
+  const { jamRoomUsers } = useAppContext()
   const [form] = useForm()
 
   const onFinish = ({ message }: Store) => {
-    const body = { message, jam_id, user_id: user.id }
-    submitChatMessage(body)
+    handleSubmit(message)
     form.resetFields()
   }
 
@@ -39,8 +37,8 @@ export const Chatroom = ({ jam_id, chats }: Props) => {
           overflowX: 'hidden',
         }}
       >
-        {chatIndex[jam_id] ? (
-          chatIndex[jam_id].map((chat, i) => (
+        {chats.length ? (
+          chats.map((chat, i) => (
             <ChatCard
               key={`chat-message-${i}-${chat.user_id}-${chat.message}`}
               chat={chat}

@@ -46,15 +46,6 @@ export const getEntriesForJam = async (jam_id: string) => {
   }
 }
 
-export const getChatForJam = async (jam_id: string) => {
-  try {
-    const { data } = await axios.get(`/api/jams/${jam_id}/chat`)
-    return Promise.resolve(data)
-  } catch (error) {
-    console.error('getChatForJam', error)
-  }
-}
-
 export const submitChatMessage = async (chat: Chat) => {
   try {
     return axios.post(`/api/jams/${chat.jam_id}/chat`, chat)
@@ -82,4 +73,13 @@ export const voteForEntry = async (entry_id: string, user_id: string) => {
   }
 }
 
-// export const login = async (): Promise<User> => {}
+// CHAT ENDPOINTS
+
+export const getChatForJam = async (jam_id: string) => {
+  try {
+    const { data } = await axios.get(`/api/jams/${jam_id}/chat`)
+    return Promise.resolve(data)
+  } catch (error) {
+    console.error('getChatForJam', error)
+  }
+}

@@ -19,7 +19,6 @@ type JamRoomChannelRes = {
 type Context = {
   jamIndex: Record<string, JamView>
   jamRoomUsers: JamRoomUsers
-  chatIndex: Record<string, Chat[]>
   subscribeToJam: (id: string) => ActionCable.Channel
   unsubscribeFromJam: (id: string) => void
 }
@@ -31,15 +30,8 @@ export const AppContextProvider = ({ children }: Props) => {
   const { consumer } = useActionCableContext()
   const [jamIndex, setJamIndex] = useState<Record<string, JamView> | null>(null)
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
-  const [chatIndex, setChatIndex] = useState<Record<string, Chat[]>>({})
 
   useEffect(() => {
-    // fetch all jams w/ entries w/ votes
-    // get user's voteTokens
-    // set up jam socket listeners (attendance, status, blah)
-
-    // jamIndex listener - global jam creations and events
-
     const subscription = consumer.subscriptions.create(
       {
         channel: 'UserLocationChannel',
@@ -61,14 +53,9 @@ export const AppContextProvider = ({ children }: Props) => {
     return () => {
       subscription.unsubscribe()
     }
-
-    // const jamRoomListener = consumer.subscriptions.create({channel: 'jam'})
-  }, [])
+  }, [user.id])
 
   const subscribeToJam = (jam_id: string) => {
-    // get initial state of jam here
-    // chat
-
     return consumer.subscriptions.create(
       {
         channel: 'JamroomChannel',
@@ -76,11 +63,10 @@ export const AppContextProvider = ({ children }: Props) => {
         user_id: user.id,
       },
       {
-        received: ({ entry, chat }: JamRoomChannelRes) => {
+        received: ({ entry }: JamRoomChannelRes) => {
           if (!jamIndex) return
 
           if (entry) {
-            console.log('entry was uploaded!', jamIndex[jam_id], entry)
             setJamIndex((jamIndex) => {
               if (!jamIndex) return {}
 
@@ -88,20 +74,8 @@ export const AppContextProvider = ({ children }: Props) => {
                 ...jamIndex,
                 [jam_id]: {
                   ...jamIndex[jam_id],
-                  entries: [...jamIndex[jam_id].entries, entry],
+                  entries: [...(jamIndex[jam_id].entries || []), entry],
                 },
-              }
-            })
-          } else if (chat) {
-            // TODO: make a chat context yo
-            console.log('chat has been updated', chat)
-            // append to chat log
-            setChatIndex((chatIndex) => {
-              if (!chatIndex) return {}
-
-              return {
-                ...chatIndex,
-                [jam_id]: [...(chatIndex[jam_id] || []), chat],
               }
             })
           }
@@ -119,7 +93,6 @@ export const AppContextProvider = ({ children }: Props) => {
         subscribeToJam,
         unsubscribeFromJam,
         jamRoomUsers,
-        chatIndex,
       }}
     >
       {children}

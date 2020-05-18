@@ -15,10 +15,8 @@ export const EntryForm = ({ jam_id }: Props) => {
 
   const handleUpload = (uploadHandler: UploadChangeParam<UploadFile<any>>) => {
     if (uploadHandler.file.error) {
-      console.log('Error Uploading', uploadHandler)
       message.error('error uploading file!')
     } else {
-      console.log('handleUpload', uploadHandler)
       message.loading('uploading file...', 0.2)
       if (uploadHandler.fileList.length) {
         const path = uploadHandler.fileList[0].response?.path

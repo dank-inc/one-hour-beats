@@ -22,7 +22,7 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(chat_params)
     if @chat.save
-      
+      ChatContextChannel.broadcast_to @chat.jam, @chat
       render :show, status: :created, location: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity

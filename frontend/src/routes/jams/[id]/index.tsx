@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { PageHeader, Button, message } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
@@ -9,25 +9,22 @@ import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
 import { FrownOutlined } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
-import { Chat } from 'types/database'
 import { Chatroom } from 'components/Chatroom'
+import { ChatContextProvider } from 'contexts/ChatContext'
 
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
   const { jamIndex, subscribeToJam } = useAppContext()
-  const [chats, setChats] = useState<Chat[] | null>([])
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
     const subscription = subscribeToJam(match.params.id)
 
-    console.log('subscription created for ', jam.id, subscription)
-
     return () => {
       subscription.unsubscribe()
     }
-  }, [match.params.id])
+  }, [match.params.id, jam.id, subscribeToJam])
 
   const handleStart = async () => {
     await api.startJam(jam.id)
@@ -40,8 +37,6 @@ export const JamDetails = ({ match }: Props) => {
   }
 
   if (!jam) return <Redirect to="/jams" />
-
-  console.log('Jam Room Render', jam.id, jam.entries)
 
   return (
     <main>
@@ -85,7 +80,9 @@ export const JamDetails = ({ match }: Props) => {
 
           <EntryForm jam_id={jam.id} />
 
-          {chats && <Chatroom jam_id={jam.id} chats={chats} />}
+          <ChatContextProvider jam_id={jam.id}>
+            <Chatroom jam_id={jam.id} />
+          </ChatContextProvider>
         </div>
       </div>
     </main>

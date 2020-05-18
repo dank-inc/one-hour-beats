@@ -1,39 +1,52 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { Chat } from 'types/view'
-import { chatIndex } from 'mock/chats'
 import { Spin } from 'antd'
+import { getChatForJam, submitChatMessage } from 'prod/api'
+import { useActionCableContext } from './ActionCableContext'
+import { useUserContext } from './UserContext'
 
 type Props = {
   children: React.ReactNode
-  jamId: string
+  jam_id: string
 }
 type Context = {
   chats: Chat[]
-  handleSubmit: (user_id: string, message: string) => void
+  handleSubmit: (message: string) => void
 }
 
 const ChatContext = createContext<Context | null>(null)
 
-export const ChatContextProvider = ({ children, jamId }: Props) => {
-  // MAYBE THIS SHOULD BE A HOOK
-  const [chats, setChats] = useState<Chat[] | null>()
+export const ChatContextProvider = ({ children, jam_id }: Props) => {
+  const { user } = useUserContext()
+  const { consumer } = useActionCableContext()
+  const [chats, setChats] = useState<Chat[] | null>(null)
 
   useEffect(() => {
-    // add socket listener
-    // socket payload ([{user_id: string, message: string}])
-    // setChats(payload)
-    const get = () => {
-      setChats(chatIndex[jamId] || [])
-    }
-    setTimeout(get, 1000)
-  }, [jamId])
+    consumer.subscriptions.create(
+      { channel: 'ChatContextChannel', user_id: user.id, jam_id },
+      {
+        received: (chat: Chat) => {
+          setChats((chats) => {
+            if (!chats) return []
 
-  const handleSubmit = (user_id: string, message: string) => {
-    // submit chat
+            return [...chats, chat]
+          })
+        },
+      }
+    )
+
+    const get = async () => {
+      setChats(await getChatForJam(jam_id))
+    }
+
+    setTimeout(get, 1000)
+  }, [jam_id])
+
+  const handleSubmit = async (message: string) => {
+    await submitChatMessage({ message, jam_id, user_id: user.id })
+
     // socket will do the thing
   }
-
-  // possibly global, so you can subscribe to chatrooms and get global notifications? would be cool
 
   return chats ? (
     <ChatContext.Provider value={{ chats, handleSubmit }}>
