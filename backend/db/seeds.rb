@@ -23,9 +23,34 @@ toffee = User.create!({
   name: "El Doge",
   password: "toffee15",
   email: "vapsquad@gmail.com",
-  thumbs: 20,
-  wins: 5,
 })
+
+users = [{
+  username: 'chocobobafett',
+  password: 'toffee15',
+  name: 'George',
+  email: 'berkleegeorge@gmail.com',
+},
+{
+  username: 'metacusis',
+  password: 'toffee15',
+  name: 'Meta',
+  email: 'cjamieschmitz@gmail.com',
+},
+{
+  username: 'JasonOne',
+  password: 'toffee15',
+  name: 'Meta',
+  email: 'Jason@danceshout.com',
+},
+{
+  username: 'iwishiwereadinosaur',
+  password: 'toffee15',
+  name: 'iwishiwereadinosaur',
+  email: 'iwishiwere@adinosaur.net',
+}]
+
+users.each { |user| User.create!(user) }
 
 User.create({
   username: 'otherdude',
@@ -65,3 +90,33 @@ VoteToken.create!({
   user_id: elijah.id,
   jam_id: jam.id,
 })
+
+chats = [
+  { jam: jam, user: toffee, message: 'hello world' },
+  {
+    jam: jam, 
+    user: elijah,
+    message:
+      'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.',
+  },
+  {
+    jam: jam, 
+    user: toffee,
+    message:
+      'I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.',
+  },
+  {
+    jam: jam, 
+    user: elijah,
+    message:
+      'When I hear the dank buzz of the little world among the stalks, and grow familiar with the countless indescribable forms',
+  },
+  {
+    jam: jam, 
+    user: elijah,
+    message:
+      'When I hear the dank buzz of the little world among the stalks, and grow familiar with the countless indescribable forms',
+  },
+]
+
+chats.each {|chat| Chat.create!(chat) } 

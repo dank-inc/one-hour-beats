@@ -1,5 +1,7 @@
 class Jam < ApplicationRecord
   has_many :entries
+  has_many :chats
+
   belongs_to :user
 
   def start!

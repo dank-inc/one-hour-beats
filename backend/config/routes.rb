@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   post 'login', to: 'users#login'
 
   resources :vote_tokens, defaults: {format: :json}
