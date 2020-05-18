@@ -10,6 +10,8 @@ import { useUserContext } from './contexts/UserContext'
 import { Button } from 'antd'
 import { JamPopout } from './routes/jams/[id]/JamPopout'
 import { AppContextProvider } from './contexts/AppContext'
+import { Footer } from 'components/Footer'
+import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 
 export const CoreLayout = () => {
   const userContext = useUserContext()
@@ -18,7 +20,7 @@ export const CoreLayout = () => {
   return (
     <BrowserRouter>
       <AppContextProvider>
-        <div>
+        <DankAmpContextProvider>
           <header>
             <h2>One Hour Beats</h2>
             <nav>
@@ -43,7 +45,8 @@ export const CoreLayout = () => {
 
             <Redirect to="/jams" />
           </Switch>
-        </div>
+          <Footer />
+        </DankAmpContextProvider>
       </AppContextProvider>
     </BrowserRouter>
   )

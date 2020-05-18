@@ -8,6 +8,7 @@ import {
 import { useUserContext } from 'contexts/UserContext'
 import { voteForEntry } from 'prod/api'
 import { EntryView } from 'types/view'
+import { useDankAmpContext } from 'contexts/DankAmpContext'
 
 type Props = {
   entry: EntryView
@@ -16,6 +17,7 @@ type Props = {
 
 export const EntryCard = ({ entry, jam_id }: Props) => {
   const { user } = useUserContext()
+  const { selectSong } = useDankAmpContext()
   const [canVote, setCanVote] = useState(false)
   const [tooltipTitle, setTooltipTitle] = useState('')
   // cast vote! - app context - or just here?
@@ -27,14 +29,11 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
   }
 
   const listenToEntry = () => {
-    message.loading('listening to entry!')
-    // queue up song in footer player
+    selectSong(entry)
   }
 
   useEffect(() => {
     const vote_token = user.vote_tokens.find((token) => token.jam_id === jam_id)
-    console.log('Vote Has Been Cast!', vote_token)
-
     if (!vote_token) {
       setTooltipTitle('you must submit a song before you can vote')
     } else if (vote_token.entry_id) {

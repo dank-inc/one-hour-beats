@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react'
-import { PageHeader, Button, message } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { PageHeader, Button, message, Popover } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { Clock } from 'components/Clock'
 import { useAppContext } from 'contexts/AppContext'
-import './style.scss'
 import * as api from 'prod/api'
 import { EntryCard } from 'components/EntryCard'
-import { FrownOutlined } from '@ant-design/icons'
+import { FrownOutlined, MessageTwoTone } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
 import { Chatroom } from 'components/Chatroom'
 import { ChatContextProvider } from 'contexts/ChatContext'
 import { useUserContext } from 'contexts/UserContext'
+import './style.scss'
 
 type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
   const { jamIndex, subscribeToJam } = useAppContext()
+  const [chatOpen, setChatOpen] = useState(false)
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
@@ -36,6 +37,10 @@ export const JamDetails = ({ match }: Props) => {
   const handleStop = async () => {
     await api.stopJam(jam.id)
     message.loading('Stopping challenge...')
+  }
+
+  const toggleChat = () => {
+    setChatOpen(!chatOpen)
   }
 
   if (!jam) return <Redirect to="/jams" />
@@ -67,29 +72,40 @@ export const JamDetails = ({ match }: Props) => {
           )}
         </div>
         <div className="jam-right">
-          {jam.entries ? (
-            jam.entries.map((entry) => (
-              <EntryCard
-                jam_id={jam.id}
-                entry={entry}
-                key={`jam-entry-${jam.id}-${entry.id}`}
-              />
-            ))
-          ) : (
-            <div>
-              No entries... yet! <FrownOutlined />
-            </div>
-          )}
+          <div className="entries-wrapper">
+            {jam.entries ? (
+              jam.entries.map((entry) => (
+                <EntryCard
+                  jam_id={jam.id}
+                  entry={entry}
+                  key={`jam-entry-${jam.id}-${entry.id}`}
+                />
+              ))
+            ) : (
+              <div>
+                No entries... yet! <FrownOutlined />
+              </div>
+            )}
+          </div>
 
           {!jam.entries.find((entry) => entry.user_id === user.id) && (
             <EntryForm jam_id={jam.id} />
           )}
-
-          <ChatContextProvider jam_id={match.params.id}>
-            <Chatroom jam_id={match.params.id} />
-          </ChatContextProvider>
         </div>
       </div>
+      <ChatContextProvider jam_id={match.params.id}>
+        <Popover
+          style={{ width: '500px' }}
+          content={<Chatroom jam_id={match.params.id} />}
+          title="Chatroom"
+          trigger="click"
+          visible={chatOpen}
+        >
+          <Button onClick={toggleChat}>
+            <MessageTwoTone />
+          </Button>
+        </Popover>
+      </ChatContextProvider>
     </main>
   )
 }

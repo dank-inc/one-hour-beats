@@ -28,8 +28,7 @@ export const Chatroom = ({ jam_id }: Props) => {
   console.log('chatroom - rendered!')
 
   return (
-    <Card>
-      <h1>Chatroom</h1>
+    <>
       <div>
         Active:
         {jamRoomUsers[jam_id]?.map((user_id) => (
@@ -68,11 +67,13 @@ export const Chatroom = ({ jam_id }: Props) => {
                 size="large"
                 autoFocus
               />
-              <Button type="primary">Send</Button>
+              <Button htmlType="submit" type="primary">
+                Send
+              </Button>
             </div>
           </Form.Item>
         </Form>
       </div>
-    </Card>
+    </>
   )
 }

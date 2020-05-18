@@ -1,3 +1,9 @@
+#root {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -27,6 +33,8 @@ header {
 
 main {
   width: 100%;
+  height: calc(100% + 75px);
+  height: 100%;
   padding: 2rem;
 
   .main-header {
@@ -35,5 +43,33 @@ main {
 
   .ant-form {
     margin: auto;
+  }
+}
+
+footer {
+  // tood always absolute bottom position
+  // make main content x bigger for scrollies
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  background: #ccc;
+  display: flex;
+  justify-content: space-between;
+  padding: auto 2rem;
+  align-items: center;
+
+  * {
+    margin: auto 2rem;
+  }
+
+  .player-transport {
+    display: flex;
+  }
+
+  .player-info {
+    display: flex;
+    align-items: center;
   }
 }
