@@ -3,21 +3,17 @@ import { Store } from 'antd/lib/form/interface'
 import { Form, Input, Button, InputNumber, message } from 'antd'
 import axios from 'axios'
 import { useUserContext } from 'contexts/UserContext'
+import { createJam } from 'prod/api'
 
 type Props = {}
 export const Create = (props: Props) => {
   const { user } = useUserContext()
 
-  const onFinish = async (values: Store) => {
+  const onFinish = async ({ id, name, time_limit, description }: Store) => {
     message.loading('Creating Challenge', 0.5)
-    try {
-      const body = { ...values, user_id: user.id }
-      await axios.post('/api/jams', body)
-      message.success('Challenge Created!')
-      // redirect to jams page.
-    } catch (err) {
-      message.error(`couldn't create jam!`)
-    }
+    await createJam({ id, name, time_limit, user_id: user.id, description })
+
+    message.success('Challenge Created!')
   }
 
   const onFinishFailed = () => {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { Entry, Chat } from 'types/database'
+import { Entry, Chat, Jam } from 'types/database'
 import { JamView, UserView } from 'types/view'
 import { message } from 'antd'
 
@@ -34,9 +34,18 @@ export const getJamIndex = async (): Promise<Record<string, JamView>> => {
   }
 }
 
+export const createJam = async (jam: Jam) => {
+  try {
+    await axios.post(`/api/jams/`, jam, cfg())
+    return Promise.resolve(true)
+  } catch (error) {
+    console.error('jam create', error)
+  }
+}
+
 export const startJam = async (id: string) => {
   try {
-    await axios.post(`/api/jams/${id}/start`, cfg())
+    await axios.post(`/api/jams/${id}/start`, {}, cfg())
     return Promise.resolve(true)
   } catch (error) {
     console.error('startjam', error)
@@ -45,7 +54,7 @@ export const startJam = async (id: string) => {
 
 export const stopJam = async (id: string) => {
   try {
-    await axios.post(`/api/jams/${id}/stop`, cfg())
+    await axios.post(`/api/jams/${id}/stop`, {}, cfg())
     return Promise.resolve(true)
   } catch (error) {
     console.error('stopJam', error)
