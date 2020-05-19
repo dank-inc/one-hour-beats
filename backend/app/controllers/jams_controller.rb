@@ -1,4 +1,5 @@
 class JamsController < ApplicationController
+  before_action :authorize_request
   before_action :set_jam, only: [:submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start

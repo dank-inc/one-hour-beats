@@ -85,6 +85,9 @@ export const EntryForm = ({ jam_id }: Props) => {
         name="file"
         disabled={!canUpload}
         onChange={handleUpload}
+        headers={{
+          Authorization: window.localStorage.getItem('ohb-jwt-token') || '',
+        }}
       >
         <InboxOutlined />
 
