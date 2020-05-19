@@ -15,6 +15,23 @@ docker-compose run --rm backend bash
 > exit
 ```
 
+# After a gem has been added to backend
+
+```
+docker-compose down
+docker-compose build backend
+docker-compose run --rm backend rails db:drop db:create db:migrate db:seed
+docker-compose up
+```
+
+# after adding an npm package to frontend
+
+```
+docker-compose down
+docker-compose build --no-cache frontend
+docker-compose up
+```
+
 ## docker-compose commands
 
 ```sh
@@ -46,4 +63,11 @@ docker-compose run --rm legacy npm run db:init
 
 ```sh
 docker-compose run legacy
+```
+
+# Prod deploy instructions
+
+```
+docker-compose build
+
 ```

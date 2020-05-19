@@ -14,9 +14,9 @@ const cfg = () => {
   return { headers: { Authorization: token } }
 }
 
-export const getUser = async (username: string): Promise<UserView | null> => {
+export const getUser = async (id: string): Promise<UserView | null> => {
   try {
-    const { data } = await axios.get(`/api/users/${username}`, cfg())
+    const { data } = await axios.get(`/api/users/${id}`, cfg())
     return Promise.resolve(data)
   } catch (err) {
     return Promise.resolve(null)

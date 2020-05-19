@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorize_request, except: :create
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def login 
     @user = User.find_by(username: params[:username])
@@ -22,7 +22,6 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show
-    @user = User.find_by_username!(params[:id])
   end
 
   # POST /users

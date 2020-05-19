@@ -67,7 +67,7 @@ export const UserContextProvider = ({ children }: Props) => {
       window.localStorage.setItem('ohb-jwt-token', data.token)
       window.localStorage.setItem('ohb-jwt-exp', data.exp)
 
-      const user = await getUser(data.username)
+      const user = await getUser(data.id)
       setUser(user)
       message.success(`logged in as ${user?.username}`, 0.5)
     } catch (err) {

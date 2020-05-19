@@ -5,6 +5,7 @@ json.email        user.email
 json.password     user.password
 json.thumbs       user.thumbs
 json.wins         user.wins
+json.color        user.color
 json.vote_tokens  user.vote_tokens
 json.created_at   user.created_at
 json.updated_at   user.updated_at
