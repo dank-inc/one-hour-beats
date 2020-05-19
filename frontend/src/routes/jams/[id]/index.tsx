@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import moment from 'moment'
 import { PageHeader, Button, message, Popover, Tooltip } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
@@ -11,6 +12,7 @@ import { EntryForm } from 'components/EntryForm'
 import { Chatroom } from 'components/Chatroom'
 import { ChatContextProvider } from 'contexts/ChatContext'
 import { useUserContext } from 'contexts/UserContext'
+
 import './style.scss'
 
 type Props = RoutedProps & {}
@@ -19,6 +21,7 @@ export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
   const { jamIndex, subscribeToJam } = useAppContext()
   const [chatOpen, setChatOpen] = useState(false)
+  const [inProgress, setInProgress] = useState(false)
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
@@ -28,6 +31,21 @@ export const JamDetails = ({ match }: Props) => {
       subscription.unsubscribe()
     }
   }, [match.params.id])
+
+  useEffect(() => {
+    const updateProgress = () => {
+      // SERVER SHOULD HANDLE THE TIMERS
+      const current = +moment()
+      const endsAt = +moment(jam.started_at).add(jam.time_limit, 'minutes')
+      const timeRemaining = endsAt - current
+      const inProgress = !!(jam.started_at && timeRemaining > 0)
+      console.log('chekcing progress timer', current, endsAt, timeRemaining)
+      setInProgress(inProgress)
+    }
+
+    updateProgress()
+    const timeout = setTimeout(updateProgress, 1000)
+  }, [jam.started_at, jam.time_limit])
 
   const handleStart = async () => {
     await api.startJam(jam.id)
@@ -46,6 +64,8 @@ export const JamDetails = ({ match }: Props) => {
   if (!jam) return <Redirect to="/jams" />
   const jamOwner = jam.user_id === user.id
 
+  console.log('Jam View =>', inProgress)
+
   return (
     <>
       <main>
@@ -62,7 +82,7 @@ export const JamDetails = ({ match }: Props) => {
 
             {jam.started_at ? (
               <>
-                <Clock jam={jam} />
+                {inProgress && <Clock jam={jam} />}
                 <Tooltip
                   title={
                     jamOwner
