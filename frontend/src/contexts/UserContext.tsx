@@ -77,6 +77,10 @@ export const UserContextProvider = ({ children }: Props) => {
 
   const handleLogout = () => {
     setUser(null)
+    window.localStorage.removeItem('ohb-jwt-token')
+    window.localStorage.removeItem('ohb-jwt-username')
+    window.localStorage.removeItem('ohb-jwt-exp')
+
     message.success('logged out!', 0.5)
   }
 
