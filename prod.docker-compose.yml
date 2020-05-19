@@ -1,0 +1,50 @@
+version: "3.8"
+
+volumes:
+  el_database:
+  node_modules:
+
+services:
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+
+  backend:
+    volumes:
+      - ./backend:/usr/src/backend
+    depends_on:
+      - db
+      - redis
+    build:
+      context: ./backend
+
+  nginx:
+    build:
+      context: ./devops/nginx
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - /var/www/:/var/www
+      - ./devops/nginx/nginx-prod.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
+  db:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=ohb
+    volumes:
+      - el_database:/var/lib/postgresql/data
+
+  pgweb:
+    image: sosedoff/pgweb
+    depends_on:
+      - db
+    ports:
+      - 8081:8081
+    environment:
+      - DATABASE_URL=postgres://postgres:ohb@db:5432/one_hour_beats?sslmode=disable
