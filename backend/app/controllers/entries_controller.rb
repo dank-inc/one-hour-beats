@@ -1,4 +1,5 @@
 class EntriesController < ApplicationController
+  before_action :authorize_request
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def vote 

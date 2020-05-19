@@ -12,25 +12,10 @@ export const AccountDetails = ({ user }: Props) => {
     <Col>
       <Row align="middle" gutter={[2, 12]}>
         <Col span={6}>
-          <div style={{ float: 'left' }}>Account ID:</div>
-        </Col>
-        <Col span={12}>
-          <Input defaultValue={user.id} disabled={true}></Input>
-        </Col>
-      </Row>
-      <Row align="middle" gutter={[2, 12]}>
-        <Col span={6}>
           <div style={{ float: 'left' }}>Username:</div>
         </Col>
         <Col span={12}>
           <Input defaultValue={user.username}></Input>
-        </Col>
-        <Col span={2}>
-          <div style={{ float: 'left' }}>
-            <Tooltip placement="right" title="Only you can see this">
-              <QuestionCircleOutlined />
-            </Tooltip>
-          </div>
         </Col>
       </Row>
       <Row align="middle" gutter={[2, 12]}>
@@ -47,6 +32,14 @@ export const AccountDetails = ({ user }: Props) => {
         </Col>
         <Col span={12}>
           <Input.Password placeholder="Enter new password..." />
+        </Col>
+      </Row>
+      <Row align="middle" gutter={[2, 12]}>
+        <Col span={6}>
+          <div style={{ float: 'left' }}>Password:</div>
+        </Col>
+        <Col span={12}>
+          <Input.Password placeholder="Confirm password..." />
         </Col>
       </Row>
     </Col>

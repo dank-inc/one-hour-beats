@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2020_05_18_001111) do
     t.string "username", null: false
     t.string "name", null: false
     t.string "email", null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
     t.string "color"
     t.integer "thumbs", default: 0
     t.integer "wins", default: 0

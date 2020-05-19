@@ -22,7 +22,9 @@ export const CoreLayout = () => {
       <AppContextProvider>
         <DankAmpContextProvider>
           <header>
-            <h2>One Hour Beats</h2>
+            <Link to="/">
+              <h2>One Hour Beats</h2>
+            </Link>
             <nav>
               <Link to="/">Home</Link>
               <Link to="/create">Create</Link>
