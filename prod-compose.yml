@@ -24,7 +24,6 @@ services:
     build:
       context: ./devops/nginx
     depends_on:
-      - frontend
       - backend
     volumes:
       - /var/www/:/var/www
