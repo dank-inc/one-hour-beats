@@ -39,12 +39,3 @@ services:
       - POSTGRES_PASSWORD=ohb
     volumes:
       - el_database:/var/lib/postgresql/data
-
-  pgweb:
-    image: sosedoff/pgweb
-    depends_on:
-      - db
-    ports:
-      - 8081:8081
-    environment:
-      - DATABASE_URL=postgres://postgres:ohb@db:5432/one_hour_beats?sslmode=disable
