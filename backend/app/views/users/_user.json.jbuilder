@@ -2,7 +2,6 @@ json.id           user.id
 json.username     user.username
 json.name         user.name
 json.email        user.email
-json.password     user.password
 json.thumbs       user.thumbs
 json.wins         user.wins
 json.color        user.color
