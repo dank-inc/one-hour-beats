@@ -23,3 +23,8 @@ export type Chat = {
   jam_id: string
   message: string
 }
+
+export type SystemMessage = {
+  body: string
+  status: 'ok' | 'error'
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Tag } from 'antd'
 import { useHistory } from 'react-router'
 import { Jam } from 'types/database'
+import './jam-card.scss'
 
 type Props = { jam: Jam; users?: string[] }
 
@@ -14,7 +15,7 @@ export const JamCard = ({ jam, users }: Props) => {
   }
 
   return (
-    <Card title={jam.name} hoverable onClick={handleClick}>
+    <Card style={{ flex: 1 }} title={jam.name} hoverable onClick={handleClick}>
       <div className="jam-card">
         <p>active: true</p>
         <p>

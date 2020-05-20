@@ -1,5 +1,11 @@
+.jam-cards {
+  display: flex;
+}
+
 .jam-card {
   display: flex;
+  flex-direction: column;
+  max-width: 500px;
 
   p {
     margin: 0 1rem;

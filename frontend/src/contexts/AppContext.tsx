@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
-import { JamView, Chat, EntryView, UserView } from '../types/view'
+import {
+  JamView,
+  Chat,
+  EntryView,
+  UserView,
+  SystemMessage,
+} from '../types/view'
 import { Spin, message } from 'antd'
 import * as api from 'api'
 import { useActionCableContext } from './ActionCableContext'
@@ -65,10 +71,7 @@ export const AppContextProvider = ({ children }: Props) => {
         received: ({ jam }) => {
           if (jam) {
             setJamIndex((jamIndex) => {
-              const status = jamIndex?.[jam.id]?.started_at
-                ? 'Stopping'
-                : 'Starting'
-              message.success(`${status} ${jam.name}`)
+              console.log('jams updated', jam, jamIndex)
 
               return {
                 ...jamIndex,
@@ -80,6 +83,18 @@ export const AppContextProvider = ({ children }: Props) => {
       }
     )
 
+    const notificationsSubscription = consumer.subscriptions.create(
+      {
+        channel: 'NotificationsChannel',
+      },
+      {
+        received: ({ status, body }: SystemMessage) => {
+          if (status === 'error') message.error(body)
+          if (status === 'ok') message.success(body)
+        },
+      }
+    )
+
     const get = async () => {
       const data = await api.getJamIndex()
       if (data) setJamIndex(data)
@@ -87,6 +102,7 @@ export const AppContextProvider = ({ children }: Props) => {
     get()
 
     return () => {
+      notificationsSubscription.unsubscribe()
       userContextSubscription.unsubscribe()
       userLocationSubscription.unsubscribe()
       appContextSubscription.unsubscribe()

@@ -15,10 +15,11 @@ export const Jams = () => {
   return (
     <main>
       <PageHeader
+        className="site-page-header"
         title="Jams"
         subTitle={`Welcome ${user.name}, Pick a challenge and get jammin!`}
       />
-      <div className="main-content">
+      <div className="main-content jam-cards">
         {Object.values(jamIndex).map((jam) => (
           <JamCard
             jam={jam}

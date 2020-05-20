@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
-import { PageHeader, Button, message, Popover, Tooltip } from 'antd'
+
+import { PageHeader, Button, Popover } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
-import { Clock } from 'components/Clock'
 import { useAppContext } from 'contexts/AppContext'
-import * as api from 'api'
 import { EntryCard } from 'components/EntryCard'
 import { FrownOutlined, MessageTwoTone } from '@ant-design/icons'
 import { EntryForm } from 'components/EntryForm'
 import { Chatroom } from 'components/Chatroom'
 import { ChatContextProvider } from 'contexts/ChatContext'
 import { useUserContext } from 'contexts/UserContext'
+import { JamControl } from '../JamControl'
 
 import './style.scss'
 
@@ -21,7 +20,7 @@ export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
   const { jamIndex, subscribeToJam } = useAppContext()
   const [chatOpen, setChatOpen] = useState(false)
-  const [inProgress, setInProgress] = useState(false)
+
   const jam = jamIndex[match.params.id]
 
   useEffect(() => {
@@ -32,44 +31,24 @@ export const JamDetails = ({ match }: Props) => {
     }
   }, [match.params.id])
 
-  useEffect(() => {
-    const updateProgress = () => {
-      // SERVER SHOULD HANDLE THE TIMERS
-      const current = +moment()
-      const endsAt = +moment(jam.started_at).add(jam.time_limit, 'minutes')
-      const timeRemaining = endsAt - current
-      const inProgress = !!(jam.started_at && timeRemaining > 0)
-      console.log('chekcing progress timer', current, endsAt, timeRemaining)
-      setInProgress(inProgress)
-    }
-
-    updateProgress()
-    const timeout = setTimeout(updateProgress, 1000)
-  }, [jam.started_at, jam.time_limit])
-
-  const handleStart = async () => {
-    await api.startJam(jam.id)
-    message.loading('Starting challenge...', 0.25)
-  }
-
-  const handleStop = async () => {
-    await api.stopJam(jam.id)
-    message.loading('Stopping challenge...', 0.25)
-  }
-
   const toggleChat = () => {
     setChatOpen(!chatOpen)
   }
 
-  if (!jam) return <Redirect to="/jams" />
-  const jamOwner = jam.user_id === user.id
+  const handleClick = () => {
+    if (chatOpen) setChatOpen(false)
+  }
 
-  console.log('Jam View =>', inProgress)
+  if (!jam) return <Redirect to="/jams" />
 
   return (
     <>
-      <main>
-        <PageHeader title={jam.name} subTitle={jam.description} />
+      <main onClick={handleClick}>
+        <PageHeader
+          className="site-page-header"
+          title={jam.name}
+          subTitle={jam.description}
+        />
         <div className="main-content jam-details">
           <div className="jam-left">
             <div className="jam-info">
@@ -80,42 +59,7 @@ export const JamDetails = ({ match }: Props) => {
               {jam.started_at && <p>started at: {jam.started_at}</p>}
             </div>
 
-            {jam.started_at ? (
-              <>
-                {inProgress && <Clock jam={jam} />}
-                <Tooltip
-                  title={
-                    jamOwner
-                      ? 'Stop the Jam!'
-                      : 'Only the owner can stop the jam!'
-                  }
-                >
-                  <Button
-                    type="primary"
-                    disabled={!jamOwner}
-                    onClick={handleStop}
-                  >
-                    Stop Jam Now!
-                  </Button>
-                </Tooltip>
-              </>
-            ) : (
-              <Tooltip
-                title={
-                  jamOwner
-                    ? 'Start the Jam!'
-                    : 'Only the owner can start the jam!'
-                }
-              >
-                <Button
-                  type="primary"
-                  disabled={!jamOwner}
-                  onClick={handleStart}
-                >
-                  Start Jam Now!
-                </Button>
-              </Tooltip>
-            )}
+            <JamControl jam={jam} />
           </div>
           <div className="jam-right">
             <div className="entries-wrapper">
@@ -143,12 +87,13 @@ export const JamDetails = ({ match }: Props) => {
       <ChatContextProvider jam_id={match.params.id}>
         <Popover
           style={{ width: '500px' }}
+          placement="topLeft"
           content={<Chatroom jam_id={match.params.id} />}
           title="Chatroom"
           trigger="click"
           visible={chatOpen}
         >
-          <Button onClick={toggleChat} className="chat-button">
+          <Button type="link" onClick={toggleChat} className="chat-button">
             <MessageTwoTone />
           </Button>
         </Popover>

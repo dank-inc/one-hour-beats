@@ -29,51 +29,54 @@ export const Chatroom = ({ jam_id }: Props) => {
 
   return (
     <>
-      <div>
-        Active:
-        {jamRoomUsers[jam_id]?.map((user_id) => (
+      <Card
+        title="active users"
+        extra={jamRoomUsers[jam_id]?.map((user_id) => (
           <Tag key={`active-users-${user_id}`} color="magenta">
             {user_id}
           </Tag>
         ))}
-      </div>
-      <div
-        ref={logRef}
-        style={{
-          height: 400,
-          overflowY: 'scroll',
-          overflowX: 'hidden',
-        }}
       >
-        {chats.length ? (
-          chats.map((chat) => <ChatCard key={`chat-${chat.id}`} chat={chat} />)
-        ) : (
-          <div
-            style={{
-              borderRadius: 15,
-              backgroundColor: '#fdfacf',
-              padding: 5,
-              textAlign: 'center',
-            }}
-          >
-            Break the ice!
-          </div>
-        )}
-        <Form onFinish={onFinish} form={form}>
-          <Form.Item name="message" rules={[{ required: true }]}>
-            <div className="chat-input">
-              <Input
-                placeholder="Send a chat message..."
-                size="large"
-                autoFocus
-              />
-              <Button htmlType="submit" type="primary">
-                Send
-              </Button>
+        <div
+          ref={logRef}
+          style={{
+            height: 400,
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+          }}
+        >
+          {chats.length ? (
+            chats.map((chat) => (
+              <ChatCard key={`chat-${chat.id}`} chat={chat} />
+            ))
+          ) : (
+            <div
+              style={{
+                borderRadius: 15,
+                backgroundColor: '#fdfacf',
+                padding: 5,
+                textAlign: 'center',
+              }}
+            >
+              Break the ice!
             </div>
-          </Form.Item>
-        </Form>
-      </div>
+          )}
+          <Form onFinish={onFinish} form={form}>
+            <Form.Item name="message" rules={[{ required: true }]}>
+              <div className="chat-input">
+                <Input
+                  placeholder="Send a chat message..."
+                  size="large"
+                  autoFocus
+                />
+                <Button htmlType="submit" type="primary">
+                  Send
+                </Button>
+              </div>
+            </Form.Item>
+          </Form>
+        </div>
+      </Card>
     </>
   )
 }

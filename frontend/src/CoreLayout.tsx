@@ -7,11 +7,12 @@ import { About } from './routes/about'
 import { JamDetails } from './routes/jams/[id]'
 import { Preferences } from './routes/preferences'
 import { useUserContext } from './contexts/UserContext'
-import { Button } from 'antd'
+import { Button, Avatar } from 'antd'
 import { JamPopout } from './routes/jams/[id]/JamPopout'
 import { AppContextProvider } from './contexts/AppContext'
 import { Footer } from 'components/Footer'
 import { DankAmpContextProvider } from 'contexts/DankAmpContext'
+import { UserOutlined } from '@ant-design/icons'
 
 export const CoreLayout = () => {
   const userContext = useUserContext()
@@ -23,7 +24,15 @@ export const CoreLayout = () => {
         <DankAmpContextProvider>
           <header>
             <Link to="/">
-              <h2>One Hour Beats</h2>
+              <h2
+                style={{
+                  fontWeight: 'bold',
+                  marginTop: '0.5rem',
+                  marginLeft: '0.5rem',
+                }}
+              >
+                One Hour Beats
+              </h2>
             </Link>
             <nav>
               <Link to="/">Home</Link>
@@ -31,7 +40,17 @@ export const CoreLayout = () => {
               <Link to="/about">About</Link>
               <Link to="/jams">Jams</Link>
               <Link to="/preferences">Preferences</Link>
-              <Button onClick={userContext.handleLogout}>Logout</Button>
+
+              <Button
+                style={{ marginTop: '-0.5rem' }}
+                onClick={userContext.handleLogout}
+                type="link"
+              >
+                <Avatar
+                  style={{ backgroundColor: '#fffbe6', color: '#faad14' }}
+                  icon={<UserOutlined />}
+                />
+              </Button>
             </nav>
           </header>
           <Switch>

@@ -1,18 +1,19 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Form, Input, Button, InputNumber, message } from 'antd'
+import { Form, Input, Button, InputNumber, message, PageHeader } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
+import { useHistory } from 'react-router'
 
 type Props = {}
 export const Create = (props: Props) => {
   const { user } = useUserContext()
+  const history = useHistory()
 
   const onFinish = async ({ id, name, time_limit, description }: Store) => {
     message.loading('Creating Challenge', 0.5)
     await createJam({ id, name, time_limit, user_id: user.id, description })
-
-    message.success('Challenge Created!')
+    history.push('/jams')
   }
 
   const onFinishFailed = () => {
@@ -21,10 +22,11 @@ export const Create = (props: Props) => {
 
   return (
     <main>
-      <div className="main-header">
-        <h2>Create Challenge!</h2>
-        <p>Make your very own challenge here</p>
-      </div>
+      <PageHeader
+        className="site-page-header"
+        title="Create Challenge!"
+        subTitle="Make your very own challenge here"
+      />
       <div className="main-content">
         <Form
           onFinish={onFinish}
