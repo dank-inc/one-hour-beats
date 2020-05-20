@@ -37,10 +37,10 @@ export const UserContextProvider = ({ children }: Props) => {
   const [triedJWT, setTriedJWT] = useState(false)
 
   useEffect(() => {
-    const username = window.localStorage.getItem('ohb-jwt-username')
+    const user_id = window.localStorage.getItem('ohb-jwt-id')
 
-    const login = async (username: string) => {
-      const user = await getUser(username)
+    const login = async (user_id: string) => {
+      const user = await getUser(user_id)
       try {
         setUser(user)
         message.success(`logged in as ${user?.username}`, 0.5)
@@ -52,11 +52,11 @@ export const UserContextProvider = ({ children }: Props) => {
       }
     }
 
-    if (!username) {
+    if (!user_id) {
       setTriedJWT(true)
       return
     } else {
-      login(username)
+      login(user_id)
     }
   }, [])
 
@@ -64,6 +64,7 @@ export const UserContextProvider = ({ children }: Props) => {
     try {
       const { data } = await axios.post(`/api/login`, { username, password })
       window.localStorage.setItem('ohb-jwt-username', data.username)
+      window.localStorage.setItem('ohb-jwt-id', data.id)
       window.localStorage.setItem('ohb-jwt-token', data.token)
       window.localStorage.setItem('ohb-jwt-exp', data.exp)
 
