@@ -16,8 +16,14 @@
 }
 
 .chat-button {
-  width: 50px;
+  width: 0px;
   display: fixed;
   left: 50px;
-  bottom: 50px;
+  bottom: 70px;
+
+  span {
+    svg {
+      scale: 4;
+    }
+  }
 }

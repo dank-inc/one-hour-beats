@@ -6,6 +6,7 @@ export const About = (props: Props) => {
   return (
     <main>
       <PageHeader
+        className="site-page-header"
         title="About One Hour Beats!"
         subTitle="Why having so much fun?"
       />

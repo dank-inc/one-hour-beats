@@ -12,7 +12,7 @@ class JamsController < ApplicationController
       jam = @jam.as_json
       jam[:entries] = @jam.entries
 
-      AppContextChannel.broadcast_to 'global', jam: jam
+      AppContextChannel.broadcast_to :global, jam: jam
       head :ok
     end
   end 
@@ -24,7 +24,7 @@ class JamsController < ApplicationController
     jam = @jam.as_json
     jam[:entries] = @jam.entries
 
-    AppContextChannel.broadcast_to 'global', jam: jam
+    AppContextChannel.broadcast_to :global, jam: jam
     head :ok
   end 
 
@@ -45,8 +45,6 @@ class JamsController < ApplicationController
       jam_id: @jam.id
     }
 
-    $chat[@jam.id] = [] if $chat[@jam].nil?
-    $chat[@jam.id].append(chat)
     puts "chat submitted #{chat}"
 
     JamroomChannel.broadcast_to @jam, chat: chat
@@ -57,7 +55,6 @@ class JamsController < ApplicationController
     @file = params[:file] 
     
     puts ">> uploading: #{@jam.id}/#{@file.original_filename}"
-
     uploaddir = "uploads/#{@jam.id}"
 
     # TODO: get user_id from auth token.
@@ -87,7 +84,11 @@ class JamsController < ApplicationController
     @jam = Jam.new(jam_params)
     @jam.id = @jam.name.split(' ').join('_')
 
-    if @jam.save
+    if @jam.save!
+      jam = @jam.as_json
+      jam[:entries] = []
+
+      AppContextChannel.broadcast_to :global, jam: jam
       render :show, status: :created, location: @jam 
     else
       render json: @jam.errors, status: :unprocessable_entity 
@@ -104,7 +105,6 @@ class JamsController < ApplicationController
   end
 
   # DELETE /jams/1
-  # DELETE /jams/1.json
   def destroy
     @jam.destroy
       head :no_content
