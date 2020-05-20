@@ -5,7 +5,7 @@ import { InboxOutlined } from '@ant-design/icons'
 import { Store } from 'antd/lib/form/interface'
 import { UploadChangeParam } from 'antd/lib/upload'
 import { UploadFile } from 'antd/lib/upload/interface'
-import { submitEntry } from 'prod/api'
+import { submitEntry } from 'api'
 import { Entry } from 'types/database'
 
 type Props = { jam_id: string }

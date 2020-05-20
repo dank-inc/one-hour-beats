@@ -6,18 +6,11 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { User } from 'types/database'
 import { Login } from 'routes/login'
 import { message, Spin } from 'antd'
 import axios from 'axios'
 import { UserView } from 'types/view'
-import { getUser } from 'prod/api'
-
-type JWT = {
-  username: string | null
-  token: string | null
-  exp: string | null
-}
+import { getUser } from 'api'
 
 type Props = {
   children: React.ReactNode

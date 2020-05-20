@@ -3,7 +3,7 @@ import { Store } from 'antd/lib/form/interface'
 import { Form, Input, Button, InputNumber, message } from 'antd'
 import axios from 'axios'
 import { useUserContext } from 'contexts/UserContext'
-import { createJam } from 'prod/api'
+import { createJam } from 'api'
 
 type Props = {}
 export const Create = (props: Props) => {

@@ -6,7 +6,7 @@ import {
   FireTwoTone,
 } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
-import { voteForEntry } from 'prod/api'
+import { voteForEntry } from 'api'
 import { EntryView } from 'types/view'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
 

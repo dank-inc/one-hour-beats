@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useUserContext } from './UserContext'
 import { JamView, Chat, EntryView, UserView } from '../types/view'
 import { Spin, message } from 'antd'
-import * as api from 'prod/api'
+import * as api from 'api'
 import { useActionCableContext } from './ActionCableContext'
 
 type Props = {

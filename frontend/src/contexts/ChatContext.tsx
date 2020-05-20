@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { Chat } from 'types/view'
 import { Spin } from 'antd'
-import { getChatForJam, submitChatMessage } from 'prod/api'
+import { getChatForJam, submitChatMessage } from 'api'
 import { useActionCableContext } from './ActionCableContext'
 import { useUserContext } from './UserContext'
 
