@@ -1,20 +1,27 @@
 import React from 'react'
+import './style.scss'
 import { Store } from 'antd/lib/form/interface'
-import { Button, Card, message, Row, Col } from 'antd'
+import { Button, Card, message, Row, Col, Form } from 'antd'
 import axios from 'axios'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/ColorPicker'
 import { AccountDetails } from 'components/AccountDetails'
+import { updateUser } from 'api'
 
 type Props = {}
 export const Preferences = (props: Props) => {
   const { user } = useUserContext()
 
-  const onFinish = async (values: Store) => {
-    message.loading('Creating Challenge', 0.5)
+  const onFinish = async ({
+    name,
+    username,
+    email,
+    password,
+    color,
+  }: Store) => {
+    message.loading('Saving preferences', 0.5)
     try {
-      const body = { ...values, user_id: user.id }
-      await axios.post('/api/jams', body)
+      await updateUser(user.id, { name, username, email, password, color })
       message.success('Preferences updated')
     } catch (err) {
       message.error(`Couldn't update preferences`)
@@ -30,32 +37,43 @@ export const Preferences = (props: Props) => {
       <div className="main-header">
         <h2>Preferences</h2>
         <p>Customize how others see you</p>
-        <Row
-          align="middle"
-          gutter={[16, 16]}
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Col span={9}>
-            <Card title="Account Information">
-              <AccountDetails user={user} />
-            </Card>
-          </Col>
-          <Col span={9}>
-            <Card title="Color Picker">
-              <ColorPicker user={user} />
-            </Card>
-          </Col>
-        </Row>
-        <Row
-          align="middle"
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Button type="primary" disabled>
-            Save
-          </Button>
-        </Row>
       </div>
-      <div className="main-content"></div>
+      <div className="main-content">
+        <Form
+          onFinish={onFinish}
+          initialValues={{ time_limit: 60 }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Row
+            align="middle"
+            gutter={[16, 16]}
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+          >
+            <div className="flex-container">
+              <div className="column">
+                <Card title="Account Information">
+                  <AccountDetails user={user} />
+                </Card>
+              </div>
+              <div className="column">
+                <Card title="Color Picker" style={{ height: '100%' }}>
+                  <ColorPicker user={user} />
+                </Card>
+              </div>
+            </div>
+          </Row>
+          <Row
+            align="middle"
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button>
+            </Form.Item>
+          </Row>
+        </Form>
+      </div>
     </main>
   )
 }

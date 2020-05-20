@@ -1,18 +1,7 @@
 import React from 'react'
 import { User } from '../types/database'
-import { Row, Col, Avatar } from 'antd'
-import * as colors from '@ant-design/colors'
-
-const palette = [
-  [colors.cyan[5], '#fff'],
-  [colors.magenta[6], '#fff'],
-  [colors.lime[6], '#fff'],
-  [colors.gold[6], '#fff'],
-  [colors.red[4], '#fff'],
-  [colors.blue[4], '#fff'],
-  [colors.purple[4], '#fff'],
-  [colors.volcano[5], '#fff'],
-]
+import { Row, Col, Avatar, Form, Button, Radio, Input } from 'antd'
+import { options } from 'components/ColorPalette'
 
 type Props = {
   user: User
@@ -30,12 +19,13 @@ export const ColorPicker = ({ user }: Props) => {
           <Avatar
             size={96}
             style={{
-              color: palette[7][1],
-              backgroundColor: palette[7][0],
+              color: options[user.color][2].toString(),
+              backgroundColor: options[user.color][1].toString(),
               fontSize: 'xxx-large',
+              cursor: 'default',
             }}
           >
-            {user.id[0]}
+            {user.name[0]}
           </Avatar>
         </div>
       </Row>
@@ -45,19 +35,18 @@ export const ColorPicker = ({ user }: Props) => {
         gutter={[16, 16]}
         style={{ alignItems: 'center', justifyContent: 'center' }}
       >
-        {palette.map(([background, font]) => (
-          <Col span={2}>
-            <Avatar
-              size="default"
-              style={{
-                color: font,
-                backgroundColor: background,
-                fontSize: 'default',
-              }}
-            >
-              {user.id[0]}
-            </Avatar>
-          </Col>
+        {options.map(([option, background, font]) => (
+          <Button
+            shape="circle"
+            style={{
+              color: font.toString(),
+              backgroundColor: background.toString(),
+              cursor: 'pointer',
+              margin: 6,
+            }}
+          >
+            {user.name[0]}
+          </Button>
         ))}
       </Row>
     </Col>

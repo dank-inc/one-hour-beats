@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { Entry, Chat, Jam } from 'types/database'
+import { Entry, Chat, Jam, User } from 'types/database'
 import { JamView, UserView } from 'types/view'
 import { message } from 'antd'
 
@@ -20,6 +20,15 @@ export const getUser = async (id: string): Promise<UserView | null> => {
     return Promise.resolve(data)
   } catch (err) {
     return Promise.resolve(null)
+  }
+}
+
+export const updateUser = async (id: string, body: Partial<User>) => {
+  try {
+    await axios.put(`/api/users/${id}`, body, cfg())
+    return Promise.resolve(true)
+  } catch (error) {
+    console.error('startjam', error)
   }
 }
 

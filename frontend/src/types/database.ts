@@ -25,6 +25,7 @@ export type User = {
   password: string
   name: string // full name
   email: string
+  color: number
   created_at?: string
   updated_at?: string
 }
