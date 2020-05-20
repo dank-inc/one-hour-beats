@@ -48,6 +48,7 @@ export const UserContextProvider = ({ children }: Props) => {
         message.error('Login Failed!')
         window.localStorage.removeItem('ohb-jwt-token')
         window.localStorage.removeItem('ohb-jwt-username')
+        window.localStorage.removeItem('ohb-jwt-id')
         window.localStorage.removeItem('ohb-jwt-exp')
       }
     }
