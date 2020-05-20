@@ -51,7 +51,7 @@ export const AppContextProvider = ({ children }: Props) => {
       },
       {
         received: (user: UserView) => {
-          console.log('user context updating', user)
+          console.log('user updating', user)
           setUser(user)
         },
       }

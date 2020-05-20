@@ -43,6 +43,14 @@ export const createJam = async (jam: Jam) => {
   }
 }
 
+export const updateJam = async (id: string, body: Partial<Jam>) => {
+  try {
+    await axios.put(`/api/jams/${id}`, body, cfg())
+  } catch (err) {
+    console.error('jam update', err)
+  }
+}
+
 export const startJam = async (id: string) => {
   try {
     await axios.post(`/api/jams/${id}/start`, {}, cfg())

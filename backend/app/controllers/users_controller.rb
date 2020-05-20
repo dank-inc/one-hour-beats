@@ -36,10 +36,14 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
+  # PUT /users/:id
   def update
     if @user.update(user_params)
-      render :show, status: :ok, location: @user 
+      user = @user.as_json
+      user[:vote_tokens] = @user.vote_tokens
+
+      UserContextChannel.broadcast_to @user, user
+      render :show, status: :ok, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity 
     end

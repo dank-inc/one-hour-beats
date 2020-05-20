@@ -1,7 +1,6 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
 import { Form, Input, Button, InputNumber, message } from 'antd'
-import axios from 'axios'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
 
