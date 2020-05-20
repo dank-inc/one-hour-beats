@@ -4,5 +4,5 @@ frontend-deploy:
   script:
     - cd frontend
     - npm install
-    - npm run build
+    - CI=false npm run build
     - mv -r build/* /var/www/html/
