@@ -1,0 +1,13 @@
+version: "3.8"
+
+volumes:
+  node_modules:
+
+services:
+  frontend:
+    volumes:
+      - ./frontend/build:/var/www/html
+      - node_modules:/usr/src/frontend/node_modules
+    build:
+      context: ./frontend
+    tty: true
