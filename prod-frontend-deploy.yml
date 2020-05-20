@@ -6,7 +6,7 @@ volumes:
 services:
   frontend:
     volumes:
-      - ./frontend/build:/var/www/html
+      - ./var/www/html:/usr/src/frontend/build
       - node_modules:/usr/src/frontend/node_modules
     build:
       context: ./frontend
