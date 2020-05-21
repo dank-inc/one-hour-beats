@@ -14,7 +14,7 @@ elijah = User.create!({
   name: 'elijah',
   email: 'elijahlucian@gmail.com',
   password: 'toffee15',
-  color: 7,
+  color: 'fresh',
   thumbs: 50,
   wins: 2,
 })
@@ -22,7 +22,7 @@ elijah = User.create!({
 toffee = User.create!({
   username: "toffee",
   name: "El Doge",
-  color: 7,
+  color: 'dank',
   password: "toffee15",
   email: "vapsquad@gmail.com",
 })
@@ -30,7 +30,7 @@ toffee = User.create!({
 users = [{
   username: 'chocobobafett',
   password: 'toffee15',
-  color: 7,
+  color: 'zesty',
   name: 'George',
   email: 'berkleegeorge@gmail.com',
 },
@@ -38,21 +38,21 @@ users = [{
   username: 'metacusis',
   password: 'toffee15',
   name: 'Meta',
-  color: 3,
+  color: 'wonky',
   email: 'cjamieschmitz@gmail.com',
 },
 {
   username: 'JasonOne',
   password: 'toffee15',
   name: 'Meta',
-  color: 3,
+  color: 'aloof',
   email: 'Jason@danceshout.com',
 },
 {
   username: 'iwishiwereadinosaur',
   password: 'toffee15',
   name: 'iwishiwereadinosaur',
-  color: 2,
+  color: 'visionary',
   email: 'iwishiwere@adinosaur.net',
 }]
 
@@ -61,7 +61,7 @@ users.each { |user| User.create!(user) }
 User.create({
   username: 'otherdude',
   name: 'blah',
-  color: 1,
+  color: 'dank',
   password: 'toffee15',
   email: 'toffee@toffee.com',
   thumbs: 20,

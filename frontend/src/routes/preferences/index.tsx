@@ -12,16 +12,13 @@ type Props = {}
 export const Preferences = (props: Props) => {
   const { user } = useUserContext()
 
-  const onFinish = async ({
-    name,
-    username,
-    email,
-    password,
-    color,
-  }: Store) => {
+  var color = user.color
+
+  const onFinish = async ({ name, username, email, password }: Store) => {
     message.loading('Saving preferences', 0.5)
     try {
       await updateUser(user.id, { name, username, email, password, color })
+      console.log(color)
       message.success('Preferences updated')
     } catch (err) {
       message.error(`Couldn't update preferences`)
@@ -31,6 +28,10 @@ export const Preferences = (props: Props) => {
   const onFinishFailed = () => {
     message.error('Read the errors, dum dum')
   }
+  //thing
+  const callback = (colorChoice: any) => {
+    color = colorChoice.toString()
+  }
 
   return (
     <main>
@@ -39,11 +40,7 @@ export const Preferences = (props: Props) => {
         <p>Customize how others see you</p>
       </div>
       <div className="main-content">
-        <Form
-          onFinish={onFinish}
-          initialValues={{ time_limit: 60 }}
-          onFinishFailed={onFinishFailed}
-        >
+        <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Row
             align="middle"
             gutter={[16, 16]}
@@ -57,7 +54,7 @@ export const Preferences = (props: Props) => {
               </div>
               <div className="column">
                 <Card title="Color Picker" style={{ height: '100%' }}>
-                  <ColorPicker user={user} />
+                  <ColorPicker user={user} parentCallback={callback} />
                 </Card>
               </div>
             </div>

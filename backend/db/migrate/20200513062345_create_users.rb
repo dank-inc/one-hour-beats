@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
-      t.integer :color
+      t.string :color
       t.integer :thumbs, default: 0
       t.integer :wins, default: 0
       
