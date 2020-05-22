@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { PageHeader, Button, Popover } from 'antd'
+import { PageHeader, Button, Popover, Card } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { useAppContext } from 'contexts/AppContext'
@@ -40,6 +40,7 @@ export const JamDetails = ({ match }: Props) => {
   }
 
   if (!jam) return <Redirect to="/jams" />
+  const hasSubmitted = jam.entries.find((entry) => entry.user_id === user.id)
 
   return (
     <>
@@ -49,40 +50,40 @@ export const JamDetails = ({ match }: Props) => {
           title={jam.name}
           subTitle={jam.description}
         />
-        <div className="main-content jam-details">
-          <div className="jam-left">
-            <div className="jam-info">
-              <p>Name: {jam.name}</p>
-              <p>Description: {jam.description}</p>
-              <p>time limit: {jam.time_limit} minutes</p>
+        <Card>
+          <div className="main-content jam-details">
+            <div className="jam-left">
+              <div className="jam-info">
+                <p>Name: {jam.name}</p>
+                <p>Description: {jam.description}</p>
+                <p>time limit: {jam.time_limit} minutes</p>
 
-              {jam.started_at && <p>started at: {jam.started_at}</p>}
+                {jam.started_at && <p>started at: {jam.started_at}</p>}
+              </div>
+
+              <JamControl jam={jam} />
             </div>
+            <div className="jam-right">
+              <div className="entries-wrapper">
+                {jam.entries ? (
+                  jam.entries.map((entry) => (
+                    <EntryCard
+                      jam_id={jam.id}
+                      entry={entry}
+                      key={`jam-entry-${jam.id}-${entry.id}`}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    No entries... yet! <FrownOutlined />
+                  </div>
+                )}
+              </div>
 
-            <JamControl jam={jam} />
-          </div>
-          <div className="jam-right">
-            <div className="entries-wrapper">
-              {jam.entries ? (
-                jam.entries.map((entry) => (
-                  <EntryCard
-                    jam_id={jam.id}
-                    entry={entry}
-                    key={`jam-entry-${jam.id}-${entry.id}`}
-                  />
-                ))
-              ) : (
-                <div>
-                  No entries... yet! <FrownOutlined />
-                </div>
-              )}
+              {!hasSubmitted && jam.started_at && <EntryForm jam_id={jam.id} />}
             </div>
-
-            {!jam.entries.find((entry) => entry.user_id === user.id) && (
-              <EntryForm jam_id={jam.id} />
-            )}
           </div>
-        </div>
+        </Card>
       </main>
       <ChatContextProvider jam_id={match.params.id}>
         <Popover

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { Entry, Chat, Jam } from 'types/database'
-import { JamView, UserView } from 'types/view'
+import { Entry, Jam, Invitation, Chat as ChatRecord } from 'types/database'
+import { JamView, Chat, UserView, EntryView } from 'types/view'
 import { message } from 'antd'
 
 // GET - gets data
@@ -16,7 +16,16 @@ const cfg = () => {
 
 export const getUser = async (id: string): Promise<UserView | null> => {
   try {
-    const { data } = await axios.get(`/api/users/${id}`, cfg())
+    const { data } = await axios.get<UserView>(`/api/users/${id}`, cfg())
+    return Promise.resolve(data)
+  } catch (err) {
+    return Promise.resolve(null)
+  }
+}
+
+export const requestInvite = async () => {
+  try {
+    const { data } = await axios.post<Invitation>(`/api/invite`, {}, cfg())
     return Promise.resolve(data)
   } catch (err) {
     return Promise.resolve(null)
@@ -24,10 +33,9 @@ export const getUser = async (id: string): Promise<UserView | null> => {
 }
 
 // JAM ENDPOINTS
-
 export const getJamIndex = async (): Promise<Record<string, JamView>> => {
   try {
-    const { data } = await axios.get('/api/jams', cfg())
+    const { data } = await axios.get<JamView[]>('/api/jams', cfg())
     return Promise.resolve(_.keyBy(data, 'id'))
   } catch (err) {
     return Promise.resolve({})
@@ -71,14 +79,17 @@ export const stopJam = async (id: string) => {
 
 export const getEntriesForJam = async (jam_id: string) => {
   try {
-    const { data } = await axios.get(`/api/jams/${jam_id}/entries`, cfg())
+    const { data } = await axios.get<EntryView[]>(
+      `/api/jams/${jam_id}/entries`,
+      cfg()
+    )
     return Promise.resolve(data)
   } catch (error) {
     console.error('getEntriesForJam', error)
   }
 }
 
-export const submitChatMessage = async (chat: Chat) => {
+export const submitChatMessage = async (chat: ChatRecord) => {
   try {
     return axios.post(`/api/jams/${chat.jam_id}/chat`, chat, cfg())
   } catch (error) {
@@ -97,9 +108,9 @@ export const submitEntry = async (body: Entry) => {
   }
 }
 
-export const voteForEntry = async (entry_id: string, user_id: string) => {
+export const voteForEntry = async (entry_id: string) => {
   try {
-    return await axios.post(`/api/entries/${entry_id}/vote`, { user_id }, cfg())
+    return await axios.post(`/api/entries/${entry_id}/vote`, {}, cfg())
   } catch (error) {
     message.error('Vote Failed, vote token not found!')
   }
@@ -109,7 +120,7 @@ export const voteForEntry = async (entry_id: string, user_id: string) => {
 
 export const getChatForJam = async (jam_id: string) => {
   try {
-    const { data } = await axios.get(`/api/jams/${jam_id}/chat`, cfg())
+    const { data } = await axios.get<Chat[]>(`/api/jams/${jam_id}/chat`, cfg())
     return Promise.resolve(data)
   } catch (error) {
     console.error('getChatForJam', error)

@@ -25,7 +25,7 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
   const castVote = () => {
     message.loading('casting vote!')
     // TODO: remove user id params
-    voteForEntry(entry.id, user.id)
+    voteForEntry(entry.id)
   }
 
   const listenToEntry = () => {

@@ -42,3 +42,9 @@ export type Chat = {
   created_at?: string
   updated_at?: string
 }
+
+export type Invitation = {
+  invited_by: string
+  claimed_by: string
+  token: string
+}

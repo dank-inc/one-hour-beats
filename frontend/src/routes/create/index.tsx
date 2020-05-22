@@ -1,6 +1,14 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Form, Input, Button, InputNumber, message, PageHeader } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  InputNumber,
+  message,
+  PageHeader,
+  Card,
+} from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
 import { useHistory } from 'react-router'
@@ -27,50 +35,52 @@ export const Create = (props: Props) => {
         title="Create Challenge!"
         subTitle="Make your very own challenge here"
       />
-      <div className="main-content">
-        <Form
-          onFinish={onFinish}
-          initialValues={{ time_limit: 60 }}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            label="Name Of Challenge"
-            name="name"
-            rules={[{ required: true, message: 'Provide a challenge name!' }]}
+      <Card>
+        <div className="main-content">
+          <Form
+            onFinish={onFinish}
+            initialValues={{ time_limit: 60 }}
+            onFinishFailed={onFinishFailed}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Time Limit (in minutes)"
-            name="time_limit"
-            rules={[
-              {
-                required: true,
-                message: 'Enter a time in minutes between 60 * 4800!',
-              },
-            ]}
-          >
-            <InputNumber min={60} max={4800} />
-          </Form.Item>
-          <Form.Item
-            label="Challenge Description"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: 'Provide a prompt to help people get creative!',
-              },
-            ]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+            <Form.Item
+              label="Name Of Challenge"
+              name="name"
+              rules={[{ required: true, message: 'Provide a challenge name!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Time Limit (in minutes)"
+              name="time_limit"
+              rules={[
+                {
+                  required: true,
+                  message: 'Enter a time in minutes between 60 * 4800!',
+                },
+              ]}
+            >
+              <InputNumber min={60} max={4800} />
+            </Form.Item>
+            <Form.Item
+              label="Challenge Description"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: 'Provide a prompt to help people get creative!',
+                },
+              ]}
+            >
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Create
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </Card>
     </main>
   )
 }

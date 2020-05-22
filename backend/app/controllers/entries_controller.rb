@@ -3,14 +3,11 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def vote 
-    # TODO: get use credentials from session
-    @user = User.find(params[:user_id])
-
     @entry = Entry.find(params[:id])
     @jam = @entry.jam
 
     vote_token = VoteToken.find_by!(
-      user_id: @user.id,
+      user_id: @current_user.id,
       jam_id: @jam.id
     )
     
@@ -19,11 +16,11 @@ class EntriesController < ApplicationController
     )
 
     # TODO: just send the vote token.
-    user = @entry.user.as_json
-    user[:vote_tokens] = @user.vote_tokens
+    user = @current_user.as_json
+    user[:vote_tokens] = @current_user.vote_tokens
 
-    UserContextChannel.broadcast_to @user, user
-
+    # update votes on jams?
+    UserContextChannel.broadcast_to @current_user, user
     head :ok
   end
 
@@ -39,11 +36,12 @@ class EntriesController < ApplicationController
   # POST /entries
   def create
     @entry = Entry.new(entry_params)
+    @entry.user_id = @current_user.id
     @entry.id = SecureRandom.uuid
 
       if @entry.save
         VoteToken.create!(
-          user_id: @entry.user_id,
+          user_id: @current_user.id,
           jam_id: @entry.jam_id
         )
     
@@ -53,11 +51,11 @@ class EntriesController < ApplicationController
         
         JamroomChannel.broadcast_to @entry.jam, { entry: entry }
         
-        user = @entry.user.as_json
-        user[:vote_tokens] = @entry.user.vote_tokens
+        user = @current_user.as_json
+        user[:vote_tokens] = @current_user.vote_tokens
 
         
-        UserContextChannel.broadcast_to @entry.user, user
+        UserContextChannel.broadcast_to @current_user, user
         render :show, status: :created, location: @entry
       else
         render json: @entry.errors, status: :unprocessable_entity
