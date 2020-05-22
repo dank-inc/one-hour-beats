@@ -1,18 +1,17 @@
 import React from 'react'
 import './style.scss'
 import { Store } from 'antd/lib/form/interface'
-import { Button, Card, message, Row, Col, Form } from 'antd'
-import axios from 'axios'
+import { Button, Card, message, Row, Form } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/ColorPicker'
 import { AccountDetails } from 'components/AccountDetails'
 import { updateUser } from 'api'
+import { ColorName } from 'components/ColorPalette'
 
 type Props = {}
 export const Preferences = (props: Props) => {
   const { user } = useUserContext()
-
-  var color = user.color
+  const [color, setColor] = React.useState<ColorName>(user.color)
 
   const onFinish = async ({ name, username, email, password }: Store) => {
     message.loading('Saving preferences', 0.5)
@@ -27,10 +26,6 @@ export const Preferences = (props: Props) => {
 
   const onFinishFailed = () => {
     message.error('Read the errors, dum dum')
-  }
-  //thing
-  const callback = (colorChoice: any) => {
-    color = colorChoice.toString()
   }
 
   return (
@@ -54,7 +49,11 @@ export const Preferences = (props: Props) => {
               </div>
               <div className="column">
                 <Card title="Color Picker" style={{ height: '100%' }}>
-                  <ColorPicker user={user} parentCallback={callback} />
+                  <ColorPicker
+                    color={color}
+                    setColor={setColor}
+                    letter={user.name[0]}
+                  />
                 </Card>
               </div>
             </div>

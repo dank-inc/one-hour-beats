@@ -1,16 +1,14 @@
 import React from 'react'
-import { User } from '../types/database'
-import { Row, Col, Avatar, Form, Button, Input, Tooltip } from 'antd'
+import { Row, Col, Avatar, Button, Tooltip } from 'antd'
 import { BRAND, ColorName } from 'components/ColorPalette'
 
 type Props = {
-  user: User
-  parentCallback: any
+  color: ColorName
+  setColor: (color: string) => void
+  letter: string
 }
 
-export const ColorPicker = ({ user, parentCallback }: Props) => {
-  const [colorChoice, setColorChoice] = React.useState(user.color)
-
+export const ColorPicker = ({ color, setColor, letter }: Props) => {
   return (
     <Col>
       <Row
@@ -23,12 +21,12 @@ export const ColorPicker = ({ user, parentCallback }: Props) => {
             size={96}
             style={{
               color: '#fff',
-              backgroundColor: BRAND.colors[colorChoice as ColorName],
+              backgroundColor: BRAND.colors[color],
               fontSize: 'xxx-large',
               cursor: 'default',
             }}
           >
-            {user.name[0]}
+            {letter}
           </Avatar>
         </div>
       </Row>
@@ -49,12 +47,9 @@ export const ColorPicker = ({ user, parentCallback }: Props) => {
                 cursor: 'pointer',
                 margin: 6,
               }}
-              onClick={() => {
-                setColorChoice(key)
-                parentCallback(key)
-              }}
+              onClick={() => setColor(key)}
             >
-              {user.name[0]}
+              {letter}
             </Button>
           </Tooltip>
         ))}

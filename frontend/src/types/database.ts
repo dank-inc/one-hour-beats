@@ -1,3 +1,5 @@
+import { ColorName } from 'components/ColorPalette'
+
 export type Jam = {
   id: string
   name: string
@@ -25,7 +27,7 @@ export type User = {
   password: string
   name: string // full name
   email: string
-  color: string
+  color: ColorName
   created_at?: string
   updated_at?: string
 }
