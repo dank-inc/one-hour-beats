@@ -12,33 +12,42 @@ export const Login = ({ handleLogin }: Props) => {
   }
 
   return (
-    <main>
-      <div className="main-header">
-        <h1>Login</h1>
-      </div>
-      <div className="main-content">
-        <Form onFinish={onFinish}>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </main>
+    <>
+      <header>
+        <h2>One Hour Beats</h2>
+      </header>
+      <main>
+        <div className="main-header">
+          <h1>Login</h1>
+        </div>
+        <div className="main-content">
+          <Form onFinish={onFinish}>
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                { required: true, message: 'Please input your username!' },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: 'Please input your password!' },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </main>
+    </>
   )
 }

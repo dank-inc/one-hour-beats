@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many  :entries
   has_many  :vote_tokens
   has_many  :chats
+  has_many  :invitations, foreign_key: :invited_by
   
   has_secure_password
   validates :email, presence: true, uniqueness: true
@@ -15,6 +16,15 @@ class User < ApplicationRecord
   def thumbsup
     update(thumbs: thumbs + 1)
   end
-  
+
+  def active_invitation
+    Invitation.find_by(
+      invited_by: self.id,
+      claimed_by: nil,
+    )
+  end
+
+
+
   # TODO: write an instance method that increments the users' wins
 end

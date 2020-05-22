@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_001111) do
+ActiveRecord::Schema.define(version: 2020_05_20_235556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_05_18_001111) do
   enable_extension "uuid-ossp"
 
   create_table "chats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id", null: false
+    t.uuid "user_id", null: false
     t.string "jam_id", null: false
     t.string "message"
     t.datetime "created_at", precision: 6, null: false
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 2020_05_18_001111) do
     t.string "jam_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "invited_by", null: false
+    t.uuid "claimed_by"
+    t.string "token", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["token"], name: "index_invitations_on_token"
   end
 
   create_table "jams", id: :string, force: :cascade do |t|

@@ -34,18 +34,12 @@ class JamsController < ApplicationController
   end 
 
   def submit_chat 
-    # TODO: need a chat controller, dog
-    puts "chat recieved #{params}"
-    user = User.find params[:user_id]
     chat = {
       message: params[:message],
-      user_id: user.id, # TODO: get form session
-      username: user.username,
-      # TODO COLOR
+      user_id: @current_user.id, 
+      username: @current_user.username,
       jam_id: @jam.id
     }
-
-    puts "chat submitted #{chat}"
 
     JamroomChannel.broadcast_to @jam, chat: chat
   end
@@ -54,13 +48,10 @@ class JamsController < ApplicationController
     @jam = Jam.find(params[:id])
     @file = params[:file] 
     
-    puts ">> uploading: #{@jam.id}/#{@file.original_filename}"
+    puts ">> uploading: #{@jam.id}/#{@current_user.username}_#{@file.original_filename}"
     uploaddir = "uploads/#{@jam.id}"
-
     # TODO: get user_id from auth token.
     # TODO: get title
-
-    # filename = "#{user_id}-#{title.split(' ').join('_').downcase}"
 
     path = "#{uploaddir}/#{@file.original_filename}"
     FileUtils.mkdir_p("public/#{uploaddir}") unless File.directory?("public/#{uploaddir}")
@@ -82,6 +73,7 @@ class JamsController < ApplicationController
   # POST /jams
   def create
     @jam = Jam.new(jam_params)
+    @jam.user_id = @current_user.id
     @jam.id = @jam.name.split(' ').join('_')
 
     if @jam.save!

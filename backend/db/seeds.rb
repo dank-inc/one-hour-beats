@@ -52,15 +52,6 @@ users = [{
 
 users.each { |user| User.create!(user) }
 
-User.create({
-  username: 'otherdude',
-  name: 'blah',
-  password: 'toffee15',
-  email: 'toffee@toffee.com',
-  thumbs: 20,
-  wins: 10,
-})
-
 jam = Jam.create!({
   id: 'dank-rhinos',
   name: "first one hour beat!",
@@ -80,31 +71,33 @@ Jam.create!({
 })
 
 chats = [
-  { jam: jam, user: toffee, message: 'hello world' },
+  { jam_id: jam.id, user_id: toffee.id, message: 'hello world' },
   {
-    jam: jam, 
-    user: elijah,
+    jam_id: jam.id, 
+    user_id: elijah.id,
     message:
       'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.',
   },
   {
-    jam: jam, 
-    user: toffee,
+    jam_id: jam.id, 
+    user_id: toffee.id,
     message:
       'I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.',
   },
   {
-    jam: jam, 
-    user: elijah,
+    jam_id: jam.id, 
+    user_id: elijah.id,
     message:
       'When I hear the dank buzz of the little world among the stalks, and grow familiar with the countless indescribable forms',
   },
   {
-    jam: jam, 
-    user: elijah,
+    jam_id: jam.id, 
+    user_id: elijah.id,
     message:
       'When I hear the dank buzz of the little world among the stalks, and grow familiar with the countless indescribable forms',
   },
 ]
 
-chats.each {|chat| Chat.create!(chat) } 
+chats.each do |chat| 
+  Chat.create!(chat)
+end
