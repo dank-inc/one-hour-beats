@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Row, Col, Avatar, Button, Tooltip } from 'antd'
 import { BRAND, ColorName } from 'components/ColorPalette'
 
 type Props = {
   color: ColorName
-  setColor: (color: string) => void
+  setColor: Dispatch<SetStateAction<ColorName>>
   letter: string
 }
 
@@ -47,7 +47,7 @@ export const ColorPicker = ({ color, setColor, letter }: Props) => {
                 cursor: 'pointer',
                 margin: 6,
               }}
-              onClick={() => setColor(key)}
+              onClick={() => setColor(key as ColorName)}
             >
               {letter}
             </Button>
