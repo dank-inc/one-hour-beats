@@ -1,0 +1,9 @@
+image: "node:12"
+
+frontend-deploy:
+  script:
+    - exit
+    - cd frontend
+    - npm install
+    - CI="" npm run build
+    # - mv -r build/* /var/www/html/

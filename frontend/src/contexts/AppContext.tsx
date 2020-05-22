@@ -122,6 +122,14 @@ export const AppContextProvider = ({ children }: Props) => {
 
           if (entry) {
             message.success(`${entry.artist_name} submitted a song!`)
+
+            const entries = [
+              ...(jamIndex[jam_id].entries || []).filter(
+                (e) => e.id !== entry.id
+              ),
+              entry,
+            ]
+
             setJamIndex((jamIndex) => {
               if (!jamIndex) return {}
 
@@ -129,7 +137,7 @@ export const AppContextProvider = ({ children }: Props) => {
                 ...jamIndex,
                 [jam_id]: {
                   ...jamIndex[jam_id],
-                  entries: [...(jamIndex[jam_id].entries || []), entry],
+                  entries,
                 },
               }
             })

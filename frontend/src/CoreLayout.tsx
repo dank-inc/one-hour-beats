@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom'
 import { Create } from './routes/create'
@@ -7,16 +7,26 @@ import { About } from './routes/about'
 import { JamDetails } from './routes/jams/[id]'
 import { Preferences } from './routes/preferences'
 import { useUserContext } from './contexts/UserContext'
-import { Button, Avatar } from 'antd'
+import { Button, Avatar, Modal, Spin, message } from 'antd'
 import { JamPopout } from './routes/jams/[id]/JamPopout'
 import { AppContextProvider } from './contexts/AppContext'
 import { Footer } from 'components/Footer'
 import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 import { UserOutlined } from '@ant-design/icons'
+import { Invitation } from 'types/database'
+import { requestInvite } from 'api'
 
 export const CoreLayout = () => {
   const userContext = useUserContext()
-  // use location for highlighting linked thingy
+  const [modal, setModal] = useState(false)
+  const [invite, setInvite] = useState<Invitation | null>(null)
+
+  const handleInvite = async () => {
+    if (!invite) {
+      setInvite(await requestInvite())
+    }
+    setModal(!modal)
+  }
 
   return (
     <BrowserRouter>
@@ -39,6 +49,7 @@ export const CoreLayout = () => {
               <Link to="/create">Create</Link>
               <Link to="/about">About</Link>
               <Link to="/jams">Jams</Link>
+              <Button onClick={handleInvite}>Invite A Friend!</Button>
               <Link to="/preferences">Preferences</Link>
 
               <Button
@@ -67,6 +78,30 @@ export const CoreLayout = () => {
             <Redirect to="/jams" />
           </Switch>
           <Footer />
+          <Modal
+            visible={modal}
+            onOk={() => setModal(!modal)}
+            onCancel={() => setModal(!modal)}
+          >
+            {invite ? (
+              <>
+                <h3>Copy paste this link and share!</h3>
+                <Button
+                  type="link"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(
+                      `http://onehourbeats.com/invite/${invite?.token}`
+                    )
+                    message.success('Copied!', 0.5)
+                  }}
+                >
+                  http://onehourbeats.com/invite/{invite?.token}
+                </Button>
+              </>
+            ) : (
+              <Spin tip="Requesting Invite..." />
+            )}
+          </Modal>
         </DankAmpContextProvider>
       </AppContextProvider>
     </BrowserRouter>

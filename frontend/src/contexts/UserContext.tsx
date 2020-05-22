@@ -11,6 +11,8 @@ import { message, Spin } from 'antd'
 import axios from 'axios'
 import { UserView } from 'types/view'
 import { getUser } from 'api'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Invite } from 'routes/invite'
 
 type Props = {
   children: React.ReactNode
@@ -31,18 +33,22 @@ export const UserContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const user_id = window.localStorage.getItem('ohb-jwt-id')
+    const token = window.localStorage.getItem('ohb-jwt-token')
 
     const login = async (user_id: string) => {
-      const user = await getUser(user_id)
       try {
-        setUser(user)
-        message.success(`logged in as ${user?.username}`, 0.5)
+        const { data } = await axios.get<UserView>(`/api/users/${user_id}`, {
+          headers: { Authorization: token },
+        })
+        setUser(data)
+        message.success(`logged in as ${data?.username}`, 0.5)
       } catch {
         message.error('Login Failed!')
         window.localStorage.removeItem('ohb-jwt-token')
         window.localStorage.removeItem('ohb-jwt-username')
         window.localStorage.removeItem('ohb-jwt-id')
         window.localStorage.removeItem('ohb-jwt-exp')
+        window.location.reload()
       }
     }
 
@@ -85,12 +91,12 @@ export const UserContextProvider = ({ children }: Props) => {
       {children}
     </UserContext.Provider>
   ) : triedJWT ? (
-    <>
-      <header>
-        <h2>One Hour Beats</h2>
-      </header>
-      <Login handleLogin={handleLogin} />
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/invite/:token" component={Invite} />
+        <Login handleLogin={handleLogin} />
+      </Switch>
+    </BrowserRouter>
   ) : (
     <Spin tip="Loading..." />
   )

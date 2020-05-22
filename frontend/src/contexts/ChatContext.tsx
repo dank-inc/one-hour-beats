@@ -36,7 +36,10 @@ export const ChatContextProvider = ({ children, jam_id }: Props) => {
     )
 
     const get = async () => {
-      setChats(await getChatForJam(jam_id))
+      const chats = await getChatForJam(jam_id)
+      if (!chats) return
+
+      setChats(chats)
     }
 
     setTimeout(get, 1000)
