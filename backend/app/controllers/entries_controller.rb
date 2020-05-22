@@ -21,6 +21,14 @@ class EntriesController < ApplicationController
 
     # update votes on jams?
     UserContextChannel.broadcast_to @current_user, user
+
+    @entry = Entry.find(params[:id])
+
+    entry = @entry.as_json
+    entry[:artist_name] = @entry.user.username
+    entry[:votes] = @entry.votes
+
+    JamroomChannel.broadcast_to @entry.jam, { entry: entry }
     head :ok
   end
 
@@ -48,12 +56,12 @@ class EntriesController < ApplicationController
         # user channel send user with vote_tokens
         entry = @entry.as_json
         entry[:artist_name] = @entry.user.username
+        entry[:votes] = @entry.votes
         
         JamroomChannel.broadcast_to @entry.jam, { entry: entry }
         
         user = @current_user.as_json
         user[:vote_tokens] = @current_user.vote_tokens
-
         
         UserContextChannel.broadcast_to @current_user, user
         render :show, status: :created, location: @entry
