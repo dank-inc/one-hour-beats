@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [:create, :check_invite, :accept_invite]
+  before_action :authorize_request, except: [:check_invite, :accept_invite]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def login 
