@@ -1,5 +1,6 @@
 import React from 'react'
 import { PageHeader, Card } from 'antd'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 export const About = (props: Props) => {
@@ -30,6 +31,8 @@ export const About = (props: Props) => {
             TODO: add an inspiring speech about how working within limitations
             can spark creativity and shit.
           </p>
+          <h3>Discord:</h3>
+          <Link to="https://discord.gg/XhjGBNf">https://discord.gg/XhjGBNf</Link>
         </div>
       </Card>
     </main>
