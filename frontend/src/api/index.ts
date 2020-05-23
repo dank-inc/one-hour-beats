@@ -1,6 +1,12 @@
 import axios from 'axios'
-import _ from 'lodash'
-import { Entry, Jam, Invitation, Chat as ChatRecord } from 'types/database'
+import { keyBy } from 'lodash'
+import {
+  Entry,
+  Jam,
+  User,
+  Chat as ChatRecord,
+  Invitation,
+} from 'types/database'
 import { JamView, Chat, UserView, EntryView } from 'types/view'
 import { message } from 'antd'
 
@@ -23,6 +29,16 @@ export const getUser = async (id: string): Promise<UserView | null> => {
   }
 }
 
+export const updateUser = async (id: string, body: Partial<User>) => {
+  try {
+    await axios.put(`/api/users/${id}`, body, cfg())
+    return Promise.resolve(true)
+  } catch (error) {
+    console.error('startjam', error)
+  }
+}
+
+// JAM ENDPOINTS
 export const requestInvite = async () => {
   try {
     const { data } = await axios.post<Invitation>(`/api/invite`, {}, cfg())
@@ -36,7 +52,7 @@ export const requestInvite = async () => {
 export const getJamIndex = async (): Promise<Record<string, JamView>> => {
   try {
     const { data } = await axios.get<JamView[]>('/api/jams', cfg())
-    return Promise.resolve(_.keyBy(data, 'id'))
+    return Promise.resolve(keyBy(data, 'id'))
   } catch (err) {
     return Promise.resolve({})
   }

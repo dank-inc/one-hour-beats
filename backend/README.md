@@ -2,7 +2,6 @@
 
 ## scaffold shit
 
-
 ```sh
 # note these are just for example purposes, not actually used in the app
 rails g scaffold users username:string name:string email:string password:string thumbs:integer wins:integer

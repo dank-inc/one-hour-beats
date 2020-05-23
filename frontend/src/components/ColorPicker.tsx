@@ -1,24 +1,14 @@
-import React from 'react'
-import { User } from '../types/database'
-import { Row, Col, Avatar } from 'antd'
-import * as colors from '@ant-design/colors'
-
-const palette = [
-  [colors.cyan[5], '#fff'],
-  [colors.magenta[6], '#fff'],
-  [colors.lime[6], '#fff'],
-  [colors.gold[6], '#fff'],
-  [colors.red[4], '#fff'],
-  [colors.blue[4], '#fff'],
-  [colors.purple[4], '#fff'],
-  [colors.volcano[5], '#fff'],
-]
+import React, { Dispatch, SetStateAction } from 'react'
+import { Row, Col, Avatar, Button, Tooltip } from 'antd'
+import { BRAND, ColorName } from 'components/ColorPalette'
 
 type Props = {
-  user: User
+  color: ColorName
+  setColor: Dispatch<SetStateAction<ColorName>>
+  letter: string
 }
 
-export const ColorPicker = ({ user }: Props) => {
+export const ColorPicker = ({ color, setColor, letter }: Props) => {
   return (
     <Col>
       <Row
@@ -30,12 +20,13 @@ export const ColorPicker = ({ user }: Props) => {
           <Avatar
             size={96}
             style={{
-              color: palette[7][1],
-              backgroundColor: palette[7][0],
+              color: '#fff',
+              backgroundColor: BRAND.colors[color],
               fontSize: 'xxx-large',
+              cursor: 'default',
             }}
           >
-            {user.id[0]}
+            {letter}
           </Avatar>
         </div>
       </Row>
@@ -45,19 +36,22 @@ export const ColorPicker = ({ user }: Props) => {
         gutter={[16, 16]}
         style={{ alignItems: 'center', justifyContent: 'center' }}
       >
-        {palette.map(([background, font]) => (
-          <Col span={2}>
-            <Avatar
-              size="default"
+        {Object.entries(BRAND.colors).map(([key, value]) => (
+          <Tooltip placement="top" title={key}>
+            <Button
+              name={key}
+              shape="circle"
               style={{
-                color: font,
-                backgroundColor: background,
-                fontSize: 'default',
+                color: '#fff',
+                backgroundColor: value,
+                cursor: 'pointer',
+                margin: 6,
               }}
+              onClick={() => setColor(key as ColorName)}
             >
-              {user.id[0]}
-            </Avatar>
-          </Col>
+              {letter}
+            </Button>
+          </Tooltip>
         ))}
       </Row>
     </Col>
