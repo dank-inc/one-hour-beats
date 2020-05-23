@@ -86,18 +86,13 @@ export const CoreLayout = () => {
             {invite ? (
               <>
                 <h3>Copy paste this link and share!</h3>
-                <Button
-                  type="link"
+                <input
                   onClick={async () => {
                     await navigator.clipboard.writeText(
                       `http://onehourbeats.com/invite/${invite?.token}`
                     )
                     message.success('Copied!', 0.5)
                   }}
-                >
-                  http://onehourbeats.com/invite/{invite?.token}
-                </Button>
-                <input
                   style={{ width: `100%` }}
                   defaultValue={`http://onehourbeats.com/invite/${invite?.token}`}
                 />
