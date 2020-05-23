@@ -51,9 +51,8 @@ class UsersController < ApplicationController
     # challenges_count = @current_user.jams&.length.to_i
 
     # if invitations_count < challenges_count * entries_count
-    invite = 
-      @current_user.active_invitation || 
-      Invitation.create!(invited_by: @current_user.id, token: SecureRandom.hex)
+    # @current_user.active_invitation || 
+    invite = Invitation.create!(invited_by: @current_user.id, token: SecureRandom.hex)
       
       render json: invite, status: :ok
     # else 
