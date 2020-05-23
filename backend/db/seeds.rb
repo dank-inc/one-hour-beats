@@ -104,6 +104,6 @@ chats = [
   },
 ]
 
-chats.each do |chat| 
-  Chat.create!(chat)
-end
+# chats.each do |chat| 
+#   Chat.create!(chat)
+# end
