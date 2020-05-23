@@ -13,7 +13,7 @@ import { ChatContextProvider } from 'contexts/ChatContext'
 import { useUserContext } from 'contexts/UserContext'
 import { JamControl } from '../JamControl'
 import { Clock } from 'components/Clock'
-import { jamInProgress } from 'utils/time'
+import { jamInProgress, canSubmit } from 'utils/time'
 import { useJamContext } from 'contexts/JamContext'
 
 import './style.scss'
@@ -103,13 +103,15 @@ export const JamDetails = ({ match }: Props) => {
                     />
                   ))
                 ) : (
-                  <div>
+                  <Card>
                     No entries... yet! <FrownOutlined />
-                  </div>
+                  </Card>
                 )}
               </div>
 
-              {!hasSubmitted && jam.started_at && <EntryForm jam_id={jam.id} />}
+              {canSubmit(jam, user.id, entries) && (
+                <EntryForm jam_id={jam.id} />
+              )}
             </div>
           </div>
         </Card>
