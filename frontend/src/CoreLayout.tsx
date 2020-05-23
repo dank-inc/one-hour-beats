@@ -97,6 +97,10 @@ export const CoreLayout = () => {
                 >
                   http://onehourbeats.com/invite/{invite?.token}
                 </Button>
+                <input
+                  style={{ width: `100%` }}
+                  defaultValue={`http://onehourbeats.com/invite/${invite?.token}`}
+                />
               </>
             ) : (
               <Spin tip="Requesting Invite..." />
