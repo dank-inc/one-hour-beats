@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { JamView } from 'types/view'
 import moment from 'moment'
-import { Clock } from 'components/Clock'
 import { Tooltip, Button, message, Card } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { startJam, stopJam } from 'api'
@@ -51,11 +50,9 @@ export const JamControl = ({ jam }: Props) => {
   if (ended)
     return (
       <>
-        <h2>
-          Jam Is Over! <FrownTwoTone />
-        </h2>
         <Button onClick={() => history.push('/create')}>
-          Make A New Jam! <SmileTwoTone />
+          The Challenge Is Over! <FrownTwoTone /> Make A New One!{' '}
+          <SmileTwoTone />
         </Button>
       </>
     )
@@ -72,7 +69,6 @@ export const JamControl = ({ jam }: Props) => {
             Stop Jam Now!
           </Button>
         </Tooltip>
-        <Clock jam={jam} />
       </>
     )
 

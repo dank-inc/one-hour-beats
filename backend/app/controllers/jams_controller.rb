@@ -74,7 +74,7 @@ class JamsController < ApplicationController
   def create
     @jam = Jam.new(jam_params)
     @jam.user_id = @current_user.id
-    @jam.id = @jam.name.split(' ').join('_')
+    @jam.id = @jam.name.split(' ').join('_').downcase
 
     if @jam.save!
       jam = @jam.as_json

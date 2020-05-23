@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import moment from 'moment'
 
-import { PageHeader, Button, Popover, Card, Tooltip } from 'antd'
+import { PageHeader, Button, Popover, Card, Tooltip, Descriptions } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { useAppContext } from 'contexts/AppContext'
@@ -11,6 +12,9 @@ import { Chatroom } from 'components/Chatroom'
 import { ChatContextProvider } from 'contexts/ChatContext'
 import { useUserContext } from 'contexts/UserContext'
 import { JamControl } from '../JamControl'
+import { Clock } from 'components/Clock'
+import { jamInProgress } from 'utils/time'
+import { useJamContext } from 'contexts/JamContext'
 
 import './style.scss'
 
@@ -18,18 +22,12 @@ type Props = RoutedProps & {}
 
 export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
-  const { jamIndex, subscribeToJam } = useAppContext()
+  const { entries } = useJamContext()
+
+  const { jamIndex } = useAppContext()
   const [chatOpen, setChatOpen] = useState(false)
 
   const jam = jamIndex[match.params.id]
-
-  useEffect(() => {
-    const subscription = subscribeToJam(match.params.id)
-
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [match.params.id])
 
   const toggleChat = () => {
     setChatOpen(!chatOpen)
@@ -40,7 +38,7 @@ export const JamDetails = ({ match }: Props) => {
   }
 
   if (!jam) return <Redirect to="/jams" />
-  const hasSubmitted = jam.entries.find((entry) => entry.user_id === user.id)
+  const hasSubmitted = entries?.find((entry) => entry.user_id === user.id)
 
   return (
     <>
@@ -48,12 +46,26 @@ export const JamDetails = ({ match }: Props) => {
         <PageHeader
           className="site-page-header"
           title={jam.name}
-          subTitle={
-            jam.started_at
-              ? jam.description
-              : 'Prompt hidden until challenge starts!'
-          }
-        />
+          extra={[<JamControl key={`JamControl-${jam.id}`} jam={jam} />]}
+        >
+          <Descriptions column={3}>
+            <Descriptions.Item label="Time Limit">
+              {jam.time_limit} minutes
+            </Descriptions.Item>
+            <Descriptions.Item label="Started At">
+              {jam.started_at
+                ? moment(jam.started_at).format('MMM DD, YYYY @ HH:mm:ss')
+                : `Challenge Has Not Started!`}
+            </Descriptions.Item>
+            <Descriptions.Item label="Ends">
+              {jam.started_at
+                ? moment(jam.started_at)
+                    .add(jam.time_limit, 'minutes')
+                    .fromNow()
+                : `Challenge Has Not Started!`}
+            </Descriptions.Item>
+          </Descriptions>
+        </PageHeader>
         <Card>
           <div className="main-content jam-details">
             <div className="jam-left">
@@ -67,21 +79,23 @@ export const JamDetails = ({ match }: Props) => {
                     }
                   >
                     <h2 className={jam.started_at ? 'bouncing' : 'blurred'}>
-                      {jam.description}
+                      {jam.started_at
+                        ? jam.description
+                        : 'This prompt is hidden, stop trying to cheat, you dirty cheater!'}
                     </h2>
                   </Tooltip>
                 </Card>
-                <Card>
-                  <p>time limit: {jam.time_limit} minutes</p>
-                  {jam.started_at && <p>started at: {jam.started_at}</p>}
-                  <JamControl jam={jam} />
-                </Card>
+                {jamInProgress(jam) && (
+                  <Card>
+                    <Clock jam={jam} />
+                  </Card>
+                )}
               </div>
             </div>
             <div className="jam-right">
               <div className="entries-wrapper">
-                {jam.entries ? (
-                  jam.entries.map((entry) => (
+                {entries?.length ? (
+                  entries.map((entry) => (
                     <EntryCard
                       jam_id={jam.id}
                       entry={entry}

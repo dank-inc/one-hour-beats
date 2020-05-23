@@ -17,16 +17,9 @@ type Props = {
 
 type JamRoomUsers = Record<string, string[]>
 
-type JamRoomChannelRes = {
-  entry: EntryView
-  chat: Chat
-}
-
 type Context = {
   jamIndex: Record<string, JamView>
   jamRoomUsers: JamRoomUsers
-  subscribeToJam: (id: string) => ActionCable.Channel
-  unsubscribeFromJam: (id: string) => void
 }
 
 const AppContext = createContext<Context | null>(null)
@@ -109,52 +102,10 @@ export const AppContextProvider = ({ children }: Props) => {
     }
   }, [user.id])
 
-  const subscribeToJam = (jam_id: string) => {
-    return consumer.subscriptions.create(
-      {
-        channel: 'JamroomChannel',
-        jam_id,
-        user_id: user.id,
-      },
-      {
-        received: ({ entry }: JamRoomChannelRes) => {
-          if (!jamIndex) return
-
-          if (entry) {
-            message.success(`${entry.artist_name} submitted a song!`)
-
-            const entries = [
-              ...(jamIndex[jam_id].entries || []).filter(
-                (e) => e.id !== entry.id
-              ),
-              entry,
-            ]
-
-            setJamIndex((jamIndex) => {
-              if (!jamIndex) return {}
-
-              return {
-                ...jamIndex,
-                [jam_id]: {
-                  ...jamIndex[jam_id],
-                  entries,
-                },
-              }
-            })
-          }
-        },
-      }
-    )
-  }
-
-  const unsubscribeFromJam = (id: string) => {}
-
   return jamIndex ? (
     <AppContext.Provider
       value={{
         jamIndex,
-        subscribeToJam,
-        unsubscribeFromJam,
         jamRoomUsers,
       }}
     >
