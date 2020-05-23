@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { PageHeader, Button, Popover, Card } from 'antd'
+import { PageHeader, Button, Popover, Card, Tooltip } from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { useAppContext } from 'contexts/AppContext'
@@ -48,20 +48,35 @@ export const JamDetails = ({ match }: Props) => {
         <PageHeader
           className="site-page-header"
           title={jam.name}
-          subTitle={jam.description}
+          subTitle={
+            jam.started_at
+              ? jam.description
+              : 'Prompt hidden until challenge starts!'
+          }
         />
         <Card>
           <div className="main-content jam-details">
             <div className="jam-left">
               <div className="jam-info">
-                <p>Name: {jam.name}</p>
-                <p>Description: {jam.description}</p>
-                <p>time limit: {jam.time_limit} minutes</p>
-
-                {jam.started_at && <p>started at: {jam.started_at}</p>}
+                <Card>
+                  <Tooltip
+                    title={
+                      jam.started_at
+                        ? 'This is your prompt! Make a song that matches this!'
+                        : 'You have to wait till the jam starts to see the prompt!'
+                    }
+                  >
+                    <h2 className={jam.started_at ? 'bouncing' : 'blurred'}>
+                      {jam.description}
+                    </h2>
+                  </Tooltip>
+                </Card>
+                <Card>
+                  <p>time limit: {jam.time_limit} minutes</p>
+                  {jam.started_at && <p>started at: {jam.started_at}</p>}
+                  <JamControl jam={jam} />
+                </Card>
               </div>
-
-              <JamControl jam={jam} />
             </div>
             <div className="jam-right">
               <div className="entries-wrapper">

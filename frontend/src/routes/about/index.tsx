@@ -27,12 +27,25 @@ export const About = (props: Props) => {
 
           <p>But that all changes here, today!</p>
 
+          <h3>History:</h3>
+          <p>
+            Elijah Lucian started "one hour beating" in 2010, and found it to be
+            a great way to create a jump-off point for a song!
+          </p>
+
+          <p>
+            Check out the original one hour beats{' '}
+            <Link to="http://elijahlucian.blogspot.com/">here</Link>{' '}
+          </p>
+
           <p>
             TODO: add an inspiring speech about how working within limitations
             can spark creativity and shit.
           </p>
           <h3>Discord:</h3>
-          <Link to="https://discord.gg/XhjGBNf">https://discord.gg/XhjGBNf</Link>
+          <Link to="https://discord.gg/XhjGBNf">
+            https://discord.gg/XhjGBNf
+          </Link>
         </div>
       </Card>
     </main>

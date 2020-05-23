@@ -1,5 +1,14 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Checkbox, message, Upload, Tooltip } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  message,
+  Upload,
+  Tooltip,
+  Card,
+} from 'antd'
 import { useUserContext } from '../contexts/UserContext'
 import { InboxOutlined } from '@ant-design/icons'
 import { Store } from 'antd/lib/form/interface'
@@ -59,46 +68,48 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   return (
-    <Form
-      onChange={handleChange}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        label="Song Title"
-        name="title"
-        rules={[{ required: true, message: 'This needs a title!' }]}
+    <Card>
+      <Form
+        onChange={handleChange}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="I own all rights to this work"
-        name="rights"
-        valuePropName="checked"
-        rules={[{ required: true, message: 'Sign this legal document!' }]}
-      >
-        <Checkbox />
-      </Form.Item>
-      <Upload.Dragger
-        action={`/api/jams/${jam_id}/upload`}
-        multiple={false}
-        name="file"
-        disabled={!canUpload}
-        onChange={handleUpload}
-        headers={{
-          Authorization: window.localStorage.getItem('ohb-jwt-token') || '',
-        }}
-      >
-        <InboxOutlined />
+        <Form.Item
+          label="Song Title"
+          name="title"
+          rules={[{ required: true, message: 'This needs a title!' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="I own all rights to this work"
+          name="rights"
+          valuePropName="checked"
+          rules={[{ required: true, message: 'Sign this legal document!' }]}
+        >
+          <Checkbox />
+        </Form.Item>
+        <Upload.Dragger
+          action={`/api/jams/${jam_id}/upload`}
+          multiple={false}
+          name="file"
+          disabled={!canUpload}
+          onChange={handleUpload}
+          headers={{
+            Authorization: window.localStorage.getItem('ohb-jwt-token') || '',
+          }}
+        >
+          <InboxOutlined />
 
-        <p>{canUpload ? 'File Size Limit: 10MB' : 'Please enter a title!'}</p>
-      </Upload.Dragger>
+          <p>{canUpload ? 'File Size Limit: 10MB' : 'Please enter a title!'}</p>
+        </Upload.Dragger>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submitt
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submitt
+          </Button>
+        </Form.Item>
+      </Form>
+    </Card>
   )
 }
