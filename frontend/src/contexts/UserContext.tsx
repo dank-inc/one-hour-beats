@@ -25,6 +25,13 @@ type Context = {
   handleLogout: () => void
 }
 
+type Login = {
+  username: string
+  token: string
+  id: string
+  exp: string
+}
+
 const UserContext = createContext<Context | null>(null)
 
 export const UserContextProvider = ({ children }: Props) => {
@@ -44,10 +51,7 @@ export const UserContextProvider = ({ children }: Props) => {
         message.success(`logged in as ${data?.username}`, 0.5)
       } catch {
         message.error('Login Failed!')
-        window.localStorage.removeItem('ohb-jwt-token')
-        window.localStorage.removeItem('ohb-jwt-username')
-        window.localStorage.removeItem('ohb-jwt-id')
-        window.localStorage.removeItem('ohb-jwt-exp')
+        wipeLocalStorage()
         window.location.reload()
       }
     }
@@ -62,14 +66,13 @@ export const UserContextProvider = ({ children }: Props) => {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const { data } = await axios.post(`/api/login`, { username, password })
-      window.localStorage.setItem('ohb-jwt-username', data.username)
-      window.localStorage.setItem('ohb-jwt-id', data.id)
-      window.localStorage.setItem('ohb-jwt-token', data.token)
-      window.localStorage.setItem('ohb-jwt-exp', data.exp)
+      const { data } = await axios.post<Login>(`/api/login`, {
+        username,
+        password,
+      })
 
-      const user = await getUser(data.id)
-      setUser(user)
+      setLocalStorage(data)
+      setUser(await getUser(data.id))
       message.success(`logged in as ${user?.username}`, 0.5)
     } catch (err) {
       message.error('Login Failed!')
@@ -78,12 +81,22 @@ export const UserContextProvider = ({ children }: Props) => {
 
   const handleLogout = () => {
     setUser(null)
+    wipeLocalStorage()
+    message.success('logged out!', 0.5)
+  }
+
+  const setLocalStorage = (data: Login) => {
+    window.localStorage.setItem('ohb-jwt-username', data.username)
+    window.localStorage.setItem('ohb-jwt-id', data.id)
+    window.localStorage.setItem('ohb-jwt-token', data.token)
+    window.localStorage.setItem('ohb-jwt-exp', data.exp)
+  }
+
+  const wipeLocalStorage = () => {
     window.localStorage.removeItem('ohb-jwt-token')
     window.localStorage.removeItem('ohb-jwt-username')
     window.localStorage.removeItem('ohb-jwt-id')
     window.localStorage.removeItem('ohb-jwt-exp')
-
-    message.success('logged out!', 0.5)
   }
 
   return user ? (
