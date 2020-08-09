@@ -2,39 +2,16 @@ class EntriesController < ApplicationController
   before_action :authorize_request
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
-  def vote 
-    @entry = Entry.find(params[:id])
-    @jam = @entry.jam
-
-    vote_token = VoteToken.find_by!(
-      user_id: @current_user.id,
-      jam_id: @jam.id
-    )
-    
-    vote_token.update!(
-      entry_id: params[:id]
-    )
-
-    # TODO: just send the vote token.
-    user = @current_user.as_json
-    user[:vote_tokens] = @current_user.vote_tokens
-
-    # update votes on jams?
-    UserContextChannel.broadcast_to @current_user, user
-
-    @entry = Entry.find(params[:id])
-
-    entry = @entry.as_json
-    entry[:artist_name] = @entry.user.username
-    entry[:votes] = @entry.votes
-
-    JamroomChannel.broadcast_to @entry.jam, { entry: entry }
-    head :ok
-  end
 
   # GET /entries
   def index
-    @entries = Entry.all
+    if params[:jam_id].present?
+      puts "WTFFFFFF #{params[:jam_id]}"
+      @entries = Entry.where(jam_id: params[:jam_id]) 
+    else 
+      @entries = Entry.all
+    end
+
   end
 
   # GET /entries/1
@@ -69,6 +46,37 @@ class EntriesController < ApplicationController
         render json: @entry.errors, status: :unprocessable_entity
       end
   end
+
+  def vote 
+    @entry = Entry.find(params[:id])
+    @jam = @entry.jam
+
+    vote_token = VoteToken.find_by!(
+      user_id: @current_user.id,
+      jam_id: @jam.id
+    )
+    
+    vote_token.update!(
+      entry_id: params[:id]
+    )
+
+    # TODO: just send the vote token.
+    user = @current_user.as_json
+    user[:vote_tokens] = @current_user.vote_tokens
+
+    # update votes on jams?
+    UserContextChannel.broadcast_to @current_user, user
+
+    @entry = Entry.find(params[:id])
+
+    entry = @entry.as_json
+    entry[:artist_name] = @entry.user.username
+    entry[:votes] = @entry.votes
+
+    JamroomChannel.broadcast_to @entry.jam, { entry: entry }
+    head :ok
+  end
+
 
   # PATCH/PUT /entries/1
   def update

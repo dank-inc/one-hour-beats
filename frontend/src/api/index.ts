@@ -96,7 +96,7 @@ export const stopJam = async (id: string) => {
 export const getEntriesForJam = async (jam_id: string) => {
   try {
     const { data } = await axios.get<EntryView[]>(
-      `/api/jams/${jam_id}/entries`,
+      `/api/entries?jam_id=${jam_id}`,
       cfg()
     )
     return Promise.resolve(data)
