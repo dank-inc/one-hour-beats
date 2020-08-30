@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 
-import { PageHeader, Button, Popover, Card, Tooltip, Descriptions } from 'antd'
+import {
+  PageHeader,
+  Button,
+  Popover,
+  Card,
+  Tooltip,
+  Descriptions,
+  Tag,
+} from 'antd'
 import { RoutedProps } from 'types/router'
 import { Redirect } from 'react-router'
 import { useAppContext } from 'contexts/AppContext'
@@ -23,11 +31,12 @@ type Props = RoutedProps & {}
 export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
   const { entries } = useJamContext()
+  const { jamIndex, jamRoomUsers } = useAppContext()
 
-  const { jamIndex } = useAppContext()
   const [chatOpen, setChatOpen] = useState(false)
 
   const jam = jamIndex[match.params.id]
+  const users = jamRoomUsers[match.params.id]
 
   const toggleChat = () => {
     setChatOpen(!chatOpen)
@@ -46,6 +55,9 @@ export const JamDetails = ({ match }: Props) => {
         <PageHeader
           className="site-page-header"
           title={jam.name}
+          subTitle={users?.map((user) => (
+            <Tag>{user}</Tag>
+          ))}
           extra={[<JamControl key={`JamControl-${jam.id}`} jam={jam} />]}
         >
           <Descriptions column={3}>
