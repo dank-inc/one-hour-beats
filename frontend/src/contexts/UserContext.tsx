@@ -6,13 +6,14 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { Login } from 'routes/login'
-import { message, Spin } from 'antd'
 import axios from 'axios'
+import { message, Spin } from 'antd'
+
 import { UserView } from 'types/view'
 import { getUser } from 'api'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { Invite } from 'routes/invite'
+import { mockUser } from 'api/mock/user'
+
+import { UnauthedLayout } from 'UnauthedLayout'
 
 type Props = {
   children: React.ReactNode
@@ -41,6 +42,13 @@ export const UserContextProvider = ({ children }: Props) => {
   useEffect(() => {
     const user_id = window.localStorage.getItem('ohb-jwt-id')
     const token = window.localStorage.getItem('ohb-jwt-token')
+    console.log('NODE ENV => ', process.env.NODE_ENV)
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('using test user')
+      setUser(mockUser)
+      return
+    }
 
     const login = async (user_id: string) => {
       try {
@@ -104,12 +112,7 @@ export const UserContextProvider = ({ children }: Props) => {
       {children}
     </UserContext.Provider>
   ) : triedJWT ? (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/invite/:token" component={Invite} />
-        <Login handleLogin={handleLogin} />
-      </Switch>
-    </BrowserRouter>
+    <UnauthedLayout handleLogin={handleLogin} />
   ) : (
     <Spin tip="Loading..." />
   )

@@ -30,7 +30,7 @@ export const Chatroom = ({ jam_id }: Props) => {
   return (
     <>
       <Card
-        title="active users"
+        title="Chatroom"
         extra={jamRoomUsers[jam_id]?.map((user_id) => (
           <Tag key={`active-users-${user_id}`} color="magenta">
             {user_id}

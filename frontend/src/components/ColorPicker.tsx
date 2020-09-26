@@ -37,7 +37,7 @@ export const ColorPicker = ({ color, setColor, letter }: Props) => {
         style={{ alignItems: 'center', justifyContent: 'center' }}
       >
         {Object.entries(BRAND.colors).map(([key, value]) => (
-          <Tooltip placement="top" title={key}>
+          <Tooltip placement="top" key={`color-picker-${key}`} title={key}>
             <Button
               name={key}
               shape="circle"

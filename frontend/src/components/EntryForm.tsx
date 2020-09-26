@@ -24,10 +24,12 @@ export const EntryForm = ({ jam_id }: Props) => {
   const [canUpload, setCanUpload] = useState(false)
 
   const handleUpload = (uploadHandler: UploadChangeParam<UploadFile<any>>) => {
+    // check for MP3 ONLy
+
     if (uploadHandler.file.error) {
       message.error('error uploading file!')
     } else {
-      message.loading('uploading file...', 0.2)
+      // message.loading('uploading file...', 0.2)
       if (uploadHandler.fileList.length) {
         const path = uploadHandler.fileList[0].response?.path
         if (path) setLink(path)
@@ -93,7 +95,6 @@ export const EntryForm = ({ jam_id }: Props) => {
           action={`/api/jams/${jam_id}/upload`}
           multiple={false}
           name="file"
-          disabled={!canUpload}
           onChange={handleUpload}
           headers={{
             Authorization: window.localStorage.getItem('ohb-jwt-token') || '',
@@ -101,7 +102,7 @@ export const EntryForm = ({ jam_id }: Props) => {
         >
           <InboxOutlined />
 
-          <p>{canUpload ? 'File Size Limit: 10MB' : 'Please enter a title!'}</p>
+          <p>File Size Limit: 10MB</p>
         </Upload.Dragger>
 
         <Form.Item>
