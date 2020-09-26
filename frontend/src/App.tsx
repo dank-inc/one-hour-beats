@@ -1,16 +1,16 @@
 import React from 'react'
 import { CoreLayout } from './CoreLayout'
-import 'antd/dist/antd.css'
-import './App.scss'
 import { UserContextProvider } from './contexts/UserContext'
 import { ActionCableContextProvider } from 'contexts/ActionCableContext'
 
+import 'antd/dist/antd.css'
+import './App.scss'
+
 function App() {
-  // TODO: Store
-  // jamcontext
-  // - holds chat listener
-  // - holds all jam updates
-  // - holds jam room state (users, active, timeleft?)
+  // TODO: auth context - handles login
+  // TODO: User Context - handles user login and subscriber
+  // TODO:
+  console.log('app mount!')
 
   return (
     <UserContextProvider>

@@ -1,84 +1,11 @@
-#root {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.2rem 1rem;
-
-  background-image: linear-gradient(90deg, #faad14, #d48806);
-
-  h2 {
-    color: #fffbe6;
-  }
-
-  a {
-    color: #fffbe6;
-  }
-
-  nav {
-    a {
-      margin: 1rem;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-main {
-  width: 100%;
-  height: calc(100% + 75px);
-  height: 100%;
+.ant-layout-content {
   padding: 2rem;
-
-  .main-header {
-    text-align: center;
-  }
-
-  .ant-form {
-    margin: auto;
-  }
+  min-height: 80vh;
 }
 
-footer {
-  // tood always absolute bottom position
-  // make main content x bigger for scrollies
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-
-  background: #ccc;
-  display: flex;
-  justify-content: space-between;
-  padding: auto 2rem;
-  align-items: center;
-
-  * {
-    margin: auto 2rem;
-  }
-
-  .player-transport {
-    display: flex;
-  }
-
-  .player-info {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.site-page-header {
-  border: 1px solid rgb(235, 237, 240);
-  margin-bottom: 2rem;
-
-  .ant-page-header-heading-title {
-    color: #d48806;
-  }
+.blurred {
+  color: #000;
+  filter: blur(10px);
+  text-shadow: 0px 0px 5px #000;
+  user-select: none;
 }

@@ -1,15 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { useUserContext } from './UserContext'
-import {
-  JamView,
-  Chat,
-  EntryView,
-  UserView,
-  SystemMessage,
-} from '../types/view'
+import { keyBy } from 'lodash'
 import { Spin, message } from 'antd'
+
 import * as api from 'api'
-import { useActionCableContext } from './ActionCableContext'
+import { JamView, UserView, SystemMessage } from 'types/view'
+import { mockJams } from 'api/mock/jams'
+
+import { useUserContext } from 'contexts/UserContext'
+import { useActionCableContext } from 'contexts/ActionCableContext'
 
 type Props = {
   children: React.ReactNode
@@ -31,6 +29,13 @@ export const AppContextProvider = ({ children }: Props) => {
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
 
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('loading mock jams =>', mockJams)
+      const jamIndex = keyBy(mockJams, 'id')
+      setJamIndex(jamIndex)
+      return
+    }
+
     const userLocationSubscription = consumer.subscriptions.create(
       {
         channel: 'UserLocationChannel',

@@ -2,7 +2,6 @@ import React from 'react'
 import { Card, Tag } from 'antd'
 import { useHistory } from 'react-router'
 import { Jam } from 'types/database'
-import './jam-card.scss'
 
 type Props = { jam: Jam; users?: string[] }
 

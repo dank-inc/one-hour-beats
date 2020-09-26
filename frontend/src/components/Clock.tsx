@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Jam } from '../types/database'
+import { Jam } from 'types/database'
 import moment from 'moment'
 
 type Props = {
@@ -71,6 +71,19 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
       ctx.fill()
 
       ctx.restore()
+
+      ctx.fillStyle = '#333'
+      ctx.font = 'small-caps bold 24px/1 sans-serif'
+
+      const minutes = Math.floor(secondsRemaining / 60)
+      const seconds = Math.floor(secondsRemaining % 60)
+
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+
+      ctx.fillText(`${minutes}:${seconds}`, width / 2, height / 2)
+
+      document.title = `[${minutes}:${seconds}] remaining!!`
     }
 
     const ctx = canvasRef.current.getContext('2d')
