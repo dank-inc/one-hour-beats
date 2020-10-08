@@ -1,14 +1,6 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import {
-  Form,
-  Input,
-  Button,
-  InputNumber,
-  message,
-  PageHeader,
-  Layout,
-} from 'antd'
+import { Form, Input, Button, InputNumber, message, PageHeader } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
 import { useHistory } from 'react-router'

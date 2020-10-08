@@ -24,7 +24,5 @@ class User < ApplicationRecord
     )
   end
 
-
-
   # TODO: write an instance method that increments the users' wins
 end

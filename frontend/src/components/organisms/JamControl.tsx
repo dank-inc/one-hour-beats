@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { JamView } from 'types/view'
 import moment from 'moment'
-import { Tooltip, Button, message, Card } from 'antd'
+import { Tooltip, Button, message } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { startJam, stopJam } from 'api'
 import { FrownTwoTone, SmileTwoTone } from '@ant-design/icons'
@@ -43,7 +43,7 @@ export const JamControl = ({ jam }: Props) => {
     return () => {
       clearTimeout(timer)
     }
-  }, [jam.started_at, jam.time_limit])
+  }, [jam.started_at, jam.time_limit, ended])
 
   const jamOwner = user_id === jam.user_id
 

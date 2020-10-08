@@ -1,5 +1,3 @@
-import * as colors from '@ant-design/colors'
-
 export type ColorName =
   | 'zesty'
   | 'wildin'

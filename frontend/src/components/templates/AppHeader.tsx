@@ -13,12 +13,10 @@ import { UserOutlined } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { requestInvite } from 'api'
 import { Invitation } from 'types/database'
-import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 
 export const AppHeader = () => {
   const userContext = useUserContext()
-  const history = useHistory()
   const [invite, setInvite] = useState<Invitation | null>(null)
   const [modal, setModal] = useState(false)
 

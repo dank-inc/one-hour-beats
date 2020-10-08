@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteChildrenProps } from 'react-router'
-import { PageHeader, Empty, Button, Layout, Row } from 'antd'
+import { PageHeader, Empty, Button, Row } from 'antd'
 import moment from 'moment'
 
 import { JamCard } from 'components/JamCard'

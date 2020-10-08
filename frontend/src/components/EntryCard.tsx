@@ -45,7 +45,7 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
       setCanVote(true)
       setTooltipTitle('Cast your vote!')
     }
-  }, [user.vote_tokens])
+  }, [user.vote_tokens, user.id, jam_id, entry.user_id])
 
   return (
     <Card

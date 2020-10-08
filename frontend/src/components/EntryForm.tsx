@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  message,
-  Upload,
-  Tooltip,
-  Card,
-} from 'antd'
+import { Form, Input, Button, Checkbox, message, Upload, Card } from 'antd'
 import { useUserContext } from '../contexts/UserContext'
 import { InboxOutlined } from '@ant-design/icons'
 import { Store } from 'antd/lib/form/interface'
@@ -21,7 +12,7 @@ type Props = { jam_id: string }
 export const EntryForm = ({ jam_id }: Props) => {
   const { user } = useUserContext()
   const [link, setLink] = useState<string | null>(null)
-  const [canUpload, setCanUpload] = useState(false)
+  // const [canUpload, setCanUpload] = useState(false)
 
   const handleUpload = (uploadHandler: UploadChangeParam<UploadFile<any>>) => {
     // check for MP3 ONLy
@@ -42,7 +33,7 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   const handleChange = (e: Store) => {
-    setCanUpload(!e.target.value)
+    // setCanUpload(!e.target.value)
     // setCanUpload(!!val)
   }
 

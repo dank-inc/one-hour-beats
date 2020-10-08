@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Layout } from 'antd'
+import { PageHeader } from 'antd'
 import { Link } from 'react-router-dom'
 
 export const About = () => {

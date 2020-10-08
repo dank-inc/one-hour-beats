@@ -40,6 +40,7 @@ export const Invite = ({ match }: Props) => {
         password,
       }
     )
+    console.log('user created', data)
     message.success('user created, please log in!')
     history.push('/')
   }

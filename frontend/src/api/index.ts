@@ -11,7 +11,7 @@ import { JamView, Chat, UserView, EntryView } from 'types/view'
 import { message } from 'antd'
 
 // GET - gets data
-// PUT - update a given record with body (can be partial)
+// PUT - update a given record with body (can be partial) - should be PATCH apparently
 // POST - CREATE a record with body (must be full record)
 
 // USER ENDPONTS

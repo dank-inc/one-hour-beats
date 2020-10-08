@@ -4,7 +4,7 @@ one:
   username: MyString
   name: MyString
   email: MyString
-  password: MyString
+  password_digest: <%= BCrypt::Password.create('password') %>
   thumbs: 1
   wins: 1
 
@@ -12,6 +12,6 @@ two:
   username: MyString
   name: MyString
   email: MyString
-  password: MyString
+  password_digest: <%= BCrypt::Password.create('password') %>
   thumbs: 1
   wins: 1

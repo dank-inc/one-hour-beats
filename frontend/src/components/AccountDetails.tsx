@@ -1,7 +1,6 @@
 import React from 'react'
 import { User } from '../types/database'
-import { Row, Col, Tooltip, Input, Form } from 'antd'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { Row, Col, Input, Form } from 'antd'
 
 type Props = {
   user: User

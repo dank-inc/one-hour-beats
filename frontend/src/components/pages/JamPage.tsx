@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import moment from 'moment'
 
 import { PageHeader, Card, Tooltip, Descriptions, Tag, Row, Col } from 'antd'
 import { Redirect, RouteComponentProps } from 'react-router'
 import { jamInProgress, canSubmit } from 'utils/time'
-import { FrownOutlined, MessageTwoTone } from '@ant-design/icons'
+import { FrownOutlined } from '@ant-design/icons'
 
 import { EntryCard } from 'components/EntryCard'
 import { EntryForm } from 'components/EntryForm'
@@ -28,15 +28,14 @@ export const JamDetails = ({ match }: Props) => {
   const users = jamRoomUsers[match.params.id]
 
   useEffect(() => {
-    // ya
     return () => {
       document.title = `One Hour Beats - ${jam.name}`
     }
-  }, [])
+  }, [jam.name])
 
   if (!jam) return <Redirect to="/jams" />
 
-  const hasSubmitted = entries?.find((entry) => entry.user_id === user.id)
+  // const hasSubmitted = entries?.find((entry) => entry.user_id === user.id)
 
   return (
     <>

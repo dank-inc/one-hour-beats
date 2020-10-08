@@ -1,6 +1,6 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Button, Card, message, Row, Form, Layout, PageHeader } from 'antd'
+import { Button, Card, message, Row, Form, PageHeader } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/ColorPicker'
 import { AccountDetails } from 'components/AccountDetails'
