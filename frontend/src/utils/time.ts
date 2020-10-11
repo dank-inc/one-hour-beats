@@ -1,5 +1,6 @@
 import moment from 'moment'
-import { JamView, EntryView } from 'types/view'
+import { JamView } from 'types/Jam'
+import { EntryView } from 'types/Entry'
 
 export const isStarted = (started_at?: string) => {
   return !!started_at
@@ -44,12 +45,14 @@ export const canSubmit = (
   user_id: string,
   entries: EntryView[] | null
 ): boolean => {
-  console.log('started?', !!jam.started_at)
-  console.log('has submitted?', !entries?.find((e) => e.user_id === user_id))
-  console.log(
-    'time left?',
-    jam.started_at && timeLeft(jam.started_at, jam.time_limit)
-  )
+  // NOTE: 20 min leeway
+
+  // console.log('started?', !!jam.started_at)
+  // console.log('has submitted?', !entries?.find((e) => e.user_id === user_id))
+  // console.log(
+  //   'time left?',
+  //   jam.started_at && timeLeft(jam.started_at, jam.time_limit)
+  // )
 
   return (
     !!jam.started_at &&

@@ -1,5 +1,5 @@
 import React from 'react'
-import { User } from '../types/database'
+import { User } from 'types/User'
 import { Row, Col, Input, Form } from 'antd'
 
 type Props = {

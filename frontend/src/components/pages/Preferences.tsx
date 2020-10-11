@@ -2,10 +2,10 @@ import React from 'react'
 import { Store } from 'antd/lib/form/interface'
 import { Button, Card, message, Row, Form, PageHeader } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
-import { ColorPicker } from 'components/ColorPicker'
-import { AccountDetails } from 'components/AccountDetails'
+import { ColorPicker } from 'components/organisms/ColorPicker'
+import { AccountDetails } from 'components/pages/AccountDetails'
 import { updateUser } from 'api'
-import { ColorName } from 'components/ColorPalette'
+import { ColorName } from 'constants/ColorPalette'
 
 type Props = {}
 export const Preferences = (props: Props) => {

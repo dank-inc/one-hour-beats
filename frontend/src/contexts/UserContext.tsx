@@ -9,11 +9,13 @@ import React, {
 import axios from 'axios'
 import { message, Spin } from 'antd'
 
-import { UserView } from 'types/view'
+import { UserView } from 'types/User'
 import { getUser } from 'api'
 import { mockUser } from 'api/mock/user'
 
-import { UnauthedLayout } from 'UnauthedLayout'
+import { UnauthedLayout } from 'components/layouts/UnauthedLayout'
+import { useActionCableContext } from './ActionCableContext'
+import { useHistory } from 'react-router'
 
 type Props = {
   children: React.ReactNode
@@ -36,15 +38,18 @@ type Login = {
 const UserContext = createContext<Context | null>(null)
 
 export const UserContextProvider = ({ children }: Props) => {
+  const history = useHistory()
+  const { consumer } = useActionCableContext()
   const [user, setUser] = useState<UserView | null>(null)
   const [triedJWT, setTriedJWT] = useState(false)
 
   useEffect(() => {
     const user_id = window.localStorage.getItem('ohb-jwt-id')
     const token = window.localStorage.getItem('ohb-jwt-token')
-    console.log('NODE ENV => ', process.env.NODE_ENV)
 
-    if (process.env.NODE_ENV === 'development') {
+    const env = process.env.REACT_APP_ENV
+
+    if (env === 'local') {
       console.log('using test user')
       setUser(mockUser)
       return
@@ -72,6 +77,20 @@ export const UserContextProvider = ({ children }: Props) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!user) return
+
+    const subscription = consumer.subscriptions.create(
+      { channel: 'UserContextChannel', user_id: user.id },
+      { received: (user: UserView) => setUser(user) }
+    )
+    console.log('subscribed to user channel', subscription)
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [user, consumer.subscriptions])
+
   const handleLogin = async (username: string, password: string) => {
     try {
       const { data } = await axios.post<Login>(`/api/login`, {
@@ -82,6 +101,7 @@ export const UserContextProvider = ({ children }: Props) => {
       setLocalStorage(data)
       setUser(await getUser(data.id))
       message.success(`logged in as ${user?.username}`, 0.5)
+      history.push('/')
     } catch (err) {
       message.error('Login Failed!')
     }

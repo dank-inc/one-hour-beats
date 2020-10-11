@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many  :invitations, foreign_key: :invited_by
   
   has_secure_password
+  
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, presence: true, uniqueness: true
@@ -13,9 +14,10 @@ class User < ApplicationRecord
     length: { minimum: 6 },
     if: -> { new_record? || !password.nil? }
 
-  def thumbsup
-    update(thumbs: thumbs + 1)
-  end
+  # TODO: add this 
+  # def thumbsup
+  #   update(thumbs: thumbs + 1)
+  # end
 
   def active_invitation
     Invitation.find_by(

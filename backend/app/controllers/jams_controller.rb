@@ -1,5 +1,6 @@
 class JamsController < ApplicationController
-  before_action :authorize_request
+  # before_action :get_logged_in_user, only: [:jams, :entries]
+  before_action :authorize_request #, only: [:submit_chat, :start, :stop, :edit, :create, :update, :destroy]
   before_action :set_jam, only: [:submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
@@ -7,12 +8,9 @@ class JamsController < ApplicationController
     if @jam.started_at
       head :unprocessable_entity
     else 
-      @jam.start! 
-      
-      jam = @jam.as_json
-      jam[:entries] = @jam.entries
-
-      AppContextChannel.broadcast_to :global, jam: jam
+      @jam.start!
+      JamsChannel.broadcast_to :global, true
+      JamroomChannel.broadcast_to @jam, true
       head :ok
     end
   end 
@@ -20,29 +18,10 @@ class JamsController < ApplicationController
   # POST /jams/:id/stop
   def stop
     @jam.stop!
-
-    jam = @jam.as_json
-    jam[:entries] = @jam.entries
-
-    AppContextChannel.broadcast_to :global, jam: jam
+    JamsChannel.broadcast_to :global, true
+    JamroomChannel.broadcast_to @jam, true
     head :ok
   end 
-
-  # GET /jams/:id/entries
-  def entries
-    render json: @jam.entries, status: :ok
-  end 
-
-  def submit_chat 
-    chat = {
-      message: params[:message],
-      user_id: @current_user.id, 
-      username: @current_user.username,
-      jam_id: @jam.id
-    }
-
-    JamroomChannel.broadcast_to @jam, chat: chat
-  end
 
   def upload 
     @jam = Jam.find(params[:id])
@@ -63,7 +42,11 @@ class JamsController < ApplicationController
 
   # GET /jams
   def index
-    @jams = Jam.all
+    if @current_user
+      @jams = Jam.all
+    else
+      @jams = Jam.elapsed
+    end
   end
 
   # GET /jams/1
@@ -72,15 +55,19 @@ class JamsController < ApplicationController
 
   # POST /jams
   def create
+    # if more than 1 jam for user don't allow
+    if @current_user.jams.count
+      render :unprocessable_entity
+    end
+
     @jam = Jam.new(jam_params)
     @jam.user_id = @current_user.id
     @jam.id = @jam.name.split(' ').join('_').downcase
 
-    if @jam.save!
-      jam = @jam.as_json
-      jam[:entries] = []
 
-      AppContextChannel.broadcast_to :global, jam: jam
+
+    if @jam.save!
+      JamsChannel.broadcast_to :global, true
       render :show, status: :created, location: @jam 
     else
       render json: @jam.errors, status: :unprocessable_entity 
@@ -90,6 +77,7 @@ class JamsController < ApplicationController
   # PATCH/PUT /jams/1
   def update
     if @jam.update(jam_params)
+      JamsChannel.broadcast_to :global, true
       render :show, status: :ok, location: @jam 
     else
       render json: @jam.errors, status: :unprocessable_entity 
@@ -99,6 +87,7 @@ class JamsController < ApplicationController
   # DELETE /jams/1
   def destroy
     @jam.destroy
+    JamsChannel.broadcast_to :global, true
       head :no_content
   end
 

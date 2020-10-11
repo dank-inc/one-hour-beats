@@ -1,24 +1,25 @@
 import React from 'react'
-import { CoreLayout } from './CoreLayout'
+import { BrowserRouter } from 'react-router-dom'
+
 import { UserContextProvider } from './contexts/UserContext'
 import { ActionCableContextProvider } from 'contexts/ActionCableContext'
+import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 
-import 'antd/dist/antd.css'
+import { CoreLayout } from './components/layouts/AuthedLayout'
+
 import './App.scss'
+import 'antd/dist/antd.css'
 
-function App() {
-  // TODO: auth context - handles login
-  // TODO: User Context - handles user login and subscriber
-  // TODO:
-  console.log('app mount!')
-
+export default () => {
   return (
-    <UserContextProvider>
+    <BrowserRouter>
       <ActionCableContextProvider>
-        <CoreLayout />
+        <UserContextProvider>
+          <DankAmpContextProvider>
+            <CoreLayout />
+          </DankAmpContextProvider>
+        </UserContextProvider>
       </ActionCableContextProvider>
-    </UserContextProvider>
+    </BrowserRouter>
   )
 }
-
-export default App

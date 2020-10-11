@@ -1,16 +1,21 @@
 import React from 'react'
-import { RoutedProps } from 'types/router'
-import { Clock } from 'components/Clock'
-import { useAppContext } from 'contexts/AppContext'
+import { RouteComponentProps } from 'react-router-dom'
 
-type Props = RoutedProps & {}
-export const JamPopout = ({ match }: Props) => {
-  const { jamIndex } = useAppContext()
-  const jam = jamIndex[match.params.id]
+// import { Clock } from 'components/organisms/Clock'
+// import { useUserContext } from 'contexts/UserContext'
 
-  // @ts-ignore
-  if (match.params.view === 'clock')
-    return <Clock jam={jam} width={600} height={600} popout />
+export const JamPopout = ({
+  match,
+}: RouteComponentProps<{ view: string; id: string }>) => {
+  // const { user } = useUserContext()
 
-  return <div>Invalid view.</div>
+  // user.currentJam
+
+  // TODO: this based on user opt in
+  // TODO: turn into full responsive overlay
+
+  // if (match.params.view === 'clock')
+  //   return <Clock jam={jam} width={600} height={600} popout />
+
+  return <div>TODO: this.</div>
 }

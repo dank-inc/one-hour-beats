@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { Row, Col, Avatar, Button, Tooltip } from 'antd'
-import { BRAND, ColorName } from 'components/ColorPalette'
+import { BRAND, ColorName } from 'constants/ColorPalette'
 
 type Props = {
   color: ColorName

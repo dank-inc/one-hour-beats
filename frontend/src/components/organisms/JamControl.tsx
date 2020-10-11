@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { JamView } from 'types/view'
-import moment from 'moment'
+import { useHistory } from 'react-router'
 import { Tooltip, Button, message } from 'antd'
+import { FrownTwoTone, SmileTwoTone } from '@ant-design/icons'
+import moment from 'moment'
+
+import { JamView } from 'types/Jam'
+
 import { useUserContext } from 'contexts/UserContext'
 import { startJam, stopJam } from 'api'
-import { FrownTwoTone, SmileTwoTone } from '@ant-design/icons'
-import { useHistory } from 'react-router'
 
 type Props = { jam: JamView }
 export const JamControl = ({ jam }: Props) => {

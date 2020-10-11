@@ -1,10 +1,10 @@
 import React from 'react'
-import { PageHeader } from 'antd'
+import { Layout, PageHeader } from 'antd'
 import { Link } from 'react-router-dom'
 
 export const About = () => {
   return (
-    <>
+    <Layout.Content>
       <PageHeader
         title="About One Hour Beats!"
         subTitle="Why having so much fun?"
@@ -37,6 +37,6 @@ export const About = () => {
       <Link to="https://discord.gg/8qQY4mA">
         Join our discord for an invite!
       </Link>
-    </>
+    </Layout.Content>
   )
 }

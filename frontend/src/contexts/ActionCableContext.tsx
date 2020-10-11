@@ -12,6 +12,8 @@ type Context = {
 const ActionCableContext = createContext<Context | null>(null)
 
 export const ActionCableContextProvider = ({ children }: Props) => {
+  // TODO this can be a hook maybe?
+  // simplify subscriptions
   const [consumer, setConsumer] = useState<ActionCable.Cable | null>(null)
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export const useActionCableContext = () => {
 
   if (!context)
     throw new Error(
-      'ActionCableContext must be called from within the XContextProvider'
+      'ActionCableContext must be called from within its Provider'
     )
 
   return context

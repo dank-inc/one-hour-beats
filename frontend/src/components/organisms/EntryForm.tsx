@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Checkbox, message, Upload, Card } from 'antd'
-import { useUserContext } from '../contexts/UserContext'
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  message,
+  Upload,
+  Card,
+  Typography,
+} from 'antd'
+
+import { useUserContext } from '../../contexts/UserContext'
 import { InboxOutlined } from '@ant-design/icons'
 import { Store } from 'antd/lib/form/interface'
 import { UploadChangeParam } from 'antd/lib/upload'
 import { UploadFile } from 'antd/lib/upload/interface'
 import { submitEntry } from 'api'
-import { Entry } from 'types/database'
+import { Entry } from 'types/Entry'
 
 type Props = { jam_id: string }
 export const EntryForm = ({ jam_id }: Props) => {
@@ -43,8 +53,6 @@ export const EntryForm = ({ jam_id }: Props) => {
       return
     }
 
-    console.log('Rights', form)
-
     if (!form.rights) {
       message.error('acknowledge you own all rights to the file!')
       return
@@ -56,7 +64,7 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   const onFinishFailed = (error: any) => {
-    console.log('error', error)
+    console.error(error)
     message.error('please complete all required fields')
   }
 
@@ -67,6 +75,9 @@ export const EntryForm = ({ jam_id }: Props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
+        <Typography.Text>
+          You will have 20 minutes after the timer expires to upload your track!
+        </Typography.Text>
         <Form.Item
           label="Song Title"
           name="title"
@@ -92,8 +103,8 @@ export const EntryForm = ({ jam_id }: Props) => {
           }}
         >
           <InboxOutlined />
-
-          <p>File Size Limit: 10MB</p>
+          <p>Click to select file!</p>
+          <p>Size Limit: 10MB</p>
         </Upload.Dragger>
 
         <Form.Item>

@@ -1,6 +1,15 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Form, Input, Button, InputNumber, message, PageHeader } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  InputNumber,
+  message,
+  PageHeader,
+  DatePicker,
+  TimePicker,
+} from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
 import { useHistory } from 'react-router'
@@ -8,6 +17,9 @@ import { useHistory } from 'react-router'
 export const CreateJam = () => {
   const { user } = useUserContext()
   const history = useHistory()
+
+  // TODO: Time picker - schedule jams
+  // one open jam per person
 
   const onFinish = async ({ id, name, time_limit, description }: Store) => {
     message.loading('Creating Challenge', 0.5)
@@ -50,7 +62,7 @@ export const CreateJam = () => {
           <InputNumber min={60} max={4800} />
         </Form.Item>
         <Form.Item
-          label="Challenge Description"
+          label="Challenge Prompt"
           name="description"
           rules={[
             {
@@ -59,7 +71,13 @@ export const CreateJam = () => {
             },
           ]}
         >
-          <Input.TextArea />
+          <Input.TextArea placeholder="Enter a prompt that people will need to follow" />
+        </Form.Item>
+        <Form.Item label="Challenge Date">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item label="Start Time">
+          <TimePicker minuteStep={15} format="HH:mm" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

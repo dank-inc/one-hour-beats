@@ -6,7 +6,6 @@ class ChatsController < ApplicationController
   def jam_chat
     jam = Jam.find(params[:id])
     @chats = jam.chats
-    render json: @chats # :index
   end
 
   # GET /chats
@@ -22,7 +21,7 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(chat_params)
     if @chat.save
-      ChatContextChannel.broadcast_to @chat.jam, @chat
+      ChatContextChannel.broadcast_to @chat.jam, true
       head :ok
       # render :show, status: :created, location: @chat
     else

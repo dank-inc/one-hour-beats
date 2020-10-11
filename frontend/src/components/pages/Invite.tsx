@@ -35,7 +35,7 @@ export const Invite = ({ match }: Props) => {
       `/api/accept_invite/${match.params.token}`,
       {
         username,
-        email,
+        email: (email as string).trim(),
         name,
         password,
       }
@@ -138,11 +138,22 @@ export const Invite = ({ match }: Props) => {
               <Input.Password />
             </Form.Item>
 
-            <Input.Password
-              onChange={(e) => {
-                setConfirmedPass(e.target.value)
-              }}
-            />
+            <Form.Item
+              label="Password Confirmation"
+              name="passwordconfirm"
+              rules={[
+                {
+                  required: true,
+                  message: 'Confirm Your Password!',
+                },
+              ]}
+            >
+              <Input.Password
+                onChange={(e) => {
+                  setConfirmedPass(e.target.value)
+                }}
+              />
+            </Form.Item>
             <Button htmlType="submit" type="primary">
               Join The Jam
             </Button>
