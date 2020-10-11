@@ -13,20 +13,19 @@ class JamroomChannel < ApplicationCable::Channel
       @@jam_index[@jam.id] = [@user.username]
     end
      
-    UserLocationChannel.broadcast_to 'global', @@jam_index
+    UserLocationChannel.broadcast_to :global, @@jam_index
 
     puts ">>> The #{@jam.id} room now contains #{@@jam_index[@jam.id]}"
     stream_for @jam
   end
 
   def unsubscribed 
+    return unless @user
     puts ">>> #{@user.id} UNSUBSCRIBED #{@jam.id}"
     @@jam_index[@jam.id]&.delete @user.username
 
-    UserLocationChannel.broadcast_to 'global', @@jam_index
+    UserLocationChannel.broadcast_to :global, @@jam_index
 
-    # push @@jam_index to frontend
     puts ">>> The #{@jam.id} room now contains #{@@jam_index[@jam.id]}"
-    # Any cleanup needed when channel is unsubscribed
   end
 end

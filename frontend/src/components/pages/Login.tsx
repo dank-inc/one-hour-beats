@@ -3,12 +3,12 @@ import { Form, Input, Button, Layout, PageHeader } from 'antd'
 import { Store } from 'antd/lib/form/interface'
 
 type Props = {
-  handleLogin: (username: string, password: string) => void
+  handleLogin: (u: string, p: string) => void
 }
+
 export const Login = ({ handleLogin }: Props) => {
-  const onFinish = (values: Store) => {
-    handleLogin(values.username, values.password)
-  }
+  const onFinish = ({ username, password }: Store) =>
+    handleLogin(username, password)
 
   return (
     <Layout.Content>

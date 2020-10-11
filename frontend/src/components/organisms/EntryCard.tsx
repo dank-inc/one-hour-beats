@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { voteForEntry } from 'api'
-import { EntryView } from 'types/view'
+import { EntryView } from 'types/Entry'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
 
 type Props = {
@@ -20,11 +20,9 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
   const { selectSong } = useDankAmpContext()
   const [canVote, setCanVote] = useState(false)
   const [tooltipTitle, setTooltipTitle] = useState('')
-  // cast vote! - app context - or just here?
 
   const castVote = () => {
     message.loading('casting vote!')
-    // TODO: remove user id params
     voteForEntry(entry.id)
   }
 

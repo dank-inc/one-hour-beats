@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { message } from 'antd'
-import { EntryView } from 'types/view'
+import { EntryView } from 'types/Entry'
 
 type Props = {
   children: React.ReactNode

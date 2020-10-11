@@ -1,13 +1,10 @@
 import axios from 'axios'
-import { keyBy } from 'lodash'
-import {
-  Entry,
-  Jam,
-  User,
-  Chat as ChatRecord,
-  Invitation,
-} from 'types/database'
-import { JamView, Chat, UserView, EntryView } from 'types/view'
+
+import { Jam } from 'types/Jam'
+import { Chat } from 'types/Chat'
+import { Entry } from 'types/Entry'
+import { User, UserView } from 'types/User'
+import { Invitation } from 'types/Invitation'
 import { message } from 'antd'
 
 // GET - gets data
@@ -48,16 +45,6 @@ export const requestInvite = async () => {
   }
 }
 
-// JAM ENDPOINTS
-export const getJamIndex = async (): Promise<Record<string, JamView>> => {
-  try {
-    const { data } = await axios.get<JamView[]>('/api/jams', cfg())
-    return Promise.resolve(keyBy(data, 'id'))
-  } catch (err) {
-    return Promise.resolve({})
-  }
-}
-
 export const createJam = async (jam: Jam) => {
   try {
     await axios.post(`/api/jams/`, jam, cfg())
@@ -93,19 +80,7 @@ export const stopJam = async (id: string) => {
   }
 }
 
-export const getEntriesForJam = async (jam_id: string) => {
-  try {
-    const { data } = await axios.get<EntryView[]>(
-      `/api/entries?jam_id=${jam_id}`,
-      cfg()
-    )
-    return Promise.resolve(data)
-  } catch (error) {
-    console.error('getEntriesForJam', error)
-  }
-}
-
-export const submitChatMessage = async (chat: ChatRecord) => {
+export const submitChatMessage = async (chat: Chat) => {
   try {
     return axios.post(`/api/jams/${chat.jam_id}/chat`, chat, cfg())
   } catch (error) {
@@ -129,16 +104,5 @@ export const voteForEntry = async (entry_id: string) => {
     return await axios.post(`/api/entries/${entry_id}/vote`, {}, cfg())
   } catch (error) {
     message.error('Vote Failed, vote token not found!')
-  }
-}
-
-// CHAT ENDPOINTS
-
-export const getChatForJam = async (jam_id: string) => {
-  try {
-    const { data } = await axios.get<Chat[]>(`/api/jams/${jam_id}/chat`, cfg())
-    return Promise.resolve(data)
-  } catch (error) {
-    console.error('getChatForJam', error)
   }
 }

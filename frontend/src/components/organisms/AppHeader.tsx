@@ -8,15 +8,17 @@ import {
   Modal,
   Spin,
   Row,
+  Tooltip,
 } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { requestInvite } from 'api'
-import { Invitation } from 'types/database'
-import { Link } from 'react-router-dom'
+import { Invitation } from 'types/Invitation'
+import { Link, useHistory } from 'react-router-dom'
 
 export const AppHeader = () => {
-  const userContext = useUserContext()
+  const { user } = useUserContext()
+  const history = useHistory()
   const [invite, setInvite] = useState<Invitation | null>(null)
   const [modal, setModal] = useState(false)
 
@@ -41,22 +43,26 @@ export const AppHeader = () => {
           One Hour Beats
         </Typography.Title>
 
-        <Link to="/">Home</Link>
-        <Link to="/create">Create</Link>
-        <Link to="/about">About</Link>
-        <Link to="/jams">Jams</Link>
-        <Link to="/preferences">Preferences</Link>
+        <nav className="page-links">
+          <Link to="/">Home</Link>
+          <Link to="/create">Create</Link>
+          <Link to="/about">About</Link>
+          <Link to="/jams">Jams</Link>
+          <Link to="/preferences">Preferences</Link>
+        </nav>
         <Button onClick={handleInvite}>Invite A Friend!</Button>
-        <Button
-          style={{ marginTop: '-0.5rem' }}
-          onClick={userContext.handleLogout}
-          type="link"
-        >
-          <Avatar
-            style={{ backgroundColor: '#fffbe6', color: '#faad14' }}
-            icon={<UserOutlined />}
-          />
-        </Button>
+        <Tooltip title={`Welcome, ${user.name}`}>
+          <Button
+            style={{ marginTop: '-0.5rem' }}
+            onClick={() => history.push('/preferences')}
+            type="link"
+          >
+            <Avatar
+              style={{ backgroundColor: '#fffbe6', color: '#faad14' }}
+              icon={<UserOutlined />}
+            />
+          </Button>
+        </Tooltip>
       </Row>
       <Modal
         visible={modal}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Jam } from 'types/database'
+import { Jam } from 'types/Jam'
 import moment from 'moment'
 
 type Props = {

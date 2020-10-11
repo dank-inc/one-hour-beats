@@ -4,6 +4,18 @@ class ApplicationController < ActionController::API
     render json: { error: 'not_found' }
   end
 
+  def get_logged_in_user
+    header = request.headers['Authorization']&.split(' ')&.last
+    begin 
+      @decoded = JsonWebToken.decode(header)
+      @current_user = User.find(@decoded[:user_id])
+      puts "SETTING CURRENT USER => #{@current_user}"
+    rescue
+      @current_user = nil
+      puts "NO CURRENT USER"
+    end
+  end
+
   def authorize_request
     header = request.headers['Authorization']&.split(' ')&.last
 

@@ -1,4 +1,4 @@
-import { UserView } from 'types/view'
+import { UserView } from 'types/User'
 
 export const mockUser: UserView = {
   id: 'testuser',

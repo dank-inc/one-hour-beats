@@ -24,8 +24,10 @@ services:
 
   frontend:
     volumes:
-      - ./frontend:/usr/src/frontend
-      - node_modules:/usr/src/frontend/node_modules
+      - ./frontend/src:/usr/src/frontend/src
+      # - /usr/src/frontend/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     build:
       context: ./frontend
     tty: true

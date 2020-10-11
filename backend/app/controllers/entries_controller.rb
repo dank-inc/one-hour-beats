@@ -6,12 +6,10 @@ class EntriesController < ApplicationController
   # GET /entries
   def index
     if params[:jam_id].present?
-      puts "WTFFFFFF #{params[:jam_id]}"
-      @entries = Entry.where(jam_id: params[:jam_id]) 
+      @entries = Entry.where(jam_id: params[:jam_id])
     else 
       @entries = Entry.all
     end
-
   end
 
   # GET /entries/1
@@ -31,16 +29,12 @@ class EntriesController < ApplicationController
         )
     
         # user channel send user with vote_tokens
-        entry = @entry.as_json
-        entry[:artist_name] = @entry.user.username
-        entry[:votes] = @entry.votes
-        
-        JamroomChannel.broadcast_to @entry.jam, { entry: entry }
-        
+        EntriesChannel.broadcast_to @entry.jam, true
+
         user = @current_user.as_json
         user[:vote_tokens] = @current_user.vote_tokens
         
-        UserContextChannel.broadcast_to @current_user, user
+        UserContextChannel.broadcast_to @current_user, user # for self vote token updates
         render :show, status: :created, location: @entry
       else
         render json: @entry.errors, status: :unprocessable_entity
@@ -68,12 +62,7 @@ class EntriesController < ApplicationController
     UserContextChannel.broadcast_to @current_user, user
 
     @entry = Entry.find(params[:id])
-
-    entry = @entry.as_json
-    entry[:artist_name] = @entry.user.username
-    entry[:votes] = @entry.votes
-
-    JamroomChannel.broadcast_to @entry.jam, { entry: entry }
+    EntriesChannel.broadcast_to @entry.jam, true
     head :ok
   end
 
