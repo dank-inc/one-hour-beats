@@ -35,7 +35,6 @@ class EntriesController < ApplicationController
         user[:vote_tokens] = @current_user.vote_tokens
         
         UserContextChannel.broadcast_to @current_user, user # for self vote token updates
-        render :show, status: :created, location: @entry
       else
         render json: @entry.errors, status: :unprocessable_entity
       end
@@ -69,11 +68,7 @@ class EntriesController < ApplicationController
 
   # PATCH/PUT /entries/1
   def update
-      if @entry.update(entry_params)
-        render :show, status: :ok, location: @entry 
-      else
-        render json: @entry.errors, status: :unprocessable_entity 
-      end
+    render json: @entry.errors, status: :unprocessable_entity unless @entry.update(entry_params)
   end
 
   # DELETE /entries/1
