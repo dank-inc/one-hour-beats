@@ -12,6 +12,7 @@ class Jam < ApplicationRecord
 
   # TODO: add time_limit to scope
   scope :started, -> { where('started_at < now()') } 
+  scope :unstarted, -> { where started_at: nil }
 
   def started?
     @jam.started_at

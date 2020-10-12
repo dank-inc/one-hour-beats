@@ -11,6 +11,8 @@ import { message } from 'antd'
 // PUT - update a given record with body (can be partial) - should be PATCH apparently
 // POST - CREATE a record with body (must be full record)
 
+// TODO: put all these in a fancy api with a decorator and shit
+
 // USER ENDPONTS
 const cfg = () => {
   const token = window.localStorage.getItem('ohb-jwt-token')

@@ -56,19 +56,17 @@ class JamsController < ApplicationController
   # POST /jams
   def create
     # if more than 1 jam for user don't allow
-    if @current_user.jams.count
-      render :unprocessable_entity
+    if @current_user.jams.unstarted.count
+      # TODO make a catch in application controler for this shit
+      render json: { message: "you cannot have more than one open jam at a time!" }, status: :unprocessable_entity 
     end
 
     @jam = Jam.new(jam_params)
     @jam.user_id = @current_user.id
     @jam.id = @jam.name.split(' ').join('_').downcase
 
-
-
     if @jam.save!
       JamsChannel.broadcast_to :global, true
-      render :show, status: :created, location: @jam 
     else
       render json: @jam.errors, status: :unprocessable_entity 
     end
