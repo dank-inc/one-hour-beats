@@ -2,19 +2,6 @@ class UsersController < ApplicationController
   before_action :authorize_request, except: [:check_invite, :accept_invite]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def login 
-    @user = User.find_by(username: params[:username])
-    if @user && @user.password == params[:password]
-      user = @user.as_json
-      user[:vote_tokens] = @user.vote_tokens
-      
-      render json: user, status: :ok
-    else
-      @user = nil
-      render json: {}, status: 401
-    end
-  end
-
   def check_invite
     if Invitation.find_by token: params[:token]
       head :ok 
@@ -88,7 +75,7 @@ class UsersController < ApplicationController
       user = @user.as_json
       user[:vote_tokens] = @user.vote_tokens
 
-      UserContextChannel.broadcast_to @user, user
+      UserChannel.broadcast_to @user, user
       render :show, status: :ok, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity 

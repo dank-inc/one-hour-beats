@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/1
+  # GET /entries/:id
   def show
   end
 
@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
         user = @current_user.as_json
         user[:vote_tokens] = @current_user.vote_tokens
         
-        UserContextChannel.broadcast_to @current_user, user # for self vote token updates
+        UserChannel.broadcast_to @current_user, user # for self vote token updates
       else
         render json: @entry.errors, status: :unprocessable_entity
       end
@@ -58,7 +58,7 @@ class EntriesController < ApplicationController
     user[:vote_tokens] = @current_user.vote_tokens
 
     # update votes on jams?
-    UserContextChannel.broadcast_to @current_user, user
+    UserChannel.broadcast_to @current_user, user
 
     @entry = Entry.find(params[:id])
     EntriesChannel.broadcast_to @entry.jam, true
@@ -66,12 +66,12 @@ class EntriesController < ApplicationController
   end
 
 
-  # PATCH/PUT /entries/1
+  # PATCH/PUT /entries/:id
   def update
     render json: @entry.errors, status: :unprocessable_entity unless @entry.update(entry_params)
   end
 
-  # DELETE /entries/1
+  # DELETE /entries/:id
   def destroy
     @entry.destroy
       # Add some kind of realtime shit for deleting entries

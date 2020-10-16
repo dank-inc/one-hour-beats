@@ -23,8 +23,15 @@ export const CreateJam = () => {
 
   const onFinish = async ({ id, name, time_limit, description }: Store) => {
     message.loading('Creating Challenge', 0.5)
-    await createJam({ id, name, time_limit, user_id: user.id, description })
-    history.push('/jams')
+    try {
+      await createJam({ id, name, time_limit, user_id: user.id, description })
+      history.push('/jams')
+    } catch (err) {
+      console.log('error!', err)
+      message.error(
+        'Cannot create jam, you can only have 1 open jam at a time!'
+      ) // want to log message from server
+    }
   }
 
   const onFinishFailed = () => {

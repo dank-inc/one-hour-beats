@@ -16,11 +16,11 @@ import { useSubscription } from 'hooks/useSubscription'
 type Props = {
   jam: JamView
 }
+
 export const EntriesWidget = ({ jam }: Props) => {
   const { user } = useUserContext()
 
   const entries = useGet<EntryView[]>(`jams/${jam.id}/entries`)
-
   useSubscription('EntriesChannel', { jam_id: jam.id }, entries.refetch)
 
   if (entries.loading) return <Spin />

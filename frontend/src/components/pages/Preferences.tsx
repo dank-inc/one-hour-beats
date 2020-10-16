@@ -10,6 +10,7 @@ import { ColorName } from 'constants/ColorPalette'
 type Props = {}
 export const Preferences = (props: Props) => {
   const { user } = useUserContext()
+
   const [color, setColor] = React.useState<ColorName>(user.color)
 
   const onFinish = async ({ name, username, email, password }: Store) => {
@@ -26,7 +27,6 @@ export const Preferences = (props: Props) => {
   const onFinishFailed = () => {
     message.error('Read the errors, dum dum')
   }
-
   return (
     <>
       <PageHeader title="Preferences" subTitle="Customize how others see you" />

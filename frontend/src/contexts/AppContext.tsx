@@ -22,7 +22,7 @@ export const AppContextProvider = ({ userId, children }: Props) => {
   const { consumer } = useActionCableContext()
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
 
-  useSubscription('AppContextChannel', {}, () => {
+  useSubscription('AppChannel', {}, () => {
     message.info('app context channel update')
   })
 

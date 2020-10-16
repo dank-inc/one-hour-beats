@@ -81,7 +81,7 @@ export const UserContextProvider = ({ children }: Props) => {
     if (!user) return
 
     const subscription = consumer.subscriptions.create(
-      { channel: 'UserContextChannel', user_id: user.id },
+      { channel: 'UserChannel', user_id: user.id },
       { received: (user: UserView) => setUser(user) }
     )
     console.log('subscribed to user channel', subscription)
