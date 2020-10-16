@@ -1,7 +1,7 @@
-class AppContextChannel < ApplicationCable::Channel
+class UserChannel < ApplicationCable::Channel
   def subscribed
-    # for global ass updates
-    stream_for 'global'
+    @user = User.find(params[:user_id])
+    stream_for @user
   end
 
   def unsubscribed

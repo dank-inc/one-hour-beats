@@ -12,7 +12,7 @@ import {
   Spin,
   message,
 } from 'antd'
-import { Redirect, RouteComponentProps } from 'react-router'
+import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
 import { JamControl } from 'components/organisms/JamControl'
 import { Clock } from 'components/organisms/Clock'
@@ -24,15 +24,17 @@ import { Chatroom } from 'components/widgets/Chatroom'
 import { EntriesWidget } from 'components/widgets/EntriesWidget'
 import { useSubscription } from 'hooks/useSubscription'
 import { useUserContext } from 'contexts/UserContext'
+import { BackwardOutlined } from '@ant-design/icons'
 
 type Props = RouteComponentProps<{ id: string }> & {}
 
 // TODO: rename
 export const JamDetails = ({ match }: Props) => {
+  const history = useHistory()
   const { user } = useUserContext()
   const { jamRoomUsers } = useAppContext()
-  const jam = useGet<JamView>(`jams/${match.params.id}`)
 
+  const jam = useGet<JamView>(`jams/${match.params.id}`)
   useSubscription(
     'JamroomChannel',
     { jam_id: match.params.id, user_id: user.id },
@@ -58,6 +60,7 @@ export const JamDetails = ({ match }: Props) => {
   return (
     <>
       <PageHeader
+        onBack={() => history.goBack()}
         className="site-page-header"
         title={jam.data.name}
         subTitle={jamRoomUsers[match.params.id]?.map((user) => (

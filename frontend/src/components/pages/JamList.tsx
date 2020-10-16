@@ -7,8 +7,6 @@ import { useSubscription } from 'hooks/useSubscription'
 
 export const JamList = () => {
   const jams = useGet<JamView[]>('jams')
-  // TODO: Public View
-
   useSubscription('JamsChannel', {}, jams.refetch)
 
   if (jams.loading) return <Spin />

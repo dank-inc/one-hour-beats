@@ -48,12 +48,7 @@ export const requestInvite = async () => {
 }
 
 export const createJam = async (jam: Jam) => {
-  try {
-    await axios.post(`/api/jams/`, jam, cfg())
-    return Promise.resolve(true)
-  } catch (error) {
-    console.error('jam create', error)
-  }
+  return await axios.post(`/api/jams/`, jam, cfg())
 }
 
 export const updateJam = async (id: string, body: Partial<Jam>) => {

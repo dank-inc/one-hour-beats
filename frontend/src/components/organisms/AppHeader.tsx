@@ -49,8 +49,11 @@ export const AppHeader = () => {
           <Link to="/about">About</Link>
           <Link to="/jams">Jams</Link>
           <Link to="/preferences">Preferences</Link>
+          <Button type="primary" onClick={handleInvite}>
+            Invite A Friend!
+          </Button>
         </nav>
-        <Button onClick={handleInvite}>Invite A Friend!</Button>
+
         <Tooltip title={`Welcome, ${user.name}`}>
           <Button
             style={{ marginTop: '-0.5rem' }}

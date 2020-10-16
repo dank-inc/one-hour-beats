@@ -12,6 +12,6 @@ export type Jam = {
 export type JamView = Jam & {
   // jam.entries
   ended: boolean
-  started_by: string
+  created_by: string
   entries: number
 }

@@ -4,13 +4,16 @@ Rails.application.routes.draw do
     post 'login', to: 'authentication#login'
   
     resources :vote_tokens
-    resources :entries
+    resources :entries 
+
     resources :jams
     resources :users
   
     get 'jams/:jam_id/entries', to: 'entries#index'
     
+    # CHAT
     get 'jams/:id/chat', to: 'chats#jam_chat'
+    post 'jams/:id/chat', to: 'chats#create'
     
     get 'check_invite/:token', to: 'users#check_invite'
   
@@ -20,7 +23,6 @@ Rails.application.routes.draw do
     post 'jams/:id/stop', to: 'jams#stop'
     
     post 'jams/:id/upload', to: 'jams#upload'
-    post 'jams/:id/chat', to: 'chats#create'
   
     post 'invite', to: 'users#invite'
     post 'accept_invite/:token', to: 'users#accept_invite'

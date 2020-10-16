@@ -1,4 +1,4 @@
-import { Row, Typography } from 'antd'
+import { Empty, Row, Typography } from 'antd'
 import { JamCard } from 'components/organisms/JamCard'
 import React from 'react'
 import { JamView } from 'types/Jam'
@@ -12,9 +12,11 @@ export const JamListWidget = ({ jams, title }: Props) => {
     <>
       <Typography.Title style={{ color: '#333' }}>{title}</Typography.Title>
       <Row>
-        {jams.map((jam) => (
-          <JamCard jam={jam} key={`jam-list-${jam.id}`} />
-        ))}
+        {jams.length ? (
+          jams.map((jam) => <JamCard jam={jam} key={`jam-list-${jam.id}`} />)
+        ) : (
+          <Empty description="No Jams 😭" />
+        )}
       </Row>
     </>
   )

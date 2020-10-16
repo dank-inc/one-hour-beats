@@ -20,8 +20,9 @@ class ChatsController < ApplicationController
   # POST /chats
   def create
     @chat = Chat.new(chat_params)
+    
     if @chat.save
-      ChatContextChannel.broadcast_to @chat.jam, true
+      ChatChannel.broadcast_to @chat.jam, true
       head :ok
       # render :show, status: :created, location: @chat
     else

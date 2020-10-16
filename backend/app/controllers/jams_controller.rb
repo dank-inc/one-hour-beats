@@ -58,7 +58,8 @@ class JamsController < ApplicationController
     # if more than 1 jam for user don't allow
     if @current_user.jams.unstarted.count
       # TODO make a catch in application controler for this shit
-      render json: { message: "you cannot have more than one open jam at a time!" }, status: :unprocessable_entity 
+      render json: { message: "you cannot have more than one open jam at a time!" }, status: :unprocessable_entity
+      return
     end
 
     @jam = Jam.new(jam_params)

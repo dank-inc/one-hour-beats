@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Tag, Card, Alert } from 'antd'
+import { Tag, Card, Alert, Spin } from 'antd'
 
 import { ChatCard } from 'components/molecules/ChatCard'
 import { ChatForm } from 'components/organisms/ChatForm'
@@ -21,7 +21,7 @@ export const Chatroom = ({ jamId }: Props) => {
   const chats = useGet<ChatView[]>(`jams/${jamId}/chat`)
 
   useSubscription(
-    'ChatContextChannel',
+    'ChatChannel',
     { user_id: user.id, jam_id: jamId },
     chats.refetch
   )
@@ -32,11 +32,13 @@ export const Chatroom = ({ jamId }: Props) => {
   useEffect(() => {
     if (!logRef?.current) return
 
-    logRef.current.scrollTo(0, logRef.current.scrollHeight) // (logRef.current.scrollHeight)
+    logRef.current.scrollTo(0, logRef.current.scrollHeight)
   }, [chats])
 
-  if (chats.loading || chats.error)
+  if (chats.error)
     return <ResultHandler loading={chats.loading} error={chats.error} />
+
+  if (chats.loading) return <Spin />
 
   return (
     <>
