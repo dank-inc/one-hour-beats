@@ -10,6 +10,9 @@ import {
   DatePicker,
   TimePicker,
   Layout,
+  Typography,
+  Card,
+  Row,
 } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
@@ -41,58 +44,61 @@ export const CreateJam = () => {
 
   return (
     <Layout.Content>
-      <PageHeader
-        title="Create Challenge!"
-        subTitle="Make your very own challenge here"
-      />
-      <Form
-        onFinish={onFinish}
-        initialValues={{ time_limit: 60 }}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Name Of Challenge"
-          name="name"
-          rules={[{ required: true, message: 'Provide a challenge name!' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Time Limit (in minutes)"
-          name="time_limit"
-          rules={[
-            {
-              required: true,
-              message: 'Enter a time in minutes between 60 * 4800!',
-            },
-          ]}
-        >
-          <InputNumber min={60} max={4800} />
-        </Form.Item>
-        <Form.Item
-          label="Challenge Prompt"
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: 'Provide a prompt to help people get creative!',
-            },
-          ]}
-        >
-          <Input.TextArea placeholder="Enter a prompt that people will need to follow" />
-        </Form.Item>
-        <Form.Item label="Challenge Date">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="Start Time">
-          <TimePicker minuteStep={15} format="HH:mm" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create
-          </Button>
-        </Form.Item>
-      </Form>
+      <Typography.Title>Create A Challenge</Typography.Title>
+      <p>Let's give 'em something to jam</p>
+      <Row className="full-width">
+        <Card title="New Challenge">
+          <Form
+            className="form"
+            onFinish={onFinish}
+            initialValues={{ time_limit: 60 }}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="Name Of Challenge"
+              name="name"
+              rules={[{ required: true, message: 'Provide a challenge name!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Time Limit (in minutes)"
+              name="time_limit"
+              rules={[
+                {
+                  required: true,
+                  message: 'Enter a time in minutes between 60 * 4800!',
+                },
+              ]}
+            >
+              <InputNumber min={60} max={4800} />
+            </Form.Item>
+            <Form.Item
+              label="Challenge Prompt"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: 'Provide a prompt to help people get creative!',
+                },
+              ]}
+            >
+              <Input.TextArea placeholder="Enter a prompt that people will need to follow" />
+            </Form.Item>
+            <Form.Item label="Challenge Date">
+              <DatePicker />
+            </Form.Item>
+            <Form.Item label="Start Time">
+              <TimePicker minuteStep={15} format="HH:mm" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Create
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </Row>
     </Layout.Content>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Row, Typography } from 'antd'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom'
 
 import { Login } from 'components/pages/Login'
 import { Invite } from 'components/pages/Invite'
@@ -37,6 +37,7 @@ export const UnauthedLayout = ({ handleLogin }: Props) => {
               <Login handleLogin={handleLogin} />
             </Route>
             <Route path="/" component={Home} />
+            <Redirect to="/" />
           </Switch>
           <Layout.Footer>copyright 2020 - One Hour Beats</Layout.Footer>
         </Layout>

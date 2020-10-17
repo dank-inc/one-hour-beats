@@ -1,6 +1,15 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Button, Card, message, Row, Form, PageHeader, Layout } from 'antd'
+import {
+  Button,
+  Card,
+  message,
+  Row,
+  Form,
+  PageHeader,
+  Layout,
+  Typography,
+} from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/organisms/ColorPicker'
 import { AccountDetails } from 'components/pages/AccountDetails'
@@ -29,28 +38,21 @@ export const Preferences = (props: Props) => {
   }
   return (
     <Layout.Content className="preferences">
-      <PageHeader title="Preferences" subTitle="Customize how others see you" />
+      <Typography.Title>Preferences</Typography.Title>
+      <p>Customize how others will see you</p>
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-        <Row
-          align="middle"
-          gutter={[16, 16]}
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
+        <Row align="middle">
           <div className="flex-container">
-            <div className="column">
-              <Card title="Account Information">
-                <AccountDetails user={user} />
-              </Card>
-            </div>
-            <div className="column">
-              <Card title="Color Picker" style={{ height: '100%' }}>
-                <ColorPicker
-                  color={color}
-                  setColor={setColor}
-                  letter={user.name[0]}
-                />
-              </Card>
-            </div>
+            <Card title="Account Information">
+              <AccountDetails user={user} />
+            </Card>
+            <Card title="Color Picker" style={{ height: '100%' }}>
+              <ColorPicker
+                color={color}
+                setColor={setColor}
+                letter={user.name[0]}
+              />
+            </Card>
           </div>
         </Row>
         <Row
