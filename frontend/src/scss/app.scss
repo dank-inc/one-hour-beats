@@ -40,10 +40,6 @@ body {
   min-height: 86vh;
 }
 
-.ant-card {
-  margin: 1rem !important;
-}
-
 h1.ant-typography {
   margin: 0;
 }
@@ -82,5 +78,33 @@ h1.ant-typography {
   }
 }
 
-.ant-layout-footer {
+.vinyl {
+  height: 100%;
+
+  .song-playing {
+    animation: spin calc(60 / 72) s infinite linear;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+main {
+  padding: 3rem;
+
+  .jam-list .jam-card {
+    margin-right: 3rem;
+    width: 300px;
+  }
+
+  .ant-typography {
+    font-size: 38pt;
+    margin: 2rem 0;
+  }
 }

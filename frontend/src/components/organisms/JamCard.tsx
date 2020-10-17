@@ -6,8 +6,6 @@ import moment from 'moment'
 import { JamView } from 'types/Jam'
 import { useAppContext } from 'contexts/AppContext'
 
-import 'scss/jam-card.scss'
-
 type Props = { jam: JamView }
 
 export const JamCard = ({ jam }: Props) => {

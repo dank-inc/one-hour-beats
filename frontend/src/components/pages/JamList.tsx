@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Spin, Result } from 'antd'
+import { PageHeader, Spin, Result, Layout } from 'antd'
 import { useGet } from 'hooks/useGet'
 import { JamView } from 'types/Jam'
 import { JamListWidget } from 'components/widgets/JamListWidget'
@@ -13,8 +13,7 @@ export const JamList = () => {
   if (jams.error) return <Result title="error fetching jams" />
 
   return (
-    <>
-      <PageHeader title="All Challenge Listings" />
+    <Layout.Content>
       <JamListWidget
         title="Upcoming Jams"
         jams={jams.data.filter((j) => !j.started_at && !j.ended)}
@@ -27,6 +26,6 @@ export const JamList = () => {
         title="Finished Jams"
         jams={jams.data.filter((j) => j.ended)}
       />
-    </>
+    </Layout.Content>
   )
 }

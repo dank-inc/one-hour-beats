@@ -11,6 +11,7 @@ import {
   Col,
   Spin,
   message,
+  Layout,
 } from 'antd'
 import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
@@ -24,7 +25,6 @@ import { Chatroom } from 'components/widgets/Chatroom'
 import { EntriesWidget } from 'components/widgets/EntriesWidget'
 import { useSubscription } from 'hooks/useSubscription'
 import { useUserContext } from 'contexts/UserContext'
-import { BackwardOutlined } from '@ant-design/icons'
 
 type Props = RouteComponentProps<{ id: string }> & {}
 
@@ -58,7 +58,7 @@ export const JamDetails = ({ match }: Props) => {
   // TODO: add "started by"
 
   return (
-    <>
+    <Layout.Content>
       <PageHeader
         onBack={() => history.goBack()}
         className="site-page-header"
@@ -117,6 +117,6 @@ export const JamDetails = ({ match }: Props) => {
           <EntriesWidget jam={jam.data} />
         </Col>
       </Row>
-    </>
+    </Layout.Content>
   )
 }

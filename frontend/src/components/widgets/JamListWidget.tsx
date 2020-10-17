@@ -10,8 +10,8 @@ type Props = {
 export const JamListWidget = ({ jams, title }: Props) => {
   return (
     <>
-      <Typography.Title style={{ color: '#333' }}>{title}</Typography.Title>
-      <Row>
+      <Typography.Title>{title}</Typography.Title>
+      <Row className="jam-list">
         {jams.length ? (
           jams.map((jam) => <JamCard jam={jam} key={`jam-list-${jam.id}`} />)
         ) : (
