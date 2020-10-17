@@ -7,8 +7,8 @@ import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 
 import { CoreLayout } from './components/layouts/AuthedLayout'
 
-import './App.scss'
 import 'antd/dist/antd.css'
+import 'scss/app.scss'
 
 export default () => {
   return (

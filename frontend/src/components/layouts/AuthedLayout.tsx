@@ -23,19 +23,17 @@ export const CoreLayout = () => {
     <AppContextProvider userId={user.id}>
       <Layout className="layout">
         <AppHeader />
-        <Layout.Content>
-          <Switch>
-            <Route path="/jams/:id/:popout" component={JamPopout} />
-            <Route path="/jams/:id" component={JamDetails} />
-            <Route exact path="/jams" component={JamList} />
+        <Switch>
+          <Route path="/jams/:id/:popout" component={JamPopout} />
+          <Route path="/jams/:id" component={JamDetails} />
+          <Route exact path="/jams" component={JamList} />
 
-            <Route path="/create" component={CreateJam} />
-            <Route path="/about" component={About} />
-            <Route path="/preferences" component={Preferences} />
+          <Route path="/create" component={CreateJam} />
+          <Route path="/about" component={About} />
+          <Route path="/preferences" component={Preferences} />
 
-            <Route path="/" component={Home} />
-          </Switch>
-        </Layout.Content>
+          <Route path="/" component={Home} />
+        </Switch>
         <Footer />
       </Layout>
     </AppContextProvider>
