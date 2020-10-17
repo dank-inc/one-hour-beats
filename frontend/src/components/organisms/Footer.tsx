@@ -1,17 +1,20 @@
 import React from 'react'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
-import { Layout, Row } from 'antd'
+import { Col, Layout, Row } from 'antd'
 import 'scss/footer.scss'
 
 export const Footer = () => {
   const { song } = useDankAmpContext()
 
   return (
-    <Layout.Footer className="ohb-footer">
-      <Row align="middle" justify="space-between">
-        <h3>{song ? `${song.artist_name} - ${song.title}` : 'Load a song!'}</h3>
-        {song && <audio controls autoPlay src={`/api/${song.link}`} />}
-      </Row>
-    </Layout.Footer>
+    <Row className="app-footer" align="middle" justify="space-between">
+      <Col>
+        <p>Copyright 2020 - onehourbeats.com</p>
+      </Col>
+      <Col className="flex-right">
+        <p>{song ? `${song.artist_name} - ${song.title}` : 'Load a song!'}</p>
+        <audio controls autoPlay src={song ? `/api/${song.link}` : ''} />
+      </Col>
+    </Row>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Typography, Layout, Row } from 'antd'
+import { Typography, Layout, Row, Col } from 'antd'
 
 import 'scss/app-header.scss'
 import { TopMenu } from './TopMenu'
@@ -16,12 +16,16 @@ export const AppHeader = () => {
   return (
     <Layout.Header className="app-header">
       <Row justify="space-between" align="middle">
-        <Link to="/">
-          <Typography.Title style={{ color: '#fff' }}>
-            One Hour Beats
-          </Typography.Title>
-        </Link>
-        <TopMenu />
+        <Col>
+          <Link to="/">
+            <Typography.Title>One Hour Beats</Typography.Title>
+          </Link>
+        </Col>
+        <Col className="top-nav">
+          <Link to="/jams">Jams</Link>
+          <Link to="/create">New</Link>
+          <TopMenu />
+        </Col>
       </Row>
     </Layout.Header>
   )

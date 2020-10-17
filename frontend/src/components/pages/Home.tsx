@@ -67,7 +67,10 @@ export const Home = () => {
           <a href="https://discord.gg/8qQY4mA" target="_new">
             <Discord />
           </a>
-          <a href="discord" target="_new">
+          <a
+            href="https://www.facebook.com/groups/371494887355851"
+            target="_new"
+          >
             <Facebook />
           </a>
         </p>

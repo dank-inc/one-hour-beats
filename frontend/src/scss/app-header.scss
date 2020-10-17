@@ -5,12 +5,19 @@
     height: 100%;
   }
 
+  h1 {
+    color: $color-light;
+  }
+
   .avatar {
     background-color: $color-light;
     color: $color-accent-1;
   }
 
-  .butt-in {
-    text-align: center;
+  .top-nav {
+    a {
+      font-weight: 600;
+      margin-right: 2rem;
+    }
   }
 }

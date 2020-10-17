@@ -3,23 +3,20 @@ import { Avatar, Comment } from 'antd'
 import moment from 'moment'
 
 import { ChatView } from 'types/Chat'
-import { BRAND } from 'constants/ColorPalette'
+import { useUserContext } from 'contexts/UserContext'
 
 type Props = {
   chat: ChatView
 }
 
 export const ChatCard = ({ chat }: Props) => {
-  // TODO: If the chat id equals login user, reverse chat bubbles
+  const { user } = useUserContext()
 
   return (
     <Comment
       avatar={
         <Avatar
-          style={{
-            color: '#ffffff',
-            backgroundColor: BRAND.colors[chat.color],
-          }}
+          className={`chat-avatar ${chat.user_id === user.id ? 'you' : 'them'}`}
         >
           {chat.username?.[0]}
         </Avatar>

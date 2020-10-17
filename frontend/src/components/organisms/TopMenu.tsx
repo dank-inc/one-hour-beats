@@ -48,8 +48,6 @@ export const TopMenu = () => {
             <Menu.Item onSelect={() => {}}>Welcome, {user.name}</Menu.Item>
             <Menu.Divider />
             <Menu.Item key="/">Home</Menu.Item>
-            <Menu.Item key="/create">Create</Menu.Item>
-            <Menu.Item key="/jams">Jams</Menu.Item>
             <Menu.Item key="/preferences">Preferences</Menu.Item>
             <Menu.Item key="/about">About</Menu.Item>
             <Menu.Divider />
