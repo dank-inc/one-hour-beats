@@ -50,26 +50,5 @@ npm install
 npm run start
 ```
 
-## Legacy Setup
-
-### setup the legacy app:
-
-```sh
-docker-compose build legacy
-docker-compose run --rm legacy npm run db:init
-```
-
-### run the legacy app:
-
-```sh
-docker-compose run legacy
-```
-
-# Prod deploy instructions
-
-```
-docker-compose build
-
-```
 
 Icon Pack by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
