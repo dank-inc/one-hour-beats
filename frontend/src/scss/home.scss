@@ -1,0 +1,71 @@
+@import 'variables.scss';
+
+.home-page {
+  padding: 0;
+
+  .title {
+    align-items: center;
+    background-color: $color-accent-2;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+
+    &.top-fold {
+      background-color: $color-light;
+      display: block;
+      padding-top: 16rem;
+      padding-bottom: 16rem;
+      height: auto;
+
+      .ant-typography {
+        color: $color-accent-2;
+        animation: breathe alternate 2s ease-in-out infinite;
+      }
+    }
+
+    .ant-typography {
+      letter-spacing: 0.1rem;
+      color: $color-light;
+      margin: auto;
+      font-size: 64pt;
+      text-align: center;
+    }
+  }
+
+  .message {
+    text-align: center;
+    margin: 4rem auto;
+    flex-direction: column;
+
+    p {
+      width: 77%;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+  }
+
+  p {
+    margin: auto;
+    text-align: center;
+  }
+
+  @keyframes breathe {
+    from {
+      letter-spacing: 0.1rem;
+    }
+    to {
+      letter-spacing: 0.2rem;
+    }
+  }
+
+  svg {
+    height: 60px;
+    width: 60px;
+    margin: 0 2rem;
+  }
+}

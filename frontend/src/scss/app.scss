@@ -1,0 +1,86 @@
+@import 'variables.scss';
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $font-header;
+  color: #333;
+}
+
+a {
+  color: $color-accent-2;
+  :hover {
+    color: $color-light;
+  }
+}
+
+html {
+  --antd-wave-shadow-color: $color-accent-2;
+}
+
+.ant-btn-primary {
+  background-color: $color-accent-2;
+  border: 0;
+
+  ::selection {
+    background-color: $color-accent-2;
+  }
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24pt;
+  overflow-y: scroll;
+}
+
+.ant-layout-content {
+  background-color: $color-light !important;
+  min-height: 86vh;
+}
+
+.ant-card {
+  margin: 1rem !important;
+}
+
+h1.ant-typography {
+  margin: 0;
+}
+
+.page-links {
+  a {
+    margin: 0 1rem;
+  }
+}
+
+.blurred {
+  color: #000;
+  filter: blur(10px);
+  text-shadow: 0px 0px 5px #000;
+  user-select: none;
+}
+
+.ant-form-item-label {
+  width: 15%;
+  text-align: right;
+}
+
+.ant-layout-header {
+  background-color: #333;
+
+  a {
+    font-size: 16pt;
+
+    :hover {
+      color: $color-light;
+    }
+  }
+
+  h1 {
+    color: $color-light;
+  }
+}
+
+.ant-layout-footer {
+}
