@@ -17,7 +17,7 @@ type Props = {
 
 export const EntryCard = ({ entry, jam_id }: Props) => {
   const { user } = useUserContext()
-  const { selectSong } = useDankAmpContext()
+  const { song, selectSong } = useDankAmpContext()
   const [canVote, setCanVote] = useState(false)
   const [tooltipTitle, setTooltipTitle] = useState('')
 
@@ -49,7 +49,10 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
     <Card
       actions={[
         <Button onClick={listenToEntry}>
-          <CustomerServiceOutlined /> Listen To Entry
+          <CustomerServiceOutlined
+            className={song?.id === entry.id ? 'song-playing' : ''}
+          />{' '}
+          Listen To Entry
         </Button>,
         <Tooltip title={tooltipTitle}>
           <Button disabled={!canVote} type="primary" onClick={castVote}>

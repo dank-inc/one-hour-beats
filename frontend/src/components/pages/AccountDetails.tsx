@@ -1,6 +1,6 @@
 import React from 'react'
 import { User } from 'types/User'
-import { Row, Col, Input, Form } from 'antd'
+import { Input, Form } from 'antd'
 
 type Props = {
   user: User

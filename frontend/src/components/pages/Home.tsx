@@ -1,4 +1,4 @@
-import { Layout, Row, Typography } from 'antd'
+import { Row, Typography } from 'antd'
 import React from 'react'
 import 'scss/home.scss'
 import { ReactComponent as Facebook } from 'assets/svg/facebook.svg'
@@ -6,7 +6,7 @@ import { ReactComponent as Discord } from 'assets/svg/discord.svg'
 
 export const Home = () => {
   return (
-    <Layout.Content className="home-page">
+    <div className="home-page">
       <Row className="title top-fold">
         <Typography.Title>Inspiration</Typography.Title>
         <p>Welcome to your new safe space.</p>
@@ -76,6 +76,6 @@ export const Home = () => {
           like!
         </p>
       </Row>
-    </Layout.Content>
+    </div>
   )
 }

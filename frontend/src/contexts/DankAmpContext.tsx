@@ -18,7 +18,7 @@ export const DankAmpContextProvider = ({ children }: Props) => {
   useEffect(() => {}, [])
 
   const selectSong = (song: EntryView) => {
-    message.loading(`queueing up ${song.artist_name} - ${song.title}`)
+    message.loading(`queueing up ${song.artist_name} - ${song.title}`, 0.2)
     setSong(song)
   }
 
