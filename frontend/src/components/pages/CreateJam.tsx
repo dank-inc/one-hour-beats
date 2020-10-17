@@ -9,6 +9,7 @@ import {
   PageHeader,
   DatePicker,
   TimePicker,
+  Layout,
 } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
@@ -39,7 +40,7 @@ export const CreateJam = () => {
   }
 
   return (
-    <>
+    <Layout.Content>
       <PageHeader
         title="Create Challenge!"
         subTitle="Make your very own challenge here"
@@ -92,6 +93,6 @@ export const CreateJam = () => {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </Layout.Content>
   )
 }

@@ -1,14 +1,10 @@
 import React from 'react'
-import { Layout, PageHeader } from 'antd'
-import { Link } from 'react-router-dom'
+import { Layout, Typography } from 'antd'
 
 export const About = () => {
   return (
     <Layout.Content>
-      <PageHeader
-        title="About One Hour Beats!"
-        subTitle="Why having so much fun?"
-      />
+      <Typography.Title>About One Hour Beats</Typography.Title>
       <p>
         Once upon a time, in the early demoscene years, in the days of the
         trackers there existed a compo.
@@ -19,24 +15,26 @@ export const About = () => {
         our beloved One Hour Compo.
       </p>
       <p>But that all changes here, today!</p>
-      <h3>History:</h3>
+      <Typography.Title>History</Typography.Title>
       <p>
         Elijah Lucian started "one hour beating" in 2010, and found it to be a
         great way to create a jump-off point for a song!
       </p>
       <p>
         Check out the original one hour beats{' '}
-        <Link to="http://elijahlucian.blogspot.com/">here</Link>{' '}
+        <a href="http://elijahlucian.blogspot.com/" target="_new">
+          here
+        </a>
       </p>
       <p>
         TODO: add an inspiring speech about how working within limitations can
         spark creativity and shit.
       </p>
-      <h3>Discord:</h3>
+      <Typography.Title>Need an Invite?</Typography.Title>
       Want to jam w/ us?
-      <Link to="https://discord.gg/8qQY4mA">
+      <a href="https://discord.gg/8qQY4mA" target="_new">
         Join our discord for an invite!
-      </Link>
+      </a>
     </Layout.Content>
   )
 }

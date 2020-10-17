@@ -8,7 +8,7 @@ export const mockJams: JamView[] = [
     entries: 1,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
     ended: false,
     started_at: new Date().toISOString(),
   },
@@ -19,7 +19,7 @@ export const mockJams: JamView[] = [
     entries: 0,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
     ended: true,
   },
   {
@@ -30,7 +30,7 @@ export const mockJams: JamView[] = [
     ended: true,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
   },
   {
     id: 'jam4',
@@ -39,7 +39,7 @@ export const mockJams: JamView[] = [
     entries: 0,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
     ended: true,
   },
   {
@@ -49,7 +49,7 @@ export const mockJams: JamView[] = [
     entries: 0,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
     ended: true,
   },
   {
@@ -59,7 +59,7 @@ export const mockJams: JamView[] = [
     entries: 0,
     time_limit: 60,
     user_id: 'testuser',
-    started_by: 'testuser',
+    created_by: 'testuser',
     ended: false,
   },
 ]

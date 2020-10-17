@@ -30,16 +30,14 @@ export const UnauthedLayout = ({ handleLogin }: Props) => {
               </nav>
             </Row>
           </Layout.Header>
-          <Layout.Content>
-            <Switch>
-              <Route path="/invite/:token" component={Invite} />
-              <Route path="/about" component={About} />
-              <Route path="/login">
-                <Login handleLogin={handleLogin} />
-              </Route>
-              <Route path="/" component={Home} />
-            </Switch>
-          </Layout.Content>
+          <Switch>
+            <Route path="/invite/:token" component={Invite} />
+            <Route path="/about" component={About} />
+            <Route path="/login">
+              <Login handleLogin={handleLogin} />
+            </Route>
+            <Route path="/" component={Home} />
+          </Switch>
           <Layout.Footer>copyright 2020 - One Hour Beats</Layout.Footer>
         </Layout>
       </BrowserRouter>

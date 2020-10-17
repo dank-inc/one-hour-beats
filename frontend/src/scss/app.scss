@@ -35,13 +35,13 @@ body {
   overflow-y: scroll;
 }
 
+.layout {
+  background-color: $color-light;
+}
+
 .ant-layout-content {
   background-color: $color-light !important;
   min-height: 86vh;
-}
-
-.ant-card {
-  margin: 1rem !important;
 }
 
 h1.ant-typography {
@@ -82,5 +82,82 @@ h1.ant-typography {
   }
 }
 
-.ant-layout-footer {
+.song-playing {
+  animation: spin calc(60s / 72) infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+main {
+  padding: 3rem;
+  max-width: 1200px;
+  margin: auto;
+
+  .ant-card-head {
+    background: $color-accent-2;
+    color: $color-light;
+
+    &-title {
+      font-size: 24pt;
+    }
+  }
+
+  .ant-card {
+    margin: 1rem;
+    background: $color-light;
+  }
+
+  .jam-list {
+    background: $color-accent-2;
+    border-radius: 2.2rem 0 0 0;
+
+    .ant-card {
+      font-family: $font-header;
+      border-radius: 2.2rem 0 0 0;
+      margin: 2rem;
+      box-shadow: 3px 3px #00000044;
+      left: 0px;
+      top: 0px;
+      transition-property: all;
+
+      &:hover {
+        left: -2px;
+        top: -3px;
+        box-shadow: 8px 8px 1px #00000022;
+      }
+    }
+
+    span {
+      padding: 0 2rem;
+      color: $color-light;
+    }
+
+    .jam-card {
+      margin-right: 1rem;
+      width: 300px;
+    }
+  }
+
+  .ant-typography {
+    font-family: $font-header;
+    font-size: 38pt;
+    margin: 2rem 0;
+    text-shadow: 5px 5px #00000011;
+  }
+
+  .palette {
+    .dank {
+    }
+    .fresh {
+    }
+    .toite {
+    }
+  }
 }
