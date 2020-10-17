@@ -12,6 +12,7 @@ import {
   Spin,
   message,
   Layout,
+  Typography,
 } from 'antd'
 import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
@@ -59,10 +60,11 @@ export const JamDetails = ({ match }: Props) => {
 
   return (
     <Layout.Content>
+      <Typography.Title>{jam.data.name}</Typography.Title>
       <PageHeader
         onBack={() => history.goBack()}
         className="site-page-header"
-        title={jam.data.name}
+        title="Jam Details"
         subTitle={jamRoomUsers[match.params.id]?.map((user) => (
           <Tag key={`user-list-${user}`}>{user}</Tag>
         ))}
@@ -98,11 +100,11 @@ export const JamDetails = ({ match }: Props) => {
                   : 'You have to wait till the jam starts to see the prompt!'
               }
             >
-              <h2 className={jam.data.started_at ? 'bouncing' : 'blurred'}>
+              <p className={jam.data.started_at ? 'bouncing' : 'blurred'}>
                 {jam.data.started_at
                   ? jam.data.description
                   : 'This prompt is hidden, stop trying to cheat, you dirty cheater!'}
-              </h2>
+              </p>
             </Tooltip>
           </Card>
           {jamInProgress(jam.data) && (

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Store } from 'antd/lib/form/interface'
-import { Button, Card, message, Row, Form, PageHeader } from 'antd'
+import { Button, Card, message, Row, Form, PageHeader, Layout } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/organisms/ColorPicker'
 import { AccountDetails } from 'components/pages/AccountDetails'
@@ -28,7 +28,7 @@ export const Preferences = (props: Props) => {
     message.error('Read the errors, dum dum')
   }
   return (
-    <>
+    <Layout.Content className="preferences">
       <PageHeader title="Preferences" subTitle="Customize how others see you" />
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Row
@@ -64,6 +64,6 @@ export const Preferences = (props: Props) => {
           </Form.Item>
         </Row>
       </Form>
-    </>
+    </Layout.Content>
   )
 }

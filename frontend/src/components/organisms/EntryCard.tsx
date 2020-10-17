@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Card, message, Avatar, Tooltip } from 'antd'
-import { UserOutlined, FireTwoTone } from '@ant-design/icons'
+import {
+  UserOutlined,
+  FireTwoTone,
+  CustomerServiceOutlined,
+} from '@ant-design/icons'
 import { useUserContext } from 'contexts/UserContext'
 import { voteForEntry } from 'api'
 import { EntryView } from 'types/Entry'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
-import { ReactComponent as Vinyl } from 'assets/icons/050-musical-note.svg'
 
 type Props = {
   entry: EntryView
@@ -46,9 +49,9 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
     <Card
       actions={[
         <Button onClick={listenToEntry}>
-          <Vinyl
-            className={`vinyl ${song?.id === entry.id ? 'song-playing' : ''}`}
-          />
+          <CustomerServiceOutlined
+            className={song?.id === entry.id ? 'song-playing' : ''}
+          />{' '}
           Listen To Entry
         </Button>,
         <Tooltip title={tooltipTitle}>

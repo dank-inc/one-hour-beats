@@ -15,7 +15,7 @@ export const JamListWidget = ({ jams, title }: Props) => {
         {jams.length ? (
           jams.map((jam) => <JamCard jam={jam} key={`jam-list-${jam.id}`} />)
         ) : (
-          <Empty description="No Jams 😭" />
+          <Typography.Text>Nothing Here...</Typography.Text>
         )}
       </Row>
     </>

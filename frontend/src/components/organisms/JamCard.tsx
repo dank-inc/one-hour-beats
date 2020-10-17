@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Tag } from 'antd'
+import { Card, Row, Tag, Tooltip } from 'antd'
 import { useHistory } from 'react-router'
 import moment from 'moment'
 
@@ -21,32 +21,34 @@ export const JamCard = ({ jam }: Props) => {
   const inProgress = jam.started_at && !jam.ended
 
   return (
-    <Card
-      className="jam-card"
-      extra={
-        inProgress ? (
-          <p>
-            ends in{' '}
-            {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}!
-          </p>
-        ) : jam.ended ? (
-          <p>
-            ended at{' '}
-            {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}
-          </p>
-        ) : null
-      }
-      title={jam.name}
-      hoverable
-      onClick={handleClick}
-    >
-      <Row>Created by {jam.created_by}</Row>
-      <Row>
-        In Room Now:
-        {jamRoomUsers[jam.id]?.map((u) => (
-          <Tag color="volcano">{u}</Tag>
-        ))}
-      </Row>
-    </Card>
+    <Tooltip title={`${jam.created_by} - ${jam.name}`}>
+      <Card
+        className="jam-card"
+        extra={
+          inProgress ? (
+            <p>
+              ends in{' '}
+              {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}!
+            </p>
+          ) : jam.ended ? (
+            <p>
+              ended at{' '}
+              {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}
+            </p>
+          ) : null
+        }
+        title={jam.name}
+        hoverable
+        onClick={handleClick}
+      >
+        <Row>Created by {jam.created_by}</Row>
+        <Row>
+          In Room Now:
+          {jamRoomUsers[jam.id]?.map((u) => (
+            <Tag color="volcano">{u}</Tag>
+          ))}
+        </Row>
+      </Card>
+    </Tooltip>
   )
 }
