@@ -9,6 +9,8 @@
 # TODO: UUID
 # TODO: bcrypt
 
+puts "Creating Users..."
+
 elijah = User.create!({
   username: 'eli7vh',
   name: 'elijah',
@@ -57,6 +59,8 @@ users = [{
 }]
 
 users.each { |user| User.create!(user) }
+
+puts "Creating Jams..."
 
 jam = Jam.create!({
   id: 'dank-rhinos',

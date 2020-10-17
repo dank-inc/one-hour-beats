@@ -51,6 +51,10 @@ export const createJam = async (jam: Jam) => {
   return await axios.post(`/api/jams/`, jam, cfg())
 }
 
+export const deleteJam = async (id: string) => {
+  return await axios.delete(`/api/jams/${id}`, cfg())
+}
+
 export const updateJam = async (id: string, body: Partial<Jam>) => {
   try {
     await axios.put(`/api/jams/${id}`, body, cfg())

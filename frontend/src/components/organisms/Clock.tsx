@@ -75,15 +75,15 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
       ctx.fillStyle = '#333'
       ctx.font = 'small-caps bold 24px/1 sans-serif'
 
-      const minutes = Math.floor(secondsRemaining / 60)
-      const seconds = Math.floor(secondsRemaining % 60)
+      const minutes = Math.floor((secondsRemaining + 1) / 60)
+      const seconds = Math.floor((secondsRemaining + 1) % 60)
 
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
 
-      ctx.fillText(`${minutes}:${seconds}`, width / 2, height / 2)
-
-      document.title = `[${minutes}:${seconds}] remaining!!`
+      const sec = seconds === 0 ? '00' : seconds
+      ctx.fillText(`${minutes}:${sec}`, width / 2, height / 2)
+      document.title = `[${minutes}:${sec}] remaining!!`
     }
 
     const ctx = canvasRef.current.getContext('2d')

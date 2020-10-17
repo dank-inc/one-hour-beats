@@ -17,6 +17,7 @@ import {
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
 import { useHistory } from 'react-router'
+import moment from 'moment'
 
 export const CreateJam = () => {
   const { user } = useUserContext()
@@ -25,16 +26,42 @@ export const CreateJam = () => {
   // TODO: Time picker - schedule jams
   // one open jam per person
 
-  const onFinish = async ({ id, name, time_limit, description }: Store) => {
+  const onFinish = async ({
+    id,
+    name,
+    time_limit,
+    description,
+    scheduledDate,
+    scheduledTime,
+  }: Store) => {
     message.loading('Creating Challenge', 0.5)
+
+    scheduledDate.set({
+      hour: scheduledTime.get('hour'),
+      minute: scheduledTime.get('minute'),
+      second: scheduledTime.get('second'),
+    })
+
+    if (scheduledDate < moment()) {
+      message.error(
+        'Cannot set time for the past... We must forge ahead to the big, bright future. Only there can we truly face our fears and grow to be better humans in general.'
+      )
+      return
+    }
+
     try {
-      await createJam({ id, name, time_limit, user_id: user.id, description })
+      await createJam({
+        id,
+        name,
+        time_limit,
+        user_id: user.id,
+        description,
+        scheduled_at: scheduledDate,
+      })
       history.push('/jams')
     } catch (err) {
-      console.log('error!', err)
-      message.error(
-        'Cannot create jam, you can only have 1 open jam at a time!'
-      ) // want to log message from server
+      console.log('error!', err.response.data)
+      message.error(err.response.data.message) // want to log message from server
     }
   }
 
@@ -84,10 +111,18 @@ export const CreateJam = () => {
           >
             <Input.TextArea placeholder="Enter a prompt that people will need to follow" />
           </Form.Item>
-          <Form.Item label="Date">
+          <Form.Item
+            rules={[{ required: true, message: 'schedule a date' }]}
+            label="Date"
+            name="scheduledDate"
+          >
             <DatePicker />
           </Form.Item>
-          <Form.Item label="Start Time">
+          <Form.Item
+            rules={[{ required: true, message: 'schedule a time!' }]}
+            label="Start Time"
+            name="scheduledTime"
+          >
             <TimePicker minuteStep={15} format="HH:mm" />
           </Form.Item>
           <Form.Item>

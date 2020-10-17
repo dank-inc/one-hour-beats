@@ -13,6 +13,7 @@ import {
   message,
   Layout,
   Typography,
+  Button,
 } from 'antd'
 import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
@@ -26,6 +27,7 @@ import { Chatroom } from 'components/widgets/Chatroom'
 import { EntriesWidget } from 'components/widgets/EntriesWidget'
 import { useSubscription } from 'hooks/useSubscription'
 import { useUserContext } from 'contexts/UserContext'
+import { deleteJam } from 'api'
 
 type Props = RouteComponentProps<{ id: string }> & {}
 
@@ -33,7 +35,6 @@ type Props = RouteComponentProps<{ id: string }> & {}
 export const JamDetails = ({ match }: Props) => {
   const history = useHistory()
   const { user } = useUserContext()
-  const { jamRoomUsers } = useAppContext()
 
   const jam = useGet<JamView>(`jams/${match.params.id}`)
   useSubscription(
@@ -56,36 +57,42 @@ export const JamDetails = ({ match }: Props) => {
     return <Redirect to="/jams" />
   }
 
-  // TODO: add "started by"
-
   return (
     <Layout.Content>
       <Typography.Title>Jam Room: {jam.data.name}</Typography.Title>
       <PageHeader
         onBack={() => history.goBack()}
-        className="site-page-header"
+        className="jam-details-header"
         title="Back To Jam Listing"
         extra={[
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
         ]}
       >
-        <Descriptions column={3}>
-          <Descriptions.Item label="Time Limit">
-            {jam.data.time_limit} minutes
-          </Descriptions.Item>
-          <Descriptions.Item label="Started At">
-            {jam.data.started_at
-              ? moment(jam.data.started_at).format('MMM DD, YYYY @ HH:mm:ss')
-              : `Challenge Has Not Started!`}
-          </Descriptions.Item>
-          <Descriptions.Item label="Ends">
-            {jam.data.started_at
-              ? moment(jam.data.started_at)
-                  .add(jam.data.time_limit, 'minutes')
-                  .fromNow()
-              : `Challenge Has Not Started!`}
-          </Descriptions.Item>
-        </Descriptions>
+        <p>Time Limit: {jam.data.time_limit} minutes</p>
+        {jam.data.started_at ? (
+          <>
+            <p>
+              Started At{' '}
+              {moment(jam.data.started_at).format('MMM DD, YYYY @ hh:mm a')}
+            </p>
+            <p>
+              Ends{' '}
+              {moment(jam.data.started_at)
+                .add(jam.data.time_limit, 'minutes')
+                .fromNow()}
+            </p>
+          </>
+        ) : (
+          <Tooltip
+            mouseLeaveDelay={0.5}
+            title={moment(jam.data.scheduled_at).fromNow()}
+          >
+            <div>
+              Starts{' '}
+              {moment(jam.data.scheduled_at).format('MMM DD, YYYY - hh:mm a')}
+            </div>
+          </Tooltip>
+        )}
       </PageHeader>
       <Row justify="space-between">
         <Col span={12}>
@@ -105,7 +112,15 @@ export const JamDetails = ({ match }: Props) => {
             </Tooltip>
           </Card>
           {jamInProgress(jam.data) && (
-            <Card title="Time Remaining">
+            <Card
+              title="Time Remaining"
+              actions={[
+                <p>
+                  <b>Note:</b> You will have 20 minutes after the timer expires
+                  to upload your track! Good luck and have fun!
+                </p>,
+              ]}
+            >
               <Clock jam={jam.data} />
             </Card>
           )}
