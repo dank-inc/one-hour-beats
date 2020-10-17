@@ -69,15 +69,12 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   return (
-    <Card>
+    <Card title="Submit Your Entry!">
       <Form
         onChange={handleChange}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Typography.Text>
-          You will have 20 minutes after the timer expires to upload your track!
-        </Typography.Text>
         <Form.Item
           label="Song Title"
           name="title"

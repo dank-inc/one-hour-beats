@@ -7,6 +7,7 @@ export type Jam = {
   user_id: string // created By
   created_at?: string
   updated_at?: string
+  scheduled_at: string
 }
 
 export type JamView = Jam & {

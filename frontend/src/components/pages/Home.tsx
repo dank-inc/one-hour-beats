@@ -17,7 +17,7 @@ export const Home = () => {
       <Row className="message">
         <p>
           One Hour Beats was created in order for people to expand their{' '}
-          <strong>creativity</strong> and <strong>musicality</strong>
+          <b>creativity</b> and <b>musicality</b>
         </p>
         <p>
           get comfortable making mistakes, meet fellow musicians, and just

@@ -19,6 +19,7 @@ export const JamCard = ({ jam }: Props) => {
   // TODO: colors of users
 
   const inProgress = jam.started_at && !jam.ended
+  const upcoming = !jam.started_at
 
   return (
     <Tooltip title={`${jam.created_by} - ${jam.name}`}>
@@ -35,7 +36,9 @@ export const JamCard = ({ jam }: Props) => {
               ended{' '}
               {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}
             </p>
-          ) : null
+          ) : (
+            <p>starts {moment(jam.scheduled_at).fromNow()}</p>
+          )
         }
         title={jam.name}
         hoverable

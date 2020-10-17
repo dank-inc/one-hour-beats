@@ -152,8 +152,14 @@ main {
     font-family: $font-header;
     text-shadow: 3px 3px #00000033;
 
+    &-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     &-title {
-      font-size: 24pt;
+      // padding: 1rem 0 0 0;
+      font-size: 18pt;
     }
   }
 
@@ -175,6 +181,19 @@ main {
       top: 0px;
       transition-property: all;
 
+      &-extra {
+        margin: 0;
+        padding: 0;
+        font-family: $font-body;
+        font-weight: 500;
+        color: $color-light;
+      }
+
+      &-body {
+        text-align: right;
+        font-family: $font-body;
+      }
+
       &:active {
         background-color: $color-light-alt;
       }
@@ -193,7 +212,7 @@ main {
 
     .jam-card {
       margin-right: 1rem;
-      width: 300px;
+      width: 350px;
     }
   }
 
@@ -202,5 +221,18 @@ main {
     font-size: 38pt;
     margin: 2rem 0;
     text-shadow: 5px 5px #00000011;
+  }
+
+  .jam-details-header {
+    border: 1px solid $color-grey;
+    border-radius: 2rem 0 0 0;
+
+    .ant-page-header-content {
+      div {
+        width: auto;
+        margin: auto;
+        padding: 0.25rem;
+      }
+    }
   }
 }

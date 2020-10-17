@@ -55,9 +55,7 @@ class JamsController < ApplicationController
 
   # POST /jams
   def create
-    # if more than 1 jam for user don't allow
-    if @current_user.jams.unstarted.count
-      # TODO make a catch in application controler for this shit
+    if @current_user.jams.unstarted.any?
       render json: { message: "you cannot have more than one open jam at a time!" }, status: :unprocessable_entity
       return
     end
@@ -98,6 +96,6 @@ class JamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def jam_params
-      params.require(:jam).permit(:name, :description, :time_limit, :user_id, :started_at, :message)
+      params.require(:jam).permit(:name, :description, :time_limit, :user_id, :started_at, :message, :scheduled_at)
     end
 end

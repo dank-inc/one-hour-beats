@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { Tooltip, Button, message } from 'antd'
+import { Tooltip, Button, message, Popconfirm } from 'antd'
 import { FrownTwoTone, SmileTwoTone } from '@ant-design/icons'
 import moment from 'moment'
 
 import { JamView } from 'types/Jam'
 
 import { useUserContext } from 'contexts/UserContext'
-import { startJam, stopJam } from 'api'
+import { deleteJam, startJam, stopJam } from 'api'
 
 type Props = { jam: JamView }
 export const JamControl = ({ jam }: Props) => {
@@ -49,6 +49,15 @@ export const JamControl = ({ jam }: Props) => {
 
   const jamOwner = user_id === jam.user_id
 
+  const handleDelete = async () => {
+    try {
+      await deleteJam(jam.id)
+      history.push('/jams')
+    } catch (err) {
+      message.error("couldn't delete jam!")
+    }
+  }
+
   if (ended)
     return (
       <>
@@ -78,9 +87,16 @@ export const JamControl = ({ jam }: Props) => {
     <Tooltip
       title={jamOwner ? 'Start the Jam!' : 'Only the owner can start the jam!'}
     >
-      <Button type="primary" disabled={!jamOwner} onClick={handleStart}>
-        Start Jam Now!
-      </Button>
+      <>
+        <Popconfirm title="This is irreversable!" onConfirm={handleDelete}>
+          <Button danger disabled={!jamOwner}>
+            Delete
+          </Button>
+        </Popconfirm>
+        <Button type="primary" disabled={!jamOwner} onClick={handleStart}>
+          Start Jam Now!
+        </Button>
+      </>
     </Tooltip>
   )
 }
