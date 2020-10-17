@@ -60,14 +60,11 @@ export const JamDetails = ({ match }: Props) => {
 
   return (
     <Layout.Content>
-      <Typography.Title>{jam.data.name}</Typography.Title>
+      <Typography.Title>Jam Room: {jam.data.name}</Typography.Title>
       <PageHeader
         onBack={() => history.goBack()}
         className="site-page-header"
-        title="Jam Details"
-        subTitle={jamRoomUsers[match.params.id]?.map((user) => (
-          <Tag key={`user-list-${user}`}>{user}</Tag>
-        ))}
+        title="Back To Jam Listing"
         extra={[
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
         ]}

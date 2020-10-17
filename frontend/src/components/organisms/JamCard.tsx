@@ -32,7 +32,7 @@ export const JamCard = ({ jam }: Props) => {
             </p>
           ) : jam.ended ? (
             <p>
-              ended at{' '}
+              ended{' '}
               {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}
             </p>
           ) : null

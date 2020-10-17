@@ -9,23 +9,59 @@ h5 {
   color: #333;
 }
 
-a {
-  color: $color-accent-2;
-  :hover {
-    color: $color-light;
-  }
-}
-
 html {
   --antd-wave-shadow-color: $color-accent-2;
+}
+
+::selection {
+  background-color: $color-light-alt;
+  text-shadow: 0px 0px 7px #00000066;
+}
+
+.ant-alert-info {
+  background: $color-light-alt;
+  border: $color-light-alt;
+}
+
+.ant-input,
+.ant-input-password,
+.ant-picker {
+  &:active {
+    filter: brightness(1.4);
+  }
+
+  ::selection,
+  &:focus {
+    filter: brightness(1);
+    border-color: $color-accent-2;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    border-color: $color-accent-2;
+    // background-color: $color-light-alt !important;
+  }
 }
 
 .ant-btn-primary {
   background-color: $color-accent-2;
   border: 0;
+  outline: none;
 
-  ::selection {
+  &:active {
+    filter: brightness(1.4);
+  }
+
+  ::selection,
+  &:focus {
+    filter: brightness(1);
     background-color: $color-accent-2;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    background-color: $color-accent-2;
+    // background-color: $color-light-alt !important;
   }
 }
 
@@ -36,6 +72,7 @@ body {
 }
 
 .layout {
+  min-height: 100vh;
   background-color: $color-light;
 }
 
@@ -79,10 +116,6 @@ h1.ant-typography {
 
   a {
     font-size: 16pt;
-
-    :hover {
-      color: $color-light;
-    }
   }
 
   h1 {
@@ -117,6 +150,7 @@ main {
     background: $color-accent-2;
     color: $color-light;
     font-family: $font-header;
+    text-shadow: 3px 3px #00000033;
 
     &-title {
       font-size: 24pt;
@@ -140,6 +174,10 @@ main {
       left: 0px;
       top: 0px;
       transition-property: all;
+
+      &:active {
+        background-color: $color-light-alt;
+      }
 
       &:hover {
         left: -2px;

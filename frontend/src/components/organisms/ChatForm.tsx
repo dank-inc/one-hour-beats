@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { Button, Form, Input } from 'antd'
+import { Button, Col, Form, Input, Row } from 'antd'
 import { Store } from 'antd/lib/form/interface'
 
 import { submitChatMessage } from 'api'
+import { SendOutlined } from '@ant-design/icons'
 
 type Props = {
   userId: string
@@ -18,15 +19,13 @@ export const ChatForm = ({ userId, jamId }: Props) => {
   }
 
   return (
-    <Form onFinish={onFinish} form={form}>
+    <Form onFinish={onFinish} form={form} className="chat-form">
       <Form.Item name="message" rules={[{ required: true }]}>
-        <div className="chat-input">
-          <Input placeholder="Send a chat message..." size="large" autoFocus />
-          <Button htmlType="submit" type="primary">
-            Send
-          </Button>
-        </div>
+        <Input placeholder="Send a chat message..." size="large" autoFocus />
       </Form.Item>
+      <Button className="chat-submit" htmlType="submit" type="primary">
+        <SendOutlined />
+      </Button>
     </Form>
   )
 }

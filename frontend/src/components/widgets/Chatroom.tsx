@@ -43,6 +43,7 @@ export const Chatroom = ({ jamId }: Props) => {
   return (
     <>
       <Card
+        className="chat-room"
         title="Chatroom"
         extra={jamRoomUsers[jamId]?.map((user_id) => (
           <Tag key={`active-users-${user_id}`} color="magenta">
@@ -50,14 +51,7 @@ export const Chatroom = ({ jamId }: Props) => {
           </Tag>
         ))}
       >
-        <div
-          ref={logRef}
-          style={{
-            height: 400,
-            overflowY: 'scroll',
-            overflowX: 'hidden',
-          }}
-        >
+        <div ref={logRef} className="chat-log">
           {chats.data.length ? (
             chats.data.map((chat) => (
               <ChatCard key={`chat-${chat.id}`} chat={chat} />
@@ -65,8 +59,8 @@ export const Chatroom = ({ jamId }: Props) => {
           ) : (
             <Alert message="All Quiet... Break The Ice!" type="info" />
           )}
-          <ChatForm jamId={jamId} userId={user.id} />
         </div>
+        <ChatForm jamId={jamId} userId={user.id} />
       </Card>
     </>
   )
