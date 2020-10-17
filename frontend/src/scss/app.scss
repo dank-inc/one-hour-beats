@@ -62,10 +62,9 @@ h1.ant-typography {
 }
 
 .ant-form-item {
-  label {
-    font-size: 16pt;
-  }
-  input {
+  label,
+  input,
+  textarea {
     font-size: 16pt;
   }
 }
@@ -104,18 +103,15 @@ h1.ant-typography {
   }
 }
 
-.full-width {
+.flex-container {
   width: 100%;
 }
 
 main {
   padding: 3rem;
   max-width: 1200px;
+  width: 100%;
   margin: auto;
-
-  .form {
-    width: 100%;
-  }
 
   .ant-card-head {
     background: $color-accent-2;

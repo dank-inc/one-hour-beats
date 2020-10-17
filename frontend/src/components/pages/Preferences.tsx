@@ -9,6 +9,7 @@ import {
   PageHeader,
   Layout,
   Typography,
+  Divider,
 } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { ColorPicker } from 'components/organisms/ColorPicker'
@@ -41,20 +42,12 @@ export const Preferences = (props: Props) => {
       <Typography.Title>Preferences</Typography.Title>
       <p>Customize how others will see you</p>
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-        <Row align="middle">
-          <div className="flex-container">
-            <Card title="Account Information">
-              <AccountDetails user={user} />
-            </Card>
-            <Card title="Color Picker" style={{ height: '100%' }}>
-              <ColorPicker
-                color={color}
-                setColor={setColor}
-                letter={user.name[0]}
-              />
-            </Card>
-          </div>
-        </Row>
+        <div className="flex-container">
+          <Card title="Account Information">
+            <AccountDetails user={user} />
+          </Card>
+          <Card title="Color Picker" style={{ height: '100%' }}></Card>
+        </div>
         <Row
           align="middle"
           style={{ alignItems: 'center', justifyContent: 'center' }}
