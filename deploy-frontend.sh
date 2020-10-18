@@ -1,1 +1,3 @@
-cd ~/one-hour-beats && docker-compose build --no-cache frontend && docker-compose -f prod-frontend-deploy.yml run --rm frontend npm run build
+# TODO rsync
+
+cd frontend && npm i && npm run build && scp -vr build/* root@onehourbeats.com:/var/www/html/
