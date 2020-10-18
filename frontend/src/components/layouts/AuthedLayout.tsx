@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Layout } from 'antd'
 import { Footer } from 'components/organisms/Footer'
 import { CreateJam } from 'components/pages/CreateJam'
@@ -14,9 +14,9 @@ import { AppHeader } from 'components/organisms/AppHeader'
 import { Home } from 'components/pages/Home'
 import { AppContextProvider } from 'contexts/AppContext'
 import { useUserContext } from 'contexts/UserContext'
+import { Login } from 'components/pages/Login'
 
 export const CoreLayout = () => {
-  // TODO: on app mount, change icon to random music emoji
   const { user } = useUserContext()
 
   return (
@@ -28,9 +28,16 @@ export const CoreLayout = () => {
           <Route path="/jams/:id" component={JamDetails} />
           <Route exact path="/jams" component={JamList} />
 
-          <Route path="/create" component={CreateJam} />
           <Route path="/about" component={About} />
-          <Route path="/preferences" component={Preferences} />
+
+          {user && (
+            <>
+              <Route path="/preferences" component={Preferences} />
+              <Route path="/create" component={CreateJam} />
+            </>
+          )}
+
+          {!user && <Route path="/login" component={Login} />}
 
           <Route path="/" component={Home} />
         </Switch>

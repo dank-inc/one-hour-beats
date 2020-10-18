@@ -26,18 +26,18 @@ import { useUserContext } from 'contexts/UserContext'
 
 type Props = RouteComponentProps<{ id: string }> & {}
 
-// TODO: rename
 export const JamDetails = ({ match }: Props) => {
   const history = useHistory()
   const { user } = useUserContext()
 
   const jam = useGet<JamView>(`jams/${match.params.id}`)
 
-  useSubscription(
-    'JamroomChannel',
-    { jam_id: match.params.id, user_id: user?.id },
-    jam.refetch
-  )
+  if (user)
+    useSubscription(
+      'JamroomChannel',
+      { jam_id: match.params.id, user_id: user.id },
+      jam.refetch
+    )
 
   useEffect(() => {
     return () => {

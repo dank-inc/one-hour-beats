@@ -1,7 +1,7 @@
 class JamsController < ApplicationController
   # before_action :get_logged_in_user, only: [:jams, :entries]
-  before_action :authorize_request, only: [:submit_chat, :start, :stop, :edit, :create, :update, :destroy]
-  before_action :set_jam, only: [:submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
+  before_action :authorize_request, only: [:upload, :submit_chat, :start, :stop, :edit, :create, :update, :destroy]
+  before_action :set_jam, only: [:upload, :submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
   def start
@@ -29,8 +29,6 @@ class JamsController < ApplicationController
     
     puts ">> uploading: #{@jam.id}/#{@current_user.username}_#{@file.original_filename}"
     uploaddir = "uploads/#{@jam.id}"
-    # TODO: get user_id from auth token.
-    # TODO: get title
 
     path = "#{uploaddir}/#{@file.original_filename}"
     FileUtils.mkdir_p("public/#{uploaddir}") unless File.directory?("public/#{uploaddir}")

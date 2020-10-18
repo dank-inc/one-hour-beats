@@ -12,6 +12,7 @@ import { JamView } from 'types/Jam'
 import { EntryView } from 'types/Entry'
 import { canSubmit } from 'utils/time'
 import { useSubscription } from 'hooks/useSubscription'
+import { Link } from 'react-router-dom'
 
 type Props = {
   jam: JamView
@@ -42,7 +43,13 @@ export const EntriesWidget = ({ jam }: Props) => {
           No entries... yet! <FrownOutlined />
         </Card>
       )}
-      {canSubmit(jam, entries.data, user?.id) && <EntryForm jam_id={jam.id} />}
+      {!user ? (
+        <Card>
+          You must be logged in to enter! <Link to="/about">Find out more</Link>
+        </Card>
+      ) : (
+        canSubmit(jam, entries.data, user?.id) && <EntryForm jam_id={jam.id} />
+      )}
     </>
   )
 }

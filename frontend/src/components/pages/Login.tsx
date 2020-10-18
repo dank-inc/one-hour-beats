@@ -1,12 +1,11 @@
 import React from 'react'
 import { Form, Input, Button, Layout, PageHeader } from 'antd'
 import { Store } from 'antd/lib/form/interface'
+import { useUserContext } from 'contexts/UserContext'
 
-type Props = {
-  handleLogin: (u: string, p: string) => void
-}
+export const Login = () => {
+  const { handleLogin } = useUserContext()
 
-export const Login = ({ handleLogin }: Props) => {
   const onFinish = ({ username, password }: Store) =>
     handleLogin(username, password)
 

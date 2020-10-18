@@ -8,7 +8,6 @@ class Jam < ApplicationRecord
 
   validates :scheduled_at, presence: true
 
-  # TODO: add start_at
   # TODO: if jam finished w/ no entries, archive jam
   # TODO: users opt-into jam
 
