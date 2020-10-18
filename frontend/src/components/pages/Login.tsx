@@ -10,7 +10,7 @@ export const Login = () => {
   const onFinish = ({ username, password }: Store) =>
     handleLogin(username, password)
 
-  if (user) <Redirect to="/jams" />
+  if (user) return <Redirect to="/jams" />
 
   return (
     <Layout.Content>
