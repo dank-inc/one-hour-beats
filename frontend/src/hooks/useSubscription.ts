@@ -31,7 +31,7 @@ export const useSubscription = (
       subscription.unsubscribe()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channel, consumer.subscriptions])
+  }, [channel, consumer.subscriptions, params.jam_id, params.user_id])
 
   return null
 }

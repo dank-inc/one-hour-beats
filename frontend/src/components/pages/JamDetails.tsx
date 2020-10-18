@@ -32,12 +32,11 @@ export const JamDetails = ({ match }: Props) => {
 
   const jam = useGet<JamView>(`jams/${match.params.id}`)
 
-  if (user)
-    useSubscription(
-      'JamroomChannel',
-      { jam_id: match.params.id, user_id: user.id },
-      jam.refetch
-    )
+  useSubscription(
+    'JamroomChannel',
+    { jam_id: match.params.id, user_id: user?.id },
+    jam.refetch
+  )
 
   useEffect(() => {
     return () => {

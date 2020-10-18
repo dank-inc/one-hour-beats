@@ -5,7 +5,7 @@ import { UserContextProvider } from './contexts/UserContext'
 import { ActionCableContextProvider } from 'contexts/ActionCableContext'
 import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 
-import { CoreLayout } from './components/layouts/AuthedLayout'
+import { CoreLayout } from './components/layouts/CoreLayout'
 
 import 'scss/app.less'
 import 'scss/app.scss'
