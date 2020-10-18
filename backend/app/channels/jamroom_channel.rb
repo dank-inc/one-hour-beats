@@ -7,7 +7,7 @@ class JamroomChannel < ApplicationCable::Channel
     
     @jam = Jam.find params[:jam_id]
     
-    @user = User.find params[:user_id]
+    @user = User.find_by_id params[:user_id]
     @username = @user ? @user.username : "guest_#{SecureRandom.hex(4)}"
     
     if @@jam_index[@jam.id] 

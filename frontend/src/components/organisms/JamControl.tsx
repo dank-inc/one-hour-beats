@@ -47,8 +47,6 @@ export const JamControl = ({ jam }: Props) => {
     }
   }, [jam.started_at, jam.time_limit, ended])
 
-  const jamOwner = user_id === jam.user_id
-
   const handleDelete = async () => {
     try {
       await deleteJam(jam.id)
@@ -57,6 +55,8 @@ export const JamControl = ({ jam }: Props) => {
       message.error("couldn't delete jam!")
     }
   }
+
+  if (user_id !== jam.user_id) return null
 
   if (ended)
     return (
@@ -71,12 +71,8 @@ export const JamControl = ({ jam }: Props) => {
   if (inProgress)
     return (
       <>
-        <Tooltip
-          title={
-            jamOwner ? 'Stop the Jam!' : 'Only the owner can stop the jam!'
-          }
-        >
-          <Button type="primary" disabled={!jamOwner} onClick={handleStop}>
+        <Tooltip title="Stop the Jam!">
+          <Button type="primary" onClick={handleStop}>
             Stop Jam Now!
           </Button>
         </Tooltip>
@@ -84,19 +80,15 @@ export const JamControl = ({ jam }: Props) => {
     )
 
   return (
-    <Tooltip
-      title={jamOwner ? 'Start the Jam!' : 'Only the owner can start the jam!'}
-    >
-      <>
-        <Popconfirm title="This is irreversable!" onConfirm={handleDelete}>
-          <Button danger disabled={!jamOwner}>
-            Delete
-          </Button>
-        </Popconfirm>
-        <Button type="primary" disabled={!jamOwner} onClick={handleStart}>
+    <>
+      <Popconfirm title="This is irreversable!" onConfirm={handleDelete}>
+        <Button danger>Delete</Button>
+      </Popconfirm>
+      <Tooltip title="Pump Up The Jam">
+        <Button type="primary" onClick={handleStart}>
           Start Jam Now!
         </Button>
-      </>
-    </Tooltip>
+      </Tooltip>
+    </>
   )
 }
