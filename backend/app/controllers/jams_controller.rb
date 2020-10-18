@@ -1,6 +1,6 @@
 class JamsController < ApplicationController
   # before_action :get_logged_in_user, only: [:jams, :entries]
-  before_action :authorize_request #, only: [:submit_chat, :start, :stop, :edit, :create, :update, :destroy]
+  before_action :authorize_request, only: [:submit_chat, :start, :stop, :edit, :create, :update, :destroy]
   before_action :set_jam, only: [:submit_chat, :entries, :start, :stop, :show, :edit, :update, :destroy]
 
   # POST /jams/:id/start
@@ -42,11 +42,7 @@ class JamsController < ApplicationController
 
   # GET /jams
   def index
-    if @current_user
-      @jams = Jam.all
-    else
-      @jams = Jam.elapsed
-    end
+    @jams = Jam.all
   end
 
   # GET /jams/1

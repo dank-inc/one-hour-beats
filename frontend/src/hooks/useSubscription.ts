@@ -1,9 +1,14 @@
 import { useActionCableContext } from 'contexts/ActionCableContext'
 import { useEffect } from 'react'
 
+type ChannelParams = {
+  user_id?: string
+  jam_id?: string
+}
+
 export const useSubscription = (
   channel: string,
-  params: Record<string, string>,
+  params: ChannelParams,
   refetch: () => void
 ) => {
   const { consumer } = useActionCableContext()

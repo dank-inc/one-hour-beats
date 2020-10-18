@@ -20,11 +20,7 @@ export const Chatroom = ({ jamId }: Props) => {
   const { user } = useUserContext()
   const chats = useGet<ChatView[]>(`jams/${jamId}/chat`)
 
-  useSubscription(
-    'ChatChannel',
-    { user_id: user.id, jam_id: jamId },
-    chats.refetch
-  )
+  useSubscription('ChatChannel', { jam_id: jamId }, chats.refetch)
 
   const { jamRoomUsers } = useAppContext()
   const logRef = useRef<HTMLDivElement | null>(null)
@@ -60,7 +56,7 @@ export const Chatroom = ({ jamId }: Props) => {
             <Alert message="All Quiet... Break The Ice!" type="info" />
           )}
         </div>
-        <ChatForm jamId={jamId} userId={user.id} />
+        {user && <ChatForm jamId={jamId} userId={user.id} />}
       </Card>
     </>
   )

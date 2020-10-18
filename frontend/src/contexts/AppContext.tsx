@@ -5,7 +5,7 @@ import { useActionCableContext } from 'contexts/ActionCableContext'
 import { useSubscription } from 'hooks/useSubscription'
 
 type Props = {
-  userId: string
+  userId?: string
   children: React.ReactNode
 }
 

@@ -19,7 +19,6 @@ export const JamCard = ({ jam }: Props) => {
   // TODO: colors of users
 
   const inProgress = jam.started_at && !jam.ended
-  const upcoming = !jam.started_at
 
   return (
     <Tooltip title={`${jam.created_by} - ${jam.name}`}>

@@ -5,21 +5,17 @@ import {
   PageHeader,
   Card,
   Tooltip,
-  Descriptions,
-  Tag,
   Row,
   Col,
   Spin,
   message,
   Layout,
   Typography,
-  Button,
 } from 'antd'
 import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
 import { JamControl } from 'components/organisms/JamControl'
 import { Clock } from 'components/organisms/Clock'
-import { useAppContext } from 'contexts/AppContext'
 import { useGet } from 'hooks/useGet'
 import { JamView } from 'types/Jam'
 
@@ -27,7 +23,6 @@ import { Chatroom } from 'components/widgets/Chatroom'
 import { EntriesWidget } from 'components/widgets/EntriesWidget'
 import { useSubscription } from 'hooks/useSubscription'
 import { useUserContext } from 'contexts/UserContext'
-import { deleteJam } from 'api'
 
 type Props = RouteComponentProps<{ id: string }> & {}
 
@@ -37,9 +32,10 @@ export const JamDetails = ({ match }: Props) => {
   const { user } = useUserContext()
 
   const jam = useGet<JamView>(`jams/${match.params.id}`)
+
   useSubscription(
     'JamroomChannel',
-    { jam_id: match.params.id, user_id: user.id },
+    { jam_id: match.params.id, user_id: user?.id },
     jam.refetch
   )
 

@@ -42,7 +42,7 @@ export const EntriesWidget = ({ jam }: Props) => {
           No entries... yet! <FrownOutlined />
         </Card>
       )}
-      {canSubmit(jam, user.id, entries.data) && <EntryForm jam_id={jam.id} />}
+      {canSubmit(jam, entries.data, user?.id) && <EntryForm jam_id={jam.id} />}
     </>
   )
 }

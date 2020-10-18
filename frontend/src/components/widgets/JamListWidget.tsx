@@ -1,4 +1,4 @@
-import { Empty, Row, Typography } from 'antd'
+import { Row, Typography } from 'antd'
 import { JamCard } from 'components/organisms/JamCard'
 import React from 'react'
 import { JamView } from 'types/Jam'

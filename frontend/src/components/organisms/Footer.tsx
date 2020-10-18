@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
-import { Col, Layout, Row } from 'antd'
+import { Col, Row } from 'antd'
 import 'scss/footer.scss'
 
 export const Footer = () => {

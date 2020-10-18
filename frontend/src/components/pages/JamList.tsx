@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Spin, Result, Layout } from 'antd'
+import { Spin, Result, Layout } from 'antd'
 import { useGet } from 'hooks/useGet'
 import { JamView } from 'types/Jam'
 import { JamListWidget } from 'components/widgets/JamListWidget'

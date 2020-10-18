@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Typography, Layout, Row, Col } from 'antd'
 
 import 'scss/app-header.scss'
 import { TopMenu } from './TopMenu'
 import { Link } from 'react-router-dom'
+import { useUserContext } from 'contexts/UserContext'
 
 export const AppHeader = () => {
-  // get location
-  // set active menu item
-
-  useEffect(() => {
-    // match location
-  }, [])
+  const { user } = useUserContext()
 
   return (
     <Layout.Header className="app-header">
@@ -23,7 +19,7 @@ export const AppHeader = () => {
         </Col>
         <Col className="top-nav">
           <Link to="/jams">Jams</Link>
-          <Link to="/create">New</Link>
+          {user && <Link to="/create">New</Link>}
           <TopMenu />
         </Col>
       </Row>

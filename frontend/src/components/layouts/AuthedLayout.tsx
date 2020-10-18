@@ -20,7 +20,7 @@ export const CoreLayout = () => {
   const { user } = useUserContext()
 
   return (
-    <AppContextProvider userId={user.id}>
+    <AppContextProvider userId={user?.id}>
       <Layout className="layout">
         <AppHeader />
         <Switch>
