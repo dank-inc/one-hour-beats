@@ -29,37 +29,6 @@ toffee = User.create!({
   email: "vapsquad@gmail.com",
 })
 
-users = [{
-  username: 'chocobobafett',
-  password: 'toffee15',
-  color: 'zesty',
-  name: 'George',
-  email: 'berkleegeorge@gmail.com',
-},
-{
-  username: 'metacusis',
-  password: 'toffee15',
-  name: 'Meta',
-  color: 'wonky',
-  email: 'cjamieschmitz@gmail.com',
-},
-{
-  username: 'JasonOne',
-  password: 'toffee15',
-  name: 'Meta',
-  color: 'aloof',
-  email: 'Jason@danceshout.com',
-},
-{
-  username: 'iwishiwereadinosaur',
-  password: 'toffee15',
-  name: 'iwishiwereadinosaur',
-  color: 'visionary',
-  email: 'iwishiwere@adinosaur.net',
-}]
-
-users.each { |user| User.create!(user) }
-
 puts "Creating Jams..."
 
 jam = Jam.create!({
