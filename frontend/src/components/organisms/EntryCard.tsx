@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Card, message, Avatar, Tooltip, Popconfirm } from 'antd'
+import React from 'react'
+import { Button, Card, message, Avatar, Popconfirm } from 'antd'
 import {
   UserOutlined,
   FireTwoTone,
@@ -18,7 +18,6 @@ type Props = {
 export const EntryCard = ({ entry, jam_id }: Props) => {
   const { user } = useUserContext()
   const { song, selectSong } = useDankAmpContext()
-  const [tooltipTitle, setTooltipTitle] = useState('')
 
   const castVote = () => {
     message.loading('casting vote!')
@@ -33,9 +32,9 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
     deleteEntry(entry.id)
   }
 
-  const vote_token = user.vote_tokens.find((token) => token.jam_id === jam_id)
+  const vote_token = user?.vote_tokens?.find((token) => token.jam_id === jam_id)
   const canVote =
-    vote_token && !vote_token.entry_id && entry.user_id !== user.id
+    vote_token && !vote_token.entry_id && entry.user_id !== user?.id
 
   return (
     <Card
@@ -46,20 +45,18 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
           />{' '}
           Listen To Entry
         </Button>,
-        entry.user_id === user.id ? (
+        entry.user_id === user?.id ? (
           <Popconfirm title="Really Delete?" onConfirm={handleDelete}>
             <Button danger>Delete</Button>
           </Popconfirm>
         ) : null,
-        <Tooltip placement="right" title={tooltipTitle}>
-          <Popconfirm
-            disabled={!canVote}
-            title="Cast your vote?"
-            onConfirm={castVote}
-          >
-            <Button disabled={!canVote}>Vote!</Button>
-          </Popconfirm>
-        </Tooltip>,
+        <Popconfirm
+          disabled={!canVote}
+          title="Cast your vote?"
+          onConfirm={castVote}
+        >
+          <Button disabled={!canVote}>Vote!</Button>
+        </Popconfirm>,
       ]}
       title={`${entry.artist_name} - ${entry.title}`}
       extra={entry.votes?.map((user_id) => (

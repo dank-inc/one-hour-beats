@@ -7,13 +7,12 @@ import React, {
   SetStateAction,
 } from 'react'
 import axios from 'axios'
-import { message, Spin } from 'antd'
+import { message } from 'antd'
 
 import { UserView } from 'types/User'
 import { getUser } from 'api'
 import { mockUser } from 'api/mock/user'
 
-import { UnauthedLayout } from 'components/layouts/UnauthedLayout'
 import { useActionCableContext } from './ActionCableContext'
 import { useHistory } from 'react-router'
 
@@ -22,7 +21,7 @@ type Props = {
 }
 
 type Context = {
-  user: UserView
+  user: UserView | null
   setUser: Dispatch<SetStateAction<UserView | null>>
   handleLogin: (username: string, password: string) => void
   handleLogout: () => void
@@ -41,7 +40,6 @@ export const UserContextProvider = ({ children }: Props) => {
   const history = useHistory()
   const { consumer } = useActionCableContext()
   const [user, setUser] = useState<UserView | null>(null)
-  const [triedJWT, setTriedJWT] = useState(false)
 
   useEffect(() => {
     const user_id = window.localStorage.getItem('ohb-jwt-id')
@@ -70,7 +68,6 @@ export const UserContextProvider = ({ children }: Props) => {
     }
 
     if (!user_id) {
-      setTriedJWT(true)
       return
     } else {
       login(user_id)
@@ -133,14 +130,10 @@ export const UserContextProvider = ({ children }: Props) => {
     window.localStorage.removeItem('ohb-jwt-exp')
   }
 
-  return user ? (
+  return (
     <UserContext.Provider value={{ user, setUser, handleLogin, handleLogout }}>
       {children}
     </UserContext.Provider>
-  ) : triedJWT ? (
-    <UnauthedLayout handleLogin={handleLogin} />
-  ) : (
-    <Spin tip="Loading..." />
   )
 }
 

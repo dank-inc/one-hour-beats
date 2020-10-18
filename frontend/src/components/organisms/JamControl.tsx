@@ -11,7 +11,7 @@ import { deleteJam, startJam, stopJam } from 'api'
 
 type Props = { jam: JamView }
 export const JamControl = ({ jam }: Props) => {
-  const user_id = useUserContext().user.id
+  const user_id = useUserContext().user?.id
   const history = useHistory()
 
   const [inProgress, setInProgress] = useState(false)

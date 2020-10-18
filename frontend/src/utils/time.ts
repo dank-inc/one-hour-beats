@@ -42,8 +42,8 @@ export const jamInProgress = (jam: JamView) => {
 
 export const canSubmit = (
   jam: JamView,
-  user_id: string,
-  entries: EntryView[] | null
+  entries: EntryView[] | null,
+  user_id?: string
 ): boolean => {
   // NOTE: 20 min leeway
 

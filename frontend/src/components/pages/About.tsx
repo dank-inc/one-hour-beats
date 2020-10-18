@@ -31,10 +31,17 @@ export const About = () => {
         spark creativity and shit.
       </p>
       <Typography.Title>Need an Invite?</Typography.Title>
-      Want to jam w/ us?
-      <a href="https://discord.gg/8qQY4mA" target="_new">
-        Join our discord for an invite!
-      </a>
+      <p>
+        One Hour Beats is currently in closed beta - but you can still sign up!
+      </p>
+      <p>
+        Simply{' '}
+        <a href="https://discord.gg/8qQY4mA" target="_new">
+          Join our discord
+        </a>
+        , tell us about yourself, and ask for an invite 😍. Don't worry, we're
+        friendly (and we want to keep it that way)
+      </p>
     </Layout.Content>
   )
 }

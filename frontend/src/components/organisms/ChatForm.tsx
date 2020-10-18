@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Form, Input } from 'antd'
 import { Store } from 'antd/lib/form/interface'
 
 import { submitChatMessage } from 'api'

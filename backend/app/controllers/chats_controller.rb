@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, only: [:create, :update, :destroy] 
   before_action :set_chat, only: [:show, :update, :destroy]
 
   # GET /jams/:id/chats

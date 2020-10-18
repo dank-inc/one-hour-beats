@@ -1,14 +1,5 @@
 import { UserOutlined } from '@ant-design/icons'
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  Menu,
-  message,
-  Modal,
-  Popconfirm,
-  Spin,
-} from 'antd'
+import { Avatar, Dropdown, Menu, message, Modal, Spin } from 'antd'
 import { requestInvite } from 'api'
 import { useUserContext } from 'contexts/UserContext'
 import React, { useState } from 'react'
@@ -45,15 +36,21 @@ export const TopMenu = () => {
       <Dropdown
         overlay={
           <Menu className="dropdown-menu" onClick={handleNav}>
-            <Menu.Item onSelect={() => {}}>Welcome, {user.name}</Menu.Item>
+            <Menu.Item onSelect={() => {}}>
+              Welcome, {user?.name || 'Guest'}
+            </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="/">Home</Menu.Item>
-            <Menu.Item key="/preferences">Preferences</Menu.Item>
             <Menu.Item key="/about">About</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="$invite">Invite A Friend!</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="$logout">Log Out</Menu.Item>
+            {user && (
+              <>
+                <Menu.Item key="/preferences">Preferences</Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="$invite">Invite A Friend!</Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="$logout">Log Out</Menu.Item>
+              </>
+            )}
           </Menu>
         }
       >

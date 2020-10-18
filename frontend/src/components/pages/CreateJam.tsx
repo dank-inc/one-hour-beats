@@ -6,22 +6,22 @@ import {
   Button,
   InputNumber,
   message,
-  PageHeader,
   DatePicker,
   TimePicker,
   Layout,
   Typography,
   Card,
-  Row,
 } from 'antd'
 import { useUserContext } from 'contexts/UserContext'
 import { createJam } from 'api'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import moment from 'moment'
 
 export const CreateJam = () => {
   const { user } = useUserContext()
   const history = useHistory()
+
+  if (!user) return <Redirect to="/" />
 
   // TODO: Time picker - schedule jams
   // one open jam per person

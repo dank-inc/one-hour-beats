@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  message,
-  Upload,
-  Card,
-  Typography,
-} from 'antd'
+import { Form, Input, Button, Checkbox, message, Upload, Card } from 'antd'
 
 import { useUserContext } from '../../contexts/UserContext'
 import { InboxOutlined } from '@ant-design/icons'
@@ -48,6 +39,8 @@ export const EntryForm = ({ jam_id }: Props) => {
   }
 
   const onFinish = (form: Store) => {
+    if (!user) return
+
     if (!link) {
       message.error('please upload a file!')
       return

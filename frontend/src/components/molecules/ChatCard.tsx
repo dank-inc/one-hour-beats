@@ -16,7 +16,9 @@ export const ChatCard = ({ chat }: Props) => {
     <Comment
       avatar={
         <Avatar
-          className={`chat-avatar ${chat.user_id === user.id ? 'you' : 'them'}`}
+          className={`chat-avatar ${
+            chat.user_id === user?.id ? 'you' : 'them'
+          }`}
         >
           {chat.username?.[0]}
         </Avatar>

@@ -55,7 +55,7 @@ export const Home = () => {
         <p>2. Create an account</p>
         <p>3. Join a Jam!</p>
       </Row>
-      <Row className="title">
+      <Row className="title" id="invite">
         <Typography.Title>Get an Invite</Typography.Title>
       </Row>
       <Row className="message">
