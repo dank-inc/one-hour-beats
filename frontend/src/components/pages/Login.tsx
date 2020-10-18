@@ -2,12 +2,15 @@ import React from 'react'
 import { Form, Input, Button, Layout, PageHeader } from 'antd'
 import { Store } from 'antd/lib/form/interface'
 import { useUserContext } from 'contexts/UserContext'
+import { Redirect } from 'react-router'
 
 export const Login = () => {
-  const { handleLogin } = useUserContext()
+  const { user, handleLogin } = useUserContext()
 
   const onFinish = ({ username, password }: Store) =>
     handleLogin(username, password)
+
+  if (user) <Redirect to="/jams" />
 
   return (
     <Layout.Content>

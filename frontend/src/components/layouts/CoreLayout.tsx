@@ -30,16 +30,12 @@ export const CoreLayout = () => {
 
           <Route path="/about" component={About} />
 
-          {user && (
-            <>
-              <Route path="/preferences" component={Preferences} />
-              <Route path="/create" component={CreateJam} />
-            </>
-          )}
+          <Route path="/preferences" component={Preferences} />
+          <Route path="/create" component={CreateJam} />
 
-          {!user && <Route path="/login" component={Login} />}
+          <Route path="/login" component={Login} />
 
-          <Route path="/" component={Home} />
+          <Home />
         </Switch>
         <Footer />
       </Layout>
