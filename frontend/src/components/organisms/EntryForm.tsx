@@ -76,14 +76,14 @@ export const EntryForm = ({ jam_id }: Props) => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="Song Title"
+          label="Song Name"
           name="title"
           rules={[{ required: true, message: 'This needs a title!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="I own all rights to this work"
+          label="I own rights"
           name="rights"
           valuePropName="checked"
           rules={[{ required: true, message: 'Sign this legal document!' }]}

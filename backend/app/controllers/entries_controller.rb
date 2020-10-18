@@ -73,9 +73,18 @@ class EntriesController < ApplicationController
 
   # DELETE /entries/:id
   def destroy
-    @entry.destroy
+    vote_tokens = VoteToken.where(jam_id: @entry.jam_id)
+    puts "VOTE TOKENS => #{vote_tokens}"
+    
+    if @entry.destroy and vote_tokens.delete_all
+      user = @current_user.as_json
+      user[:vote_tokens] = @current_user.vote_tokens
+
+      UserChannel.broadcast_to @current_user, user
+      EntriesChannel.broadcast_to @entry.jam, true
       # Add some kind of realtime shit for deleting entries
-      head :no_content 
+      head :ok 
+    end
   end
 
   private

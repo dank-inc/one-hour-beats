@@ -4,9 +4,10 @@ class Entry < ApplicationRecord
   belongs_to :user
 
   has_many :vote_tokens
+  # TODO: add unique user_id in context of jam_id
 
-  # add unique user_id in context of jam_id
 
+  # View
   def artist_name
     self.user.username
   end

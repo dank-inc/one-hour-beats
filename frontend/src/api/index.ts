@@ -100,6 +100,14 @@ export const submitEntry = async (body: Entry) => {
   }
 }
 
+export const deleteEntry = async (id: string) => {
+  try {
+    return await axios.delete(`/api/entries/${id}`, cfg())
+  } catch (error) {
+    console.error('submitEntry', error)
+  }
+}
+
 export const voteForEntry = async (entry_id: string) => {
   try {
     return await axios.post(`/api/entries/${entry_id}/vote`, {}, cfg())

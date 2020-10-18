@@ -82,7 +82,12 @@ export const UserContextProvider = ({ children }: Props) => {
 
     const subscription = consumer.subscriptions.create(
       { channel: 'UserChannel', user_id: user.id },
-      { received: (user: UserView) => setUser(user) }
+      {
+        received: (user: UserView) => {
+          console.log('UserChannel Update', user)
+          setUser(user)
+        },
+      }
     )
     console.log('subscribed to user channel', subscription)
 
@@ -101,7 +106,7 @@ export const UserContextProvider = ({ children }: Props) => {
       setLocalStorage(data)
       setUser(await getUser(data.id))
       message.success(`logged in as ${user?.username}`, 0.5)
-      history.push('/')
+      history.push()
     } catch (err) {
       message.error('Login Failed!')
     }
@@ -111,6 +116,7 @@ export const UserContextProvider = ({ children }: Props) => {
     setUser(null)
     wipeLocalStorage()
     message.success('logged out!', 0.5)
+    history.push('/')
   }
 
   const setLocalStorage = (data: Login) => {
