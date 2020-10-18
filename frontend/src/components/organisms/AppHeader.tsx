@@ -19,6 +19,7 @@ export const AppHeader = () => {
         </Col>
         <Col className="top-nav">
           <Link to="/jams">Jams</Link>
+          {!user && <Link to="/login">Login</Link>}
           {user && <Link to="/create">New</Link>}
           <TopMenu />
         </Col>

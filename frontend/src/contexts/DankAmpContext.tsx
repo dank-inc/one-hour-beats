@@ -22,8 +22,7 @@ export const DankAmpContextProvider = ({ children }: Props) => {
     setSong(song)
   }
 
-  // TODO:
-  // - transport controls
+  // TODO: transport controls
 
   return (
     <DankAmpContext.Provider value={{ song, selectSong }}>

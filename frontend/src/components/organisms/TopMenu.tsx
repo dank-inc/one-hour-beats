@@ -42,15 +42,11 @@ export const TopMenu = () => {
             <Menu.Divider />
             <Menu.Item key="/">Home</Menu.Item>
             <Menu.Item key="/about">About</Menu.Item>
-            {user && (
-              <>
-                <Menu.Item key="/preferences">Preferences</Menu.Item>
-                <Menu.Divider />
-                <Menu.Item key="$invite">Invite A Friend!</Menu.Item>
-                <Menu.Divider />
-                <Menu.Item key="$logout">Log Out</Menu.Item>
-              </>
-            )}
+            {user && <Menu.Item key="/preferences">Preferences</Menu.Item>}
+            {user && <Menu.Divider />}
+            {user && <Menu.Item key="$invite">Invite A Friend!</Menu.Item>}
+            {user && <Menu.Divider />}
+            {user && <Menu.Item key="$logout">Log Out</Menu.Item>}
           </Menu>
         }
       >

@@ -15,7 +15,7 @@ class User < ApplicationRecord
     if: -> { new_record? || !password.nil? }
 
   # TODO: add this 
-  # def thumbsup
+  # def thumbsup or claps
   #   update(thumbs: thumbs + 1)
   # end
 
@@ -25,6 +25,4 @@ class User < ApplicationRecord
       claimed_by: nil,
     )
   end
-
-  # TODO: write an instance method that increments the users' wins
 end

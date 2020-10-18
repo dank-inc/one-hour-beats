@@ -103,7 +103,7 @@ export const UserContextProvider = ({ children }: Props) => {
       setLocalStorage(data)
       setUser(await getUser(data.id))
       message.success(`logged in as ${user?.username}`, 0.5)
-      history.push('/')
+      history.push('/jams')
     } catch (err) {
       message.error('Login Failed!')
     }

@@ -23,9 +23,6 @@ export const CreateJam = () => {
 
   if (!user) return <Redirect to="/" />
 
-  // TODO: Time picker - schedule jams
-  // one open jam per person
-
   const onFinish = async ({
     id,
     name,

@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
-  before_action :authorize_request, only: [:edit, :update, :destroy]
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_request, only: [:create, :update, :destroy]
+  before_action :set_entry, only: [:show, :update, :destroy]
 
 
   # GET /entries
@@ -53,7 +53,6 @@ class EntriesController < ApplicationController
       entry_id: params[:id]
     )
 
-    # TODO: just send the vote token.
     user = @current_user.as_json
     user[:vote_tokens] = @current_user.vote_tokens
 
@@ -73,10 +72,10 @@ class EntriesController < ApplicationController
 
   # DELETE /entries/:id
   def destroy
-    vote_tokens = VoteToken.where(jam_id: @entry.jam_id)
-    puts "VOTE TOKENS => #{vote_tokens}"
+    votes = VoteToken.where jam_id: @entry.jam_id, entry_id: @entry.id
+    vote_token = VoteToken.where user_id: @current_user.id, jam_id: @entry.jam_id
     
-    if @entry.destroy and vote_tokens.delete_all
+    if @entry.destroy and votes.update_all ["entry_id = ?", nil] and vote_token.destroy
       user = @current_user.as_json
       user[:vote_tokens] = @current_user.vote_tokens
 

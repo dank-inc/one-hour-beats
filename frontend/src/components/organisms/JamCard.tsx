@@ -16,8 +16,6 @@ export const JamCard = ({ jam }: Props) => {
     history.push(`/jams/${jam.id}`)
   }
 
-  // TODO: colors of users
-
   const inProgress = jam.started_at && !jam.ended
 
   return (
