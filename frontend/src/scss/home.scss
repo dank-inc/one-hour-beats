@@ -42,9 +42,14 @@
       letter-spacing: 0.1rem;
       color: $color-light;
       margin: auto;
-      font-size: 64pt;
       text-align: center;
       text-shadow: 2px 2px #00000044;
+    }
+
+    @media (min-width: 769px) {
+      .ant-typography {
+        font-size: 64pt;
+      }
     }
   }
 

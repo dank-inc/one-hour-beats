@@ -66,8 +66,8 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24pt;
+  font-family: $font-body;
+  font-size: 18pt;
   overflow-y: scroll;
 }
 
@@ -153,6 +153,7 @@ main {
   .ant-card-head {
     background: $color-accent-2;
     color: $color-light;
+    text-overflow: ellipsis;
     font-family: $font-header;
     text-shadow: 3px 3px #00000033;
 
@@ -163,6 +164,7 @@ main {
 
     &-title {
       // padding: 1rem 0 0 0;
+
       font-size: 18pt;
     }
   }
@@ -222,7 +224,7 @@ main {
 
   .ant-typography {
     font-family: $font-header;
-    font-size: 38pt;
+    font-size: 36pt;
     margin: 2rem 0;
     text-shadow: 5px 5px #00000011;
   }
@@ -238,5 +240,13 @@ main {
         padding: 0.25rem;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    h1.ant-typography {
+      font-size: 26pt;
+    }
+
+    font-size: 17pt;
   }
 }
