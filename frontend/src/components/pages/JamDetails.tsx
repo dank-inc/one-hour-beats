@@ -90,8 +90,8 @@ export const JamDetails = ({ match }: Props) => {
         )}
       </PageHeader>
       <Row justify="space-between">
-        <Col span={12}>
-          <Card title="Prompt">
+        <Col xl={12} xs={24}>
+          <Card title="Challenge Prompt">
             <Tooltip
               title={
                 jam.data.started_at
@@ -119,11 +119,11 @@ export const JamDetails = ({ match }: Props) => {
               <Clock jam={jam.data} />
             </Card>
           )}
-          <Chatroom jamId={match.params.id} />
+          <EntriesWidget jam={jam.data} />
         </Col>
 
-        <Col span={12}>
-          <EntriesWidget jam={jam.data} />
+        <Col xl={12} xs={24}>
+          <Chatroom jamId={match.params.id} />
         </Col>
       </Row>
     </Layout.Content>
