@@ -15,6 +15,7 @@ import { Home } from 'components/pages/Home'
 import { AppContextProvider } from 'contexts/AppContext'
 import { useUserContext } from 'contexts/UserContext'
 import { Login } from 'components/pages/Login'
+import { Invite } from 'components/pages/Invite'
 
 export const CoreLayout = () => {
   const { user } = useUserContext()
@@ -24,6 +25,7 @@ export const CoreLayout = () => {
       <Layout className="layout">
         <AppHeader />
         <Switch>
+          <Route path="/invite/:token" component={Invite} />
           <Route path="/jams/:id/:popout" component={JamPopout} />
           <Route path="/jams/:id" component={JamDetails} />
           <Route exact path="/jams" component={JamList} />

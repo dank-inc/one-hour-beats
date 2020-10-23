@@ -66,10 +66,8 @@ export const Invite = ({ match }: Props) => {
             Your token is invalid <FrownOutlined />
           </p>
           <p>
-            <Link to="https://twitter.com/onehourbeats">
-              hit us up on twitter
-            </Link>{' '}
-            and tell us why you would like to join!
+            <a href="https://discord.gg/8qQY4mA">hit us up on discord</a> and
+            tell us why you would like to join!
             <SmileOutlined />
           </p>
         </main>
