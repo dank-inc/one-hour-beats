@@ -58,7 +58,7 @@ export const JamDetails = ({ match }: Props) => {
       <PageHeader
         onBack={() => history.goBack()}
         className="jam-details-header"
-        title="Back To Jam Listing"
+        title="Back To Challenge Listing"
         extra={[
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
         ]}
