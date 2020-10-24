@@ -3,6 +3,11 @@
 .home-page {
   padding: 0;
 
+  .infographic {
+    width: 100% !important;
+    margin: auto;
+  }
+
   .title {
     align-items: center;
     background-color: $color-accent-2;
@@ -38,12 +43,20 @@
       }
     }
 
+    &.title {
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+      // filter: blur(2px);
+    }
+
     .ant-typography {
       letter-spacing: 0.1rem;
       color: $color-light;
+
       margin: auto;
       text-align: center;
-      text-shadow: 2px 2px #00000044;
+      text-shadow: 4px 4px #00000044;
     }
 
     @media (min-width: 769px) {
@@ -84,8 +97,10 @@
   }
 
   svg {
-    height: 60px;
-    width: 60px;
-    margin: 0 2rem;
+    &.svg-link {
+      height: 60px;
+      width: 60px;
+      margin: 0 2rem;
+    }
   }
 }

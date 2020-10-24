@@ -56,7 +56,8 @@ class JamsController < ApplicationController
 
     @jam = Jam.new(jam_params)
     @jam.user_id = @current_user.id
-    @jam.id = @jam.name.split(' ').join('_').downcase
+    jam_name_id = @jam.name.gsub('/[a-z ]/i/', '').split(' ').join('_').downcase
+    @jam.id = "#{@current_user.name}_#{jam_name_id}"
 
     if @jam.save!
       JamsChannel.broadcast_to :global, true
