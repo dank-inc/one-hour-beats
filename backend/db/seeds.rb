@@ -35,6 +35,7 @@ jam = Jam.create!({
   description: "make a beat within the hour! anything goes!",
   time_limit: 60,
   started_at: Time.now,
+  scheduled_at: Time.now + 10.minutes,
   user_id: elijah.id, 
 })
 
@@ -44,6 +45,7 @@ Jam.create!({
   description: "make a sketch with only human noises!",
   time_limit: 60,
   started_at: nil,
+  scheduled_at: 1.day.from_now,
   user_id: toffee.id,
 })
 
