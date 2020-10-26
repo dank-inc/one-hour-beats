@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
-  before_action :authorize_request, only: [:create, :update, :destroy]
-  before_action :set_entry, only: [:show, :update, :destroy]
+  before_action :authorize_request, only: [:create, :update, :destroy, :vote]
+  before_action :set_entry, only: [:show, :update, :destroy, :vote]
 
 
   # GET /entries
@@ -41,7 +41,6 @@ class EntriesController < ApplicationController
   end
 
   def vote 
-    @entry = Entry.find(params[:id])
     @jam = @entry.jam
 
     vote_token = VoteToken.find_by!(
@@ -50,7 +49,7 @@ class EntriesController < ApplicationController
     )
     
     vote_token.update!(
-      entry_id: params[:id]
+      entry_id: @entry.id
     )
 
     user = @current_user.as_json
@@ -59,7 +58,6 @@ class EntriesController < ApplicationController
     # update votes on jams?
     UserChannel.broadcast_to @current_user, user
 
-    @entry = Entry.find(params[:id])
     EntriesChannel.broadcast_to @entry.jam, true
     head :ok
   end
