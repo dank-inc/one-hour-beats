@@ -37,10 +37,25 @@ docker-compose up
 ```sh
 docker-compose build [container name or none] # builds docker containers
 docker-compose up [container name or none] # starts up the docker network, optionaly with a given container
-docker-compose run --rm [container name] [command] # runs a given docker container with an explicit command
+docker-compose run --rm [container_name] [command] # runs a given docker container with an explicit command - commands like `bash` to get command line access to a container.
 ```
 
-# Other Instructions
+# Running it all
+
+### Run entire docker dev environment
+
+```sh
+docker-compose down # murder any lingering containers
+docker-compose up # spin up the dev environment
+# navigate to http://localhost
+```
+
+### helpful commands
+
+```sh
+docker-compose run --rm backend rails c # runs the rails console
+docker-compose logs -f [container_name] # shows logs for a specific container
+```
 
 ### Run frontend locally (w/o Docker)
 
