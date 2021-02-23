@@ -8,8 +8,8 @@ services:
   redis:
     image: redis
     command: redis-server
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
 
   backend:
     volumes:
