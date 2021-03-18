@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import { Footer } from 'components/organisms/Footer'
 import { CreateJam } from 'components/pages/CreateJam'
