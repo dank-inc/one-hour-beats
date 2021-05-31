@@ -1,9 +1,10 @@
 FROM ruby:2.7.1
+
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client yarn
 RUN mkdir /usr/src/backend
 WORKDIR /usr/src/backend
 COPY Gemfile /usr/src/backend/Gemfile
-COPY Gemfile.lock /usr/src/backend/Gemfile.lock
+# COPY Gemfile.lock /usr/src/backend/Gemfile.lock
 RUN bundle install
 
 RUN rails webpacker:install

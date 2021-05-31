@@ -9,6 +9,7 @@ docker-compose build
 docker-compose run --rm frontend npm i
 # backend
 docker-compose run --rm backend bash
+> bundle
 > rails db:create
 > rails db:migrate
 > rails db:seed
