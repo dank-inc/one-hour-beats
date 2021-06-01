@@ -14,8 +14,8 @@ import {
 } from 'antd'
 import { Redirect, RouteComponentProps, useHistory } from 'react-router'
 import { jamInProgress } from 'utils/time'
-import { JamControl } from 'components/organisms/JamControl'
-import { Clock } from 'components/organisms/Clock'
+import { JamControl } from 'components/widgets/JamControl'
+import { Clock } from 'components/widgets/Clock'
 import { useGet } from 'hooks/useGet'
 import { JamView } from 'types/Jam'
 
