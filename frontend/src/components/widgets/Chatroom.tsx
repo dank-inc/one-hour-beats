@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react'
 import { Tag, Card, Alert, Spin } from 'antd'
 
-import { ChatCard } from 'components/molecules/ChatCard'
-import { ChatForm } from 'components/organisms/ChatForm'
-import { ResultHandler } from 'components/organisms/ResultHandler'
+import { ChatCard } from 'components/elements/ChatCard'
+import { ChatForm } from './ChatForm'
+import { ResultHandler } from './ResultHandler'
 
 import { useUserContext } from 'contexts/UserContext'
 import { useAppContext } from 'contexts/AppContext'
