@@ -2,8 +2,8 @@ import React from 'react'
 import { Card, Result, Spin } from 'antd'
 import { FrownOutlined } from '@ant-design/icons'
 
-import { EntryCard } from 'components/organisms/EntryCard'
-import { EntryForm } from 'components/organisms/EntryForm'
+import { EntryCard } from 'components/widgets/EntryCard'
+import { EntryForm } from 'components/widgets/EntryForm'
 
 import { useUserContext } from 'contexts/UserContext'
 import { useGet } from 'hooks/useGet'

@@ -1,5 +1,5 @@
 import { Row, Typography } from 'antd'
-import { JamCard } from 'components/organisms/JamCard'
+import { JamCard } from 'components/widgets/JamCard'
 import React from 'react'
 import { JamView } from 'types/Jam'
 
