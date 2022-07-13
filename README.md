@@ -1,4 +1,6 @@
-# One Hour Beats YA
+# One Hour Beats
+
+One hour beats is developed in a self-contained docker environment.
 
 # First Time Setup
 
@@ -65,6 +67,5 @@ cd frontend
 npm install
 npm run start
 ```
-
 
 Icon Pack by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
