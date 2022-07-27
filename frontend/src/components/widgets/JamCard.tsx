@@ -28,6 +28,7 @@ export const JamCard = ({ jam }: Props) => {
         bgColor="gray.200"
         padding="1rem"
         cursor="pointer"
+        _hover={{ bgColor: 'gray.300' }}
         extra={
           inProgress ? (
             <p>

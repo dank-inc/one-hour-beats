@@ -10,7 +10,7 @@ import { useGet } from 'hooks/useGet'
 import { useSubscription } from 'hooks/useSubscription'
 import { ChatView } from 'types/Chat'
 
-import { Alert, Box, Spinner, Tag } from '@chakra-ui/react'
+import { Alert, Box, Grid, Spinner, Tag } from '@chakra-ui/react'
 
 type Props = { jamId: string }
 
@@ -36,7 +36,7 @@ export const Chatroom = ({ jamId }: Props) => {
 
   return (
     <Box title="Chatroom">
-      <div ref={logRef}>
+      <Grid gap="0.5rem" ref={logRef}>
         {chats.data.length ? (
           chats.data.map((chat) => (
             <ChatCard key={`chat-${chat.id}`} chat={chat} />
@@ -44,7 +44,7 @@ export const Chatroom = ({ jamId }: Props) => {
         ) : (
           <Alert title="All Quiet... Break The Ice!" status="info" />
         )}
-      </div>
+      </Grid>
       {user && <ChatForm jamId={jamId} userId={user.id} />}
       {jamRoomUsers[jamId]?.map((user_id) => (
         <Tag key={`active-users-${user_id}`} color="magenta">

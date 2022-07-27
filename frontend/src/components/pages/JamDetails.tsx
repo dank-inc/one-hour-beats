@@ -52,43 +52,44 @@ export const JamDetails = () => {
 
   return (
     <Grid>
-      <Heading>Jam Room: {jam.data.name}</Heading>
-      <Box>
+      <Grid marginBottom="1rem" bgColor="gray.100">
         <Row>
           <Button onClick={() => navigate(-1)}>Back</Button>
-          <Heading>Back To Challenge Listing</Heading>
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
+          <Heading size="md">Jam Room: {jam.data.name}</Heading>
         </Row>
-        <p>Time Limit: {jam.data.time_limit} minutes</p>
-        {jam.data.started_at ? (
-          <>
-            <p>
-              Started At{' '}
-              {DateTime.fromISO(jam.data.started_at).toFormat(
-                'MMM DD, YYYY @ hh:mm a',
-              )}
-            </p>
-            <p>
-              Ends{' '}
-              {DateTime.fromISO(jam.data.started_at)
-                .plus({ minutes: jam.data.time_limit })
-                .toRelative()}
-            </p>
-          </>
-        ) : (
-          <Tooltip
-            closeDelay={1000}
-            title={DateTime.fromISO(jam.data.scheduled_at).toRelative()!}
-          >
-            <div>
-              Starts{' '}
-              {DateTime.fromISO(jam.data.scheduled_at).toFormat(
-                'MMM DD, YYYY - hh:mm a',
-              )}
-            </div>
-          </Tooltip>
-        )}
-      </Box>
+        <Row>
+          <p>Time Limit: {jam.data.time_limit} minutes</p>
+          {jam.data.started_at ? (
+            <>
+              <p>
+                Started At{' '}
+                {DateTime.fromISO(jam.data.started_at).toFormat(
+                  'MMM DD, YYYY @ hh:mm a',
+                )}
+              </p>
+              <p>
+                Ends{' '}
+                {DateTime.fromISO(jam.data.started_at)
+                  .plus({ minutes: jam.data.time_limit })
+                  .toRelative()}
+              </p>
+            </>
+          ) : (
+            <Tooltip
+              closeDelay={1000}
+              title={DateTime.fromISO(jam.data.scheduled_at).toRelative()!}
+            >
+              <div>
+                Starts{' '}
+                {DateTime.fromISO(jam.data.scheduled_at).toFormat(
+                  'MMM DD, YYYY - hh:mm a',
+                )}
+              </div>
+            </Tooltip>
+          )}
+        </Row>
+      </Grid>
       <Row>
         <Col>
           <Card title="Challenge Prompt">
