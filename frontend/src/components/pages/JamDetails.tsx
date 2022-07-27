@@ -14,16 +14,17 @@ import { useParams } from 'react-router'
 import { DateTime } from 'luxon'
 import {
   Box,
-  Button,
   Grid,
   Heading,
   Spinner,
+  Text,
   Tooltip,
   useToast,
 } from '@chakra-ui/react'
 import { Row } from 'components/elements/Row'
 import { Col } from 'components/elements/Col'
 import { Card } from 'components/elements/Card'
+import { Link } from 'react-router-dom'
 
 export const JamDetails = () => {
   const navigate = useNavigate()
@@ -52,76 +53,79 @@ export const JamDetails = () => {
 
   return (
     <Grid>
-      <Grid marginBottom="1rem" bgColor="gray.100">
-        <Row>
-          <Button onClick={() => navigate(-1)}>Back</Button>
+      <Grid marginBottom="1rem" bgColor="gray.100" gap="1rem">
+        <Row bgColor="gray.200" py="1rem">
+          <Link to="/jams">Back</Link>
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
           <Heading size="md">Jam Room: {jam.data.name}</Heading>
         </Row>
         <Row>
-          <p>Time Limit: {jam.data.time_limit} minutes</p>
+          <Text>Time Limit: {jam.data.time_limit} minutes</Text>
           {jam.data.started_at ? (
             <>
-              <p>
-                Started At{' '}
-                {DateTime.fromISO(jam.data.started_at).toFormat(
-                  'MMM DD, YYYY @ hh:mm a',
-                )}
-              </p>
-              <p>
-                Ends{' '}
-                {DateTime.fromISO(jam.data.started_at)
-                  .plus({ minutes: jam.data.time_limit })
-                  .toRelative()}
-              </p>
+              <Row gridGap="0.5rem">
+                <Text>Start:</Text>
+                <Text>
+                  {DateTime.fromISO(jam.data.started_at).toFormat(
+                    'DD @ hh:mm a',
+                  )}
+                </Text>
+              </Row>
+              <Row gridGap="0.5rem">
+                <Text>End:</Text>
+                <Text>
+                  {DateTime.fromISO(jam.data.started_at)
+                    .plus({ minutes: jam.data.time_limit })
+                    .toRelative()}
+                </Text>
+              </Row>
             </>
           ) : (
             <Tooltip
               closeDelay={1000}
               title={DateTime.fromISO(jam.data.scheduled_at).toRelative()!}
             >
-              <div>
-                Starts{' '}
+              <Box>
+                Starts:
                 {DateTime.fromISO(jam.data.scheduled_at).toFormat(
                   'MMM DD, YYYY - hh:mm a',
                 )}
-              </div>
+              </Box>
             </Tooltip>
           )}
         </Row>
+        <Row>
+          <Text>Prompt:</Text>
+          <Tooltip
+            title={
+              jam.data.started_at
+                ? 'This is your prompt! There are many prompts like it, but this one is yours!'
+                : 'You have to wait till the jam starts to see the prompt!'
+            }
+          >
+            <p className={jam.data.started_at ? 'bouncing' : 'blurred'}>
+              {jam.data.started_at
+                ? jam.data.description
+                : 'This prompt is hidden, stop trying to cheat, you dirty cheater!'}
+            </p>
+          </Tooltip>
+        </Row>
       </Grid>
       <Row>
-        <Col>
-          <Card title="Challenge Prompt">
-            <Tooltip
-              title={
-                jam.data.started_at
-                  ? 'This is your prompt! There are many prompts like it, but this one is yours!'
-                  : 'You have to wait till the jam starts to see the prompt!'
-              }
-            >
-              <p className={jam.data.started_at ? 'bouncing' : 'blurred'}>
-                {jam.data.started_at
-                  ? jam.data.description
-                  : 'This prompt is hidden, stop trying to cheat, you dirty cheater!'}
+        {jamInProgress(jam.data) && (
+          <Card
+            title="Time Remaining"
+            extra={
+              <p>
+                <b>Note:</b> You will have 20 minutes after the timer expires to
+                upload your track! Good luck and have fun!
               </p>
-            </Tooltip>
+            }
+          >
+            <Clock jam={jam.data} />
           </Card>
-          {jamInProgress(jam.data) && (
-            <Card
-              title="Time Remaining"
-              extra={
-                <p>
-                  <b>Note:</b> You will have 20 minutes after the timer expires
-                  to upload your track! Good luck and have fun!
-                </p>
-              }
-            >
-              <Clock jam={jam.data} />
-            </Card>
-          )}
-          <EntriesWidget jam={jam.data} />
-        </Col>
+        )}
+        <EntriesWidget jam={jam.data} />
 
         <Col>
           <Chatroom jamId={params.id!} />

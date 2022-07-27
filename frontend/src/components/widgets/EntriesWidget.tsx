@@ -10,7 +10,7 @@ import { EntryView } from 'types/Entry'
 import { canSubmit } from 'utils/time'
 import { useSubscription } from 'hooks/useSubscription'
 import { Link } from 'react-router-dom'
-import { Alert, Box, Spinner } from '@chakra-ui/react'
+import { Alert, Box, Grid, Spinner } from '@chakra-ui/react'
 
 type Props = {
   jam: JamView
@@ -27,7 +27,7 @@ export const EntriesWidget = ({ jam }: Props) => {
     return <Alert status="error" title="error getting entries" />
 
   return (
-    <>
+    <Grid gap="1rem">
       {entries.data.length ? (
         entries.data.map((entry) => (
           <EntryCard
@@ -46,6 +46,6 @@ export const EntriesWidget = ({ jam }: Props) => {
       ) : (
         canSubmit(jam, entries.data, user?.id) && <EntryForm jam_id={jam.id} />
       )}
-    </>
+    </Grid>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ChatView } from 'types/Chat'
 import { useUserContext } from 'contexts/UserContext'
-import { Avatar, Heading, Text } from '@chakra-ui/react'
+import { Avatar, Box, Heading, Text, Tooltip } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 import { Row } from './Row'
 
@@ -20,9 +20,12 @@ export const ChatCard = ({ chat }: Props) => {
       borderRadius="0.25rem"
       textAlign={user?.id === chat.user_id ? 'right' : 'left'}
     >
-      <Avatar size="xs" name={chat.username} />
+      <Tooltip title={chat.username}>
+        <Box>
+          <Avatar size="xs" name={chat.username} />
+        </Box>
+      </Tooltip>
       <Row gridGap="1rem">
-        <Text>{chat.username}</Text>
         <Heading size="sm">{chat.message}</Heading>
         <Text>{DateTime.fromISO(chat.created_at!).toRelative()}</Text>
       </Row>
