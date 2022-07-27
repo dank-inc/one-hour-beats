@@ -1,22 +1,53 @@
 import React, { useEffect, useState } from 'react'
-import { RoutedProps } from 'types/router'
-import { Spin, Input, Form, Button, PageHeader, Card, message } from 'antd'
 import Axios from 'axios'
-import { FrownOutlined, SmileOutlined } from '@ant-design/icons'
-import { Link, useHistory } from 'react-router-dom'
-import { Store } from 'antd/lib/form/interface'
+import { useNavigate } from 'react-router-dom'
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Spinner,
+  useToast,
+} from '@chakra-ui/react'
+import { Card } from 'components/elements/Card'
+import { Field, useFormik } from 'formik'
+import { useParams } from 'react-router'
 
-type Props = RoutedProps<{ token: string }> & {}
-export const Invite = ({ match }: Props) => {
-  const history = useHistory()
+export const Invite = () => {
+  const navigate = useNavigate()
+  const params = useParams<{ token: string }>()
 
   const [valid, setValid] = useState<boolean | null>(null)
-  const [confirmedPass, setConfirmedPass] = useState<string | undefined>()
+  const toast = useToast()
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      confirm: '',
+      email: '',
+      name: '',
+    },
+    onSubmit: async ({ username, email, name, password, confirm }) => {
+      if (password !== confirm) {
+        toast({ title: 'passwords do not match' })
+        return
+      }
+      const { data } = await Axios.post(`/api/accept_invite/${params.token}`, {
+        username,
+        email: (email as string).trim(),
+        name,
+        password,
+      })
+      console.log('user created', data)
+      toast({ title: 'user created, please log in!' })
+      navigate('/')
+    },
+  })
 
   useEffect(() => {
     const get = async () => {
       try {
-        await Axios.get(`/api/check_invite/${match.params.token}`)
+        await Axios.get(`/api/check_invite/${params.token}`)
         setValid(true)
       } catch (err) {
         setValid(false)
@@ -24,26 +55,7 @@ export const Invite = ({ match }: Props) => {
     }
 
     get()
-  }, [match.params.token])
-
-  const onFinish = async ({ username, email, name, password }: Store) => {
-    if (password !== confirmedPass) {
-      message.error('passwords do not match')
-      return
-    }
-    const { data } = await Axios.post(
-      `/api/accept_invite/${match.params.token}`,
-      {
-        username,
-        email: (email as string).trim(),
-        name,
-        password,
-      }
-    )
-    console.log('user created', data)
-    message.success('user created, please log in!')
-    history.push('/')
-  }
+  }, [params.token])
 
   if (valid === null)
     return (
@@ -51,7 +63,7 @@ export const Invite = ({ match }: Props) => {
         <header>
           <h2>One Hour Beats</h2>
         </header>
-        <Spin size="large" tip="checking token..." />
+        <Spinner size="large" title="checking token..." />
       </>
     )
 
@@ -62,13 +74,10 @@ export const Invite = ({ match }: Props) => {
           <h2>One Hour Beats</h2>
         </header>
         <main>
-          <p>
-            Your token is invalid <FrownOutlined />
-          </p>
+          <p>Your token is invalid 😭</p>
           <p>
             <a href="https://discord.gg/8qQY4mA">hit us up on discord</a> and
-            tell us why you would like to join!
-            <SmileOutlined />
+            tell us why you would like to join! 😀
           </p>
         </main>
       </>
@@ -80,14 +89,12 @@ export const Invite = ({ match }: Props) => {
         <h2>One Hour Beats</h2>
       </header>
       <main>
-        <PageHeader
-          className="site-page-header"
-          title="Welcome To The Jam!"
-          subTitle="Create a user!"
-        />
+        <Box />
+        <Heading>Welcome To The Jam!</Heading>
+        <Heading size="md">Create A User</Heading>
         <Card>
-          <Form onFinish={onFinish}>
-            <Form.Item
+          <form onSubmit={formik.handleSubmit}>
+            <Field
               label="Username"
               name="username"
               rules={[
@@ -98,8 +105,8 @@ export const Invite = ({ match }: Props) => {
               ]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
+            </Field>
+            <Field
               label="Email"
               name="email"
               rules={[
@@ -110,8 +117,8 @@ export const Invite = ({ match }: Props) => {
               ]}
             >
               <Input type="email" />
-            </Form.Item>
-            <Form.Item
+            </Field>
+            <Field
               label="Artist Name"
               name="name"
               rules={[
@@ -122,8 +129,8 @@ export const Invite = ({ match }: Props) => {
               ]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
+            </Field>
+            <Field
               label="Password"
               name="password"
               rules={[
@@ -133,12 +140,12 @@ export const Invite = ({ match }: Props) => {
                 },
               ]}
             >
-              <Input.Password />
-            </Form.Item>
+              <Input type="password" />
+            </Field>
 
-            <Form.Item
+            <Field
               label="Password Confirmation"
-              name="passwordconfirm"
+              name="confirm"
               rules={[
                 {
                   required: true,
@@ -146,16 +153,12 @@ export const Invite = ({ match }: Props) => {
                 },
               ]}
             >
-              <Input.Password
-                onChange={(e) => {
-                  setConfirmedPass(e.target.value)
-                }}
-              />
-            </Form.Item>
-            <Button htmlType="submit" type="primary">
+              <Input type="password" />
+            </Field>
+            <Button type="submit" variant="primary">
               Join The Jam
             </Button>
-          </Form>
+          </form>
         </Card>
       </main>
     </>

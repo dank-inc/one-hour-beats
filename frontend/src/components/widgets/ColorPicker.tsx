@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Row, Col, Avatar, Button, Tooltip } from 'antd'
 import { BRAND, ColorName } from 'constants/ColorPalette'
+import { Col } from 'components/elements/Col'
+import { Row } from 'components/elements/Row'
+import { Avatar, Button, Tooltip } from '@chakra-ui/react'
 
 type Props = {
   color: ColorName
@@ -12,13 +14,11 @@ export const ColorPicker = ({ color, setColor, letter }: Props) => {
   return (
     <Col>
       <Row
-        align="middle"
-        gutter={[2, 36]}
+        alignContent="middle"
         style={{ alignItems: 'center', justifyContent: 'center' }}
       >
         <div>
           <Avatar
-            size={96}
             style={{
               color: '#fff',
               backgroundColor: BRAND.colors[color],
@@ -32,15 +32,13 @@ export const ColorPicker = ({ color, setColor, letter }: Props) => {
       </Row>
 
       <Row
-        align="middle"
-        gutter={[16, 16]}
+        alignContent="middle"
         style={{ alignItems: 'center', justifyContent: 'center' }}
       >
         {Object.entries(BRAND.colors).map(([key, value]) => (
           <Tooltip placement="top" key={`color-picker-${key}`} title={key}>
             <Button
               name={key}
-              shape="circle"
               style={{
                 color: '#fff',
                 backgroundColor: value,

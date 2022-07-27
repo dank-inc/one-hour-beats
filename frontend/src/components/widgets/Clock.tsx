@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { Jam } from 'types/Jam'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 
 type Props = {
   jam: Jam
@@ -20,11 +20,11 @@ export const Clock = ({ jam, width = 200, height = 200, popout }: Props) => {
     const draw = () => {
       if (!ctx || !canvasRef.current || !jam.started_at) return
 
-      const started_at = moment(jam.started_at)
-      const currentTime = +moment()
-      const endTime = started_at.clone().add(jam.time_limit, 'minutes')
+      const started_at = DateTime.fromISO(jam.started_at)
+      const currentTime = DateTime.now()
+      const endTime = started_at.plus({ minutes: jam.time_limit })
 
-      const elapsed = currentTime - +started_at // ms
+      const elapsed = +currentTime - +started_at // ms
       const total = +endTime - +started_at // ms
       const remaining = total - elapsed // ms
 

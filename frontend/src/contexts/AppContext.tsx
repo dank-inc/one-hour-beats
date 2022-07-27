@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { message } from 'antd'
 
 import { useActionCableContext } from 'contexts/ActionCableContext'
 import { useSubscription } from 'hooks/useSubscription'
+import { useToast } from '@chakra-ui/react'
 
 type Props = {
   userId?: string
@@ -21,9 +21,10 @@ export const AppContextProvider = ({ userId, children }: Props) => {
   // TODO pass in user from context, so we can add "Guest#2395857"
   const { consumer } = useActionCableContext()
   const [jamRoomUsers, setJamRoomUsers] = useState<JamRoomUsers>({})
+  const toast = useToast()
 
   useSubscription('AppChannel', {}, () => {
-    message.info('app context channel update')
+    toast({ description: 'app context channel update' })
   })
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const AppContextProvider = ({ userId, children }: Props) => {
           console.log('User Locations Updated', data)
           setJamRoomUsers(data)
         },
-      }
+      },
     )
 
     const get = async () => {}
@@ -63,7 +64,7 @@ export const useAppContext = () => {
 
   if (!context)
     throw new Error(
-      'AppContext must be called from within the AppContextProvider'
+      'AppContext must be called from within the AppContextProvider',
     )
 
   return context

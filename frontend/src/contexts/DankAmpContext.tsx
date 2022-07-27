@@ -1,5 +1,5 @@
+import { useToast } from '@chakra-ui/react'
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { message } from 'antd'
 import { EntryView } from 'types/Entry'
 
 type Props = {
@@ -14,11 +14,12 @@ const DankAmpContext = createContext<Context | null>(null)
 
 export const DankAmpContextProvider = ({ children }: Props) => {
   const [song, setSong] = useState<EntryView | null>(null)
+  const toast = useToast()
 
   useEffect(() => {}, [])
 
   const selectSong = (song: EntryView) => {
-    message.loading(`queueing up ${song.artist_name} - ${song.title}`, 0.2)
+    toast({ description: `queueing up ${song.artist_name} - ${song.title}` })
     setSong(song)
   }
 
@@ -36,7 +37,7 @@ export const useDankAmpContext = () => {
 
   if (!context)
     throw new Error(
-      'DankAmpContext must be called from within the DankAmpContextProvider'
+      'DankAmpContext must be called from within the DankAmpContextProvider',
     )
 
   return context

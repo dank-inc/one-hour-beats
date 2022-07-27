@@ -1,18 +1,5 @@
 import React, { useEffect } from 'react'
-import moment from 'moment'
-
-import {
-  PageHeader,
-  Card,
-  Tooltip,
-  Row,
-  Col,
-  Spin,
-  message,
-  Layout,
-  Typography,
-} from 'antd'
-import { Redirect, RouteComponentProps, useHistory } from 'react-router'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { jamInProgress } from 'utils/time'
 import { JamControl } from 'components/widgets/JamControl'
 import { Clock } from 'components/widgets/Clock'
@@ -23,19 +10,32 @@ import { Chatroom } from 'components/widgets/Chatroom'
 import { EntriesWidget } from 'components/widgets/EntriesWidget'
 import { useSubscription } from 'hooks/useSubscription'
 import { useUserContext } from 'contexts/UserContext'
+import { useParams } from 'react-router'
+import { DateTime } from 'luxon'
+import {
+  Box,
+  Button,
+  Grid,
+  Heading,
+  Spinner,
+  Tooltip,
+  useToast,
+} from '@chakra-ui/react'
+import { Row } from 'components/elements/Row'
+import { Col } from 'components/elements/Col'
+import { Card } from 'components/elements/Card'
 
-type Props = RouteComponentProps<{ id: string }> & {}
-
-export const JamDetails = ({ match }: Props) => {
-  const history = useHistory()
+export const JamDetails = () => {
+  const navigate = useNavigate()
   const { user } = useUserContext()
-
-  const jam = useGet<JamView>(`jams/${match.params.id}`)
+  const params = useParams<{ id: string }>()
+  const jam = useGet<JamView>(`jams/${params.id}`)
+  const toast = useToast()
 
   useSubscription(
     'JamroomChannel',
-    { jam_id: match.params.id, user_id: user?.id },
-    jam.refetch
+    { jam_id: params.id, user_id: user?.id },
+    jam.refetch,
   )
 
   useEffect(() => {
@@ -44,53 +44,53 @@ export const JamDetails = ({ match }: Props) => {
     }
   }, [jam.data])
 
-  if (jam.loading) return <Spin />
+  if (jam.loading) return <Spinner />
   if (jam.error) {
-    message.error(
-      `Couldn't find jam: ${match.params.id}, please contact support!`
-    )
-    return <Redirect to="/jams" />
+    toast({ title: `Couldn't find jam: ${params.id}, please contact support!` })
+    return <Navigate to="/jams" />
   }
 
   return (
-    <Layout.Content>
-      <Typography.Title>Jam Room: {jam.data.name}</Typography.Title>
-      <PageHeader
-        onBack={() => history.goBack()}
-        className="jam-details-header"
-        title="Back To Challenge Listing"
-        extra={[
+    <Grid>
+      <Heading>Jam Room: {jam.data.name}</Heading>
+      <Box>
+        <Row>
+          <Button onClick={() => navigate(-1)}>Back</Button>
+          <Heading>Back To Challenge Listing</Heading>
           <JamControl key={`JamControl-${jam.data.id}`} jam={jam.data} />,
-        ]}
-      >
+        </Row>
         <p>Time Limit: {jam.data.time_limit} minutes</p>
         {jam.data.started_at ? (
           <>
             <p>
               Started At{' '}
-              {moment(jam.data.started_at).format('MMM DD, YYYY @ hh:mm a')}
+              {DateTime.fromISO(jam.data.started_at).toFormat(
+                'MMM DD, YYYY @ hh:mm a',
+              )}
             </p>
             <p>
               Ends{' '}
-              {moment(jam.data.started_at)
-                .add(jam.data.time_limit, 'minutes')
-                .fromNow()}
+              {DateTime.fromISO(jam.data.started_at)
+                .plus({ minutes: jam.data.time_limit })
+                .toRelative()}
             </p>
           </>
         ) : (
           <Tooltip
-            mouseLeaveDelay={0.5}
-            title={moment(jam.data.scheduled_at).fromNow()}
+            closeDelay={1000}
+            title={DateTime.fromISO(jam.data.scheduled_at).toRelative()!}
           >
             <div>
               Starts{' '}
-              {moment(jam.data.scheduled_at).format('MMM DD, YYYY - hh:mm a')}
+              {DateTime.fromISO(jam.data.scheduled_at).toFormat(
+                'MMM DD, YYYY - hh:mm a',
+              )}
             </div>
           </Tooltip>
         )}
-      </PageHeader>
-      <Row justify="space-between">
-        <Col xl={12} xs={24}>
+      </Box>
+      <Row>
+        <Col>
           <Card title="Challenge Prompt">
             <Tooltip
               title={
@@ -109,12 +109,12 @@ export const JamDetails = ({ match }: Props) => {
           {jamInProgress(jam.data) && (
             <Card
               title="Time Remaining"
-              actions={[
+              extra={
                 <p>
                   <b>Note:</b> You will have 20 minutes after the timer expires
                   to upload your track! Good luck and have fun!
-                </p>,
-              ]}
+                </p>
+              }
             >
               <Clock jam={jam.data} />
             </Card>
@@ -122,10 +122,10 @@ export const JamDetails = ({ match }: Props) => {
           <EntriesWidget jam={jam.data} />
         </Col>
 
-        <Col xl={12} xs={24}>
-          <Chatroom jamId={match.params.id} />
+        <Col>
+          <Chatroom jamId={params.id!} />
         </Col>
       </Row>
-    </Layout.Content>
+    </Grid>
   )
 }

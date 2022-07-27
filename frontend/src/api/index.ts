@@ -5,14 +5,13 @@ import { Chat } from 'types/Chat'
 import { Entry } from 'types/Entry'
 import { User, UserView } from 'types/User'
 import { Invitation } from 'types/Invitation'
-import { message } from 'antd'
 
 // TODO: put all these in a fancy api with a decorator and shit
 
 // USER ENDPONTS
 const cfg = () => {
   const token = window.localStorage.getItem('ohb-jwt-token')
-  return { headers: { Authorization: token } }
+  return { headers: { Authorization: token! } }
 }
 
 export const getUser = async (id: string): Promise<UserView | null> => {
@@ -81,7 +80,6 @@ export const submitChatMessage = async (chat: Chat) => {
   try {
     return axios.post(`/api/jams/${chat.jam_id}/chat`, chat, cfg())
   } catch (error) {
-    message.error('chat message did not send!')
     console.error('chat messge submission failed', error)
   }
 }
@@ -108,6 +106,6 @@ export const voteForEntry = async (entry_id: string) => {
   try {
     return await axios.post(`/api/entries/${entry_id}/vote`, {}, cfg())
   } catch (error) {
-    message.error('Vote Failed, vote token not found!')
+    console.error('Vote Failed, vote token not found!')
   }
 }

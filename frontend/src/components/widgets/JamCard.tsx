@@ -1,40 +1,45 @@
 import React from 'react'
-import { Card, Row, Tag, Tooltip } from 'antd'
-import { useHistory } from 'react-router'
-import moment from 'moment'
+import { useNavigate } from 'react-router'
 
 import { JamView } from 'types/Jam'
 import { useAppContext } from 'contexts/AppContext'
+import { Tag, Tooltip } from '@chakra-ui/react'
+import { Card } from 'components/elements/Card'
+import { DateTime } from 'luxon'
+import { Row } from 'components/elements/Row'
 
 type Props = { jam: JamView }
 
 export const JamCard = ({ jam }: Props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { jamRoomUsers } = useAppContext()
 
   const handleClick = () => {
-    history.push(`/jams/${jam.id}`)
+    navigate(`/jams/${jam.id}`)
   }
 
   const inProgress = jam.started_at && !jam.ended
 
+  const startedAt = DateTime.fromISO(jam.started_at!)
+
   return (
     <Tooltip title={`${jam.created_by} - ${jam.name}`}>
       <Card
-        className="jam-card"
+        bgColor="gray.200"
+        padding="1rem"
+        cursor="pointer"
         extra={
           inProgress ? (
             <p>
-              ends in{' '}
-              {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}!
+              ends in {startedAt.plus({ minutes: jam.time_limit }).toRelative()}
+              !
             </p>
           ) : jam.ended ? (
             <p>
-              ended{' '}
-              {moment(jam.started_at).add(jam.time_limit, 'minutes').fromNow()}
+              ended {startedAt.plus({ minutes: jam.time_limit }).toRelative()}
             </p>
           ) : (
-            <p>starts {moment(jam.scheduled_at).fromNow()}</p>
+            <p>starts {DateTime.fromISO(jam.scheduled_at).toRelative()}</p>
           )
         }
         title={jam.name}

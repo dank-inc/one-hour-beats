@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import { Tag, Card, Alert, Spin } from 'antd'
 
 import { ChatCard } from 'components/elements/ChatCard'
 import { ChatForm } from './ChatForm'
@@ -9,10 +8,9 @@ import { useUserContext } from 'contexts/UserContext'
 import { useAppContext } from 'contexts/AppContext'
 import { useGet } from 'hooks/useGet'
 import { useSubscription } from 'hooks/useSubscription'
-
 import { ChatView } from 'types/Chat'
 
-import 'scss/chat.scss'
+import { Alert, Box, Spinner, Tag } from '@chakra-ui/react'
 
 type Props = { jamId: string }
 
@@ -34,30 +32,25 @@ export const Chatroom = ({ jamId }: Props) => {
   if (chats.error)
     return <ResultHandler loading={chats.loading} error={chats.error} />
 
-  if (chats.loading) return <Spin />
+  if (chats.loading) return <Spinner />
 
   return (
-    <>
-      <Card
-        className="chat-room"
-        title="Chatroom"
-        extra={jamRoomUsers[jamId]?.map((user_id) => (
-          <Tag key={`active-users-${user_id}`} color="magenta">
-            {user_id}
-          </Tag>
-        ))}
-      >
-        <div ref={logRef} className="chat-log">
-          {chats.data.length ? (
-            chats.data.map((chat) => (
-              <ChatCard key={`chat-${chat.id}`} chat={chat} />
-            ))
-          ) : (
-            <Alert message="All Quiet... Break The Ice!" type="info" />
-          )}
-        </div>
-        {user && <ChatForm jamId={jamId} userId={user.id} />}
-      </Card>
-    </>
+    <Box title="Chatroom">
+      <div ref={logRef}>
+        {chats.data.length ? (
+          chats.data.map((chat) => (
+            <ChatCard key={`chat-${chat.id}`} chat={chat} />
+          ))
+        ) : (
+          <Alert title="All Quiet... Break The Ice!" status="info" />
+        )}
+      </div>
+      {user && <ChatForm jamId={jamId} userId={user.id} />}
+      {jamRoomUsers[jamId]?.map((user_id) => (
+        <Tag key={`active-users-${user_id}`} color="magenta">
+          {user_id}
+        </Tag>
+      ))}
+    </Box>
   )
 }

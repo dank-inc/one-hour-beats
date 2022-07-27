@@ -1,6 +1,7 @@
+import { Input } from '@chakra-ui/react'
+import { Field } from 'formik'
 import React from 'react'
 import { User } from 'types/User'
-import { Input, Form } from 'antd'
 
 type Props = {
   user: User
@@ -9,21 +10,21 @@ type Props = {
 export const AccountDetails = ({ user }: Props) => {
   return (
     <>
-      <Form.Item label="Username" name="username">
+      <Field label="Username" name="username">
         <Input defaultValue={user.username} />
-      </Form.Item>
-      <Form.Item label="Name" name="name">
+      </Field>
+      <Field label="Name" name="name">
         <Input defaultValue={user.name} />
-      </Form.Item>
-      <Form.Item label="Email" name="email">
+      </Field>
+      <Field label="Email" name="email">
         <Input defaultValue={user.email} />
-      </Form.Item>
-      <Form.Item label="Password" name="password">
-        <Input.Password placeholder="Enter new password..." />
-      </Form.Item>
-      <Form.Item label="Password">
-        <Input.Password placeholder="Confirm password..." />
-      </Form.Item>
+      </Field>
+      <Field label="Password" name="password">
+        <Input type="password" placeholder="Enter new password..." />
+      </Field>
+      <Field label="Password">
+        <Input type="password" placeholder="Confirm password..." />
+      </Field>
     </>
   )
 }

@@ -1,7 +1,4 @@
 import React from 'react'
-import { Card, Result, Spin } from 'antd'
-import { FrownOutlined } from '@ant-design/icons'
-
 import { EntryCard } from 'components/widgets/EntryCard'
 import { EntryForm } from 'components/widgets/EntryForm'
 
@@ -13,6 +10,7 @@ import { EntryView } from 'types/Entry'
 import { canSubmit } from 'utils/time'
 import { useSubscription } from 'hooks/useSubscription'
 import { Link } from 'react-router-dom'
+import { Alert, Box, Spinner } from '@chakra-ui/react'
 
 type Props = {
   jam: JamView
@@ -24,9 +22,9 @@ export const EntriesWidget = ({ jam }: Props) => {
   const entries = useGet<EntryView[]>(`jams/${jam.id}/entries`)
   useSubscription('EntriesChannel', { jam_id: jam.id }, entries.refetch)
 
-  if (entries.loading) return <Spin />
+  if (entries.loading) return <Spinner />
   if (entries.error)
-    return <Result status="error" title="error getting entries" />
+    return <Alert status="error" title="error getting entries" />
 
   return (
     <>
@@ -39,14 +37,12 @@ export const EntriesWidget = ({ jam }: Props) => {
           />
         ))
       ) : (
-        <Card>
-          No entries... yet! <FrownOutlined />
-        </Card>
+        <Box>No entries... yet! 😭</Box>
       )}
       {!user ? (
-        <Card>
+        <Box>
           You must be logged in to enter! <Link to="/about">Find out more</Link>
-        </Card>
+        </Box>
       ) : (
         canSubmit(jam, entries.data, user?.id) && <EntryForm jam_id={jam.id} />
       )}

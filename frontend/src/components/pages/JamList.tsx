@@ -1,19 +1,19 @@
 import React from 'react'
-import { Spin, Result, Layout } from 'antd'
 import { useGet } from 'hooks/useGet'
 import { JamView } from 'types/Jam'
 import { JamListWidget } from 'components/widgets/JamListWidget'
 import { useSubscription } from 'hooks/useSubscription'
+import { Alert, Grid, Spinner } from '@chakra-ui/react'
 
 export const JamList = () => {
   const jams = useGet<JamView[]>('jams')
   useSubscription('JamsChannel', {}, jams.refetch)
 
-  if (jams.loading) return <Spin />
-  if (jams.error) return <Result title="error fetching jams" />
+  if (jams.loading) return <Spinner />
+  if (jams.error) return <Alert title="error fetching jams" />
 
   return (
-    <Layout.Content>
+    <Grid>
       <JamListWidget
         title="Upcoming Jams"
         jams={jams.data.filter((j) => !j.started_at && !j.ended)}
@@ -26,6 +26,6 @@ export const JamList = () => {
         title="Finished Jams"
         jams={jams.data.filter((j) => j.ended)}
       />
-    </Layout.Content>
+    </Grid>
   )
 }

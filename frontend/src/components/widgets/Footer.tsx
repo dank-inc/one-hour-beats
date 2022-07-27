@@ -1,20 +1,18 @@
 import React from 'react'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
-import { Col, Row } from 'antd'
-import 'scss/footer.scss'
+import { Row } from 'components/elements/Row'
+import { Box } from '@chakra-ui/react'
 
 export const Footer = () => {
   const { song } = useDankAmpContext()
 
   return (
-    <Row className="app-footer" align="middle" justify="space-between">
-      <Col>
-        <p>Copyright 2020 - onehourbeats.com</p>
-      </Col>
-      <Col className="flex-right">
-        <p>{song ? `${song.artist_name} - ${song.title}` : 'Load a song!'}</p>
+    <Row padding="1rem" bgColor="gray.800" color="white" alignItems="center">
+      <Box>Copyright 2020 - onehourbeats.com</Box>
+      <Box>{song ? `${song.artist_name} - ${song.title}` : 'Load a song!'}</Box>
+      <Box>
         <audio controls autoPlay src={song ? `/api/${song.link}` : ''} />
-      </Col>
+      </Box>
     </Row>
   )
 }

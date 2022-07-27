@@ -1,40 +1,46 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
-import { Tooltip, Button, message, Popconfirm } from 'antd'
-import { FrownTwoTone, SmileTwoTone } from '@ant-design/icons'
-import moment from 'moment'
+import { useNavigate } from 'react-router'
 
 import { JamView } from 'types/Jam'
 
 import { useUserContext } from 'contexts/UserContext'
 import { deleteJam, startJam, stopJam } from 'api'
+import { Button, Tooltip, useToast } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 type Props = { jam: JamView }
 export const JamControl = ({ jam }: Props) => {
   const user_id = useUserContext().user?.id
-  const history = useHistory()
+  const navigate = useNavigate()
+  const toast = useToast()
 
   const [inProgress, setInProgress] = useState(false)
   const [ended, setEnded] = useState(false)
 
   const handleStart = async () => {
     await startJam(jam.id)
-    message.loading('Starting challenge...', 0.25)
+    toast({ title: 'Starting challenge...' })
   }
 
   const handleStop = async () => {
     await stopJam(jam.id)
-    message.loading('Stopping challenge...', 0.25)
+    toast({ title: 'Stopping challenge...' })
   }
 
   useEffect(() => {
     const updateProgress = () => {
       // TODO: SERVER SHOULD HANDLE THE TIMERS
-      const current = +moment()
-      const endsAt = +moment(jam.started_at).add(jam.time_limit, 'minutes')
-      const timeRemaining = endsAt - current
-      const ip = !!(jam.started_at && timeRemaining > 0)
-      setEnded(timeRemaining < 0)
+
+      const current = DateTime.local()
+
+      const endsAt = DateTime.fromISO(jam.started_at!).plus({
+        minutes: jam.time_limit,
+      })
+
+      const timeRemaining = endsAt.diff(current)
+
+      const ip = !!(jam.started_at && timeRemaining.minutes > 0)
+      setEnded(timeRemaining.minutes < 0)
       setInProgress(ip)
       if (!ended) return () => clearTimeout(timer)
     }
@@ -50,9 +56,9 @@ export const JamControl = ({ jam }: Props) => {
   const handleDelete = async () => {
     try {
       await deleteJam(jam.id)
-      history.push('/jams')
+      navigate('/jams')
     } catch (err) {
-      message.error("couldn't delete jam!")
+      toast({ title: "couldn't delete jam!" })
     }
   }
 
@@ -61,9 +67,8 @@ export const JamControl = ({ jam }: Props) => {
   if (ended)
     return (
       <>
-        <Button onClick={() => history.push('/create')}>
-          The Challenge Is Over! <FrownTwoTone /> Make A New One!{' '}
-          <SmileTwoTone />
+        <Button onClick={() => navigate('/create')}>
+          The Challenge Is Over! 😭 Make A New One! 😊
         </Button>
       </>
     )
@@ -72,7 +77,7 @@ export const JamControl = ({ jam }: Props) => {
     return (
       <>
         <Tooltip title="Stop the Jam!">
-          <Button type="primary" onClick={handleStop}>
+          <Button variant="primary" onClick={handleStop}>
             Stop Jam Now!
           </Button>
         </Tooltip>
@@ -81,11 +86,13 @@ export const JamControl = ({ jam }: Props) => {
 
   return (
     <>
-      <Popconfirm title="This is irreversable!" onConfirm={handleDelete}>
-        <Button danger>Delete</Button>
-      </Popconfirm>
+      <Tooltip title="This is irreversable!">
+        <Button onClick={handleDelete} bgColor="red.200">
+          Delete
+        </Button>
+      </Tooltip>
       <Tooltip title="Pump Up The Jam">
-        <Button type="primary" onClick={handleStart}>
+        <Button variant="primary" onClick={handleStart}>
           Start Jam Now!
         </Button>
       </Tooltip>

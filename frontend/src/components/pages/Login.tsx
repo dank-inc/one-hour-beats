@@ -1,41 +1,47 @@
 import React from 'react'
-import { Form, Input, Button, Layout, PageHeader } from 'antd'
-import { Store } from 'antd/lib/form/interface'
 import { useUserContext } from 'contexts/UserContext'
-import { Redirect } from 'react-router'
+import { Navigate } from 'react-router-dom'
+import { Box, Button, Grid, Heading, Input } from '@chakra-ui/react'
+import { Field, useFormik } from 'formik'
 
 export const Login = () => {
   const { user, handleLogin } = useUserContext()
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: async ({ username, password }) => handleLogin(username, password),
+  })
 
-  const onFinish = ({ username, password }: Store) =>
-    handleLogin(username, password)
-
-  if (user) return <Redirect to="/jams" />
+  if (user) return <Navigate to="/jams" />
 
   return (
-    <Layout.Content>
-      <PageHeader title="Login" />
-      <Form onFinish={onFinish}>
-        <Form.Item
+    <Grid>
+      <Box>
+        <Heading>Login</Heading>
+      </Box>
+      <form onSubmit={formik.handleSubmit}>
+        <Field
           label="Username"
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <Input />
-        </Form.Item>
-        <Form.Item
+        </Field>
+        <Field
           label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Input type="password" />
+        </Field>
+        <Field>
+          <Button variant="primary" type="submit">
             Submit
           </Button>
-        </Form.Item>
-      </Form>
-    </Layout.Content>
+        </Field>
+      </form>
+    </Grid>
   )
 }

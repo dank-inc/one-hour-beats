@@ -1,4 +1,4 @@
-import { Result, Spin } from 'antd'
+import { Alert, Spinner } from '@chakra-ui/react'
 import React from 'react'
 
 type Props = {
@@ -12,8 +12,8 @@ export const ResultHandler = ({ loading, error, refetch }: Props) => {
   // this returns loading spinners, error handlers, or null depending on the
   // state of the data
 
-  if (loading) return <Spin />
-  if (error) return <Result title="Error getting chats" />
+  if (loading) return <Spinner />
+  if (error) return <Alert title="Error getting chats" />
 
   return null
 }

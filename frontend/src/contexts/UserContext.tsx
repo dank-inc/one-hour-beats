@@ -7,14 +7,14 @@ import React, {
   SetStateAction,
 } from 'react'
 import axios from 'axios'
-import { message } from 'antd'
 
 import { UserView } from 'types/User'
 import { getUser } from 'api'
 import { mockUser } from 'api/mock/user'
 
 import { useActionCableContext } from './ActionCableContext'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
+import { useToast } from '@chakra-ui/react'
 
 type Props = {
   children: React.ReactNode
@@ -37,7 +37,8 @@ type Login = {
 const UserContext = createContext<Context | null>(null)
 
 export const UserContextProvider = ({ children }: Props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
+  const toast = useToast()
   const { consumer } = useActionCableContext()
   const [user, setUser] = useState<UserView | null>(null)
 
@@ -56,12 +57,12 @@ export const UserContextProvider = ({ children }: Props) => {
     const login = async (user_id: string) => {
       try {
         const { data } = await axios.get<UserView>(`/api/users/${user_id}`, {
-          headers: { Authorization: token },
+          headers: { Authorization: token! },
         })
         setUser(data)
-        message.success(`logged in as ${data?.username}`, 0.5)
+        toast({ description: `logged in as ${data?.username}`, duration: 500 })
       } catch {
-        message.error('Login Failed!')
+        toast({ description: 'Login Failed!', status: 'error' })
         wipeLocalStorage()
         window.location.reload()
       }
@@ -84,7 +85,7 @@ export const UserContextProvider = ({ children }: Props) => {
           console.log('UserChannel Update', user)
           setUser(user)
         },
-      }
+      },
     )
     console.log('subscribed to user channel', subscription)
 
@@ -102,18 +103,18 @@ export const UserContextProvider = ({ children }: Props) => {
 
       setLocalStorage(data)
       setUser(await getUser(data.id))
-      message.success(`logged in as ${user?.username}`, 0.5)
-      history.push('/jams')
+      toast({ description: `logged in as ${user?.username}`, duration: 500 })
+      navigate('/jams')
     } catch (err) {
-      message.error('Login Failed!')
+      toast({ description: 'Login Failed!' })
     }
   }
 
   const handleLogout = () => {
     setUser(null)
     wipeLocalStorage()
-    message.success('logged out!', 0.5)
-    history.push('/')
+    toast({ description: 'logged out!', duration: 500 })
+    navigate('/')
   }
 
   const setLocalStorage = (data: Login) => {
@@ -142,7 +143,7 @@ export const useUserContext = () => {
 
   if (!context)
     throw new Error(
-      'UserContext must be called from within the UserContextProvider'
+      'UserContext must be called from within the UserContextProvider',
     )
 
   return context

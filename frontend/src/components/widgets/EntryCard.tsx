@@ -1,14 +1,10 @@
 import React from 'react'
-import { Button, Card, message, Avatar, Popconfirm } from 'antd'
-import {
-  UserOutlined,
-  FireTwoTone,
-  CustomerServiceOutlined,
-} from '@ant-design/icons'
+
 import { useUserContext } from 'contexts/UserContext'
 import { deleteEntry, voteForEntry } from 'api'
 import { EntryView } from 'types/Entry'
 import { useDankAmpContext } from 'contexts/DankAmpContext'
+import { Avatar, Box, Button, Heading, useToast } from '@chakra-ui/react'
 
 type Props = {
   entry: EntryView
@@ -18,9 +14,10 @@ type Props = {
 export const EntryCard = ({ entry, jam_id }: Props) => {
   const { user } = useUserContext()
   const { song, selectSong } = useDankAmpContext()
+  const toast = useToast()
 
-  const castVote = () => {
-    message.loading('casting vote!')
+  const handleVote = () => {
+    toast({ title: 'casting vote!' })
     voteForEntry(entry.id)
   }
 
@@ -37,40 +34,25 @@ export const EntryCard = ({ entry, jam_id }: Props) => {
     vote_token && !vote_token.entry_id && entry.user_id !== user?.id
 
   return (
-    <Card
-      actions={[
-        <Button onClick={listenToEntry}>
-          <CustomerServiceOutlined
-            className={song?.id === entry.id ? 'song-playing' : ''}
-          />{' '}
-          Listen To Entry
-        </Button>,
-        entry.user_id === user?.id ? (
-          <Popconfirm title="Really Delete?" onConfirm={handleDelete}>
-            <Button danger>Delete</Button>
-          </Popconfirm>
-        ) : null,
-        <Popconfirm
-          disabled={!canVote}
-          title="Cast your vote?"
-          onConfirm={castVote}
-        >
-          <Button disabled={!canVote}>Vote!</Button>
-        </Popconfirm>,
-      ]}
-      title={`${entry.artist_name} - ${entry.title}`}
-      extra={entry.votes?.map((user_id) => (
-        <FireTwoTone
-          twoToneColor="#fa541c"
-          key={`vote-${jam_id}-${entry.id}-${user_id}`}
-        />
+    <Box>
+      <Heading size="sm">
+        `${entry.artist_name} - ${entry.title}`
+      </Heading>
+      {entry.votes?.map((user_id) => (
+        <Box key={`vote-${jam_id}-${entry.id}-${user_id}`}>🔥</Box>
       ))}
-    >
-      <Card.Meta
-        description={`some metdata`}
-        // todo: user icon
-        avatar={<Avatar icon={<UserOutlined />} />}
-      ></Card.Meta>
-    </Card>
+      <Button onClick={listenToEntry}>Listen To Entry</Button>,{' '}
+      {entry.user_id === user?.id ? (
+        <Button variant="solid" onClick={handleDelete}>
+          Delete
+        </Button>
+      ) : null}
+      <Button disabled={!canVote} onClick={handleVote}>
+        Vote!
+      </Button>
+      <Box>
+        <Avatar name="😎" />
+      </Box>
+    </Box>
   )
 }

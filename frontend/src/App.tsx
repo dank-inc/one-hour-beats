@@ -6,17 +6,17 @@ import { ActionCableContextProvider } from 'contexts/ActionCableContext'
 import { DankAmpContextProvider } from 'contexts/DankAmpContext'
 
 import { CoreLayout } from './components/layouts/CoreLayout'
+import { ChakraProvider } from '@chakra-ui/react'
 
-import 'scss/app.less'
-import 'scss/app.scss'
-
-export default () => {
+export const App = () => {
   return (
     <BrowserRouter>
       <ActionCableContextProvider>
         <UserContextProvider>
           <DankAmpContextProvider>
-            <CoreLayout />
+            <ChakraProvider>
+              <CoreLayout />
+            </ChakraProvider>
           </DankAmpContextProvider>
         </UserContextProvider>
       </ActionCableContextProvider>

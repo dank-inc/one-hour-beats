@@ -1,12 +1,9 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 
 // import { Clock } from 'components/organisms/Clock'
 // import { useUserContext } from 'contexts/UserContext'
 
-export const JamPopout = ({
-  match,
-}: RouteComponentProps<{ view: string; id: string }>) => {
+export const JamPopout = () => {
   // const { user } = useUserContext()
 
   // user.currentJam

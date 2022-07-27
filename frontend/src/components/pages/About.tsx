@@ -1,10 +1,10 @@
+import { Grid, Heading } from '@chakra-ui/react'
 import React from 'react'
-import { Layout, Typography } from 'antd'
 
 export const About = () => {
   return (
-    <Layout.Content>
-      <Typography.Title>About One Hour Beats</Typography.Title>
+    <Grid>
+      <Heading>About One Hour Beats</Heading>
       <p>
         Once upon a time, in the early demoscene years, in the days of the
         trackers there existed a compo.
@@ -15,7 +15,7 @@ export const About = () => {
         our beloved One Hour Compo.
       </p>
       <p>But that all changes here, today!</p>
-      <Typography.Title>History</Typography.Title>
+      <Heading>History</Heading>
       <p>
         Elijah Lucian started "one hour beating" in 2010, and found it to be a
         great way to create a jump-off point for a song!
@@ -30,7 +30,7 @@ export const About = () => {
         TODO: add an inspiring speech about how working within limitations can
         spark creativity and shit.
       </p>
-      <Typography.Title>Need an Invite?</Typography.Title>
+      <Heading>Need an Invite?</Heading>
       <p>
         One Hour Beats is currently in closed beta - but you can still sign up!
       </p>
@@ -42,6 +42,6 @@ export const About = () => {
         , tell us about yourself, and ask for an invite 😍. Don't worry, we're
         friendly (and we want to keep it that way)
       </p>
-    </Layout.Content>
+    </Grid>
   )
 }
